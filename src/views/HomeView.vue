@@ -3,7 +3,7 @@
     <div class="home-banner-area mb-4 pt-3">
       <div class="container">
         <div class="row gutters-10 position-relative">
-          <!--            Category-->
+          <!--Category-->
           <div class="col-lg-3 position-static d-none d-lg-block">
             <div class="card">
               <div class="cart-body">
@@ -19,31 +19,19 @@
                     >
                   </router-link>
                 </div>
-                <ul
-                  class="list-unstyled categories no-scrollbar py-2 mb-0 text-start"
-                >
-                  <li class="category-nav-element" data-id="1">
-                    <router-link to="" class="nav-link text-black-50">
-                      <span class="cat-name" style="font-size: 15px">Bugs</span>
-                    </router-link>
+                <ul  class="list-unstyled categories no-scrollbar py-2 mb-0 text-start"  >
+
+                  <li class="category-nav-element c-pointer hov-text-dark" data-id="1" v-for="c in categories" :key="c.id" >
+                      <span @click="getSubCategories(c)" class="nav-link text-black-50 hov-text-dark" style="font-size: 15px">{{ c.name }}</span>
                   </li>
-                  <li class="category-nav-element" data-id="1">
-                    <router-link to="" class="nav-link text-black-50">
-                      <span class="cat-name" style="font-size: 15px">Demo</span>
-                    </router-link>
-                  </li>
-                  <li class="category-nav-element" data-id="1">
-                    <router-link to="" class="nav-link text-black-50">
-                      <span class="cat-name" style="font-size: 15px">Demo</span>
-                    </router-link>
-                  </li>
+
                 </ul>
               </div>
             </div>
           </div>
-          <!--            Category-->
+          <!--Category-->
 
-          <!--          Category list-->
+          <!--Category list-->
           <div class="col-lg-9">
             <div
               class="aiz-carousel dots-inside-bottom mobile-img-auto-height"
@@ -52,67 +40,18 @@
               data-autoplay="true"
             ></div>
             <ul class="list-unstyled mb-0 row gutters-5">
-              <li class="card col-4 col-md m-3">
-                <router-link
-                  to=""
-                  class="d-block rounded bg-white p-2 text-reset shadow-sm nav-link"
-                >
-                  <img
-                    src="../assets/img/placeholder.jpg"
-                    alt="Bugs"
-                    class="lazyload img-fit"
-                    height="78"
-                  />
-                  <div
-                    class="text-truncate fs-12 fw-600 mt-2 opacity-70 text-start text-black-50"
-                  >
-                    Bugs
+
+              <li class="card col-4 col-md-4 m-3 p-2" v-for="s in sub_categories" :key="s.id" >
+                  <div class="text-center text-black-50 ">
+                    {{ s.name }}
                   </div>
-                </router-link>
               </li>
 
-              <li class="card col-4 col-md m-3">
-                <router-link
-                  to=""
-                  class="d-block rounded bg-white p-2 text-reset shadow-sm nav-link"
-                >
-                  <img
-                    src="../assets/img/placeholder.jpg"
-                    alt="Bugs"
-                    class="lazyload img-fit"
-                    height="78"
-                  />
-                  <div
-                    class="text-truncate fs-12 fw-600 mt-2 opacity-70 text-start text-black-50"
-                  >
-                    Demo
-                  </div>
-                </router-link>
-              </li>
-
-              <li class="card col-4 col-md m-3">
-                <router-link
-                  to=""
-                  class="d-block rounded bg-white p-2 text-reset shadow-sm nav-link"
-                >
-                  <img
-                    src="../assets/img/placeholder.jpg"
-                    alt="Bugs"
-                    class="lazyload img-fit"
-                    height="78"
-                  />
-                  <div
-                    class="text-truncate fs-12 fw-600 mt-2 opacity-70 text-start text-black-50"
-                  >
-                    Demo
-                  </div>
-                </router-link>
-              </li>
             </ul>
           </div>
-          <!--          Category list-->
+          <!--Category list-->
 
-          <!--          Best-->
+          <!--Best-->
           <section class="mb-4">
             <div class="card container">
               <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
@@ -339,7 +278,7 @@
               </div>
             </div>
           </section>
-          <!--         Best-->
+          <!--Best-->
 
           <!--          Category & Brand-->
           <section class="mb-4">
@@ -384,7 +323,34 @@
 </template>
 
 <script>
+import $http from '../axios.js'
+import { mapState , mapMutations } from 'vuex'
 export default {
   name: "HomeView",
+  data() {
+    return {
+      categories : [],
+      sub_categories : [],
+    }
+  },
+  created() {
+    this.getCategories();
+  },
+  methods:{
+    ...mapMutations([
+      'ADD_ALL_CAT'
+    ]),
+    getCategories(){
+      $http.getAll('categories').then((res)=>{
+        this.categories = res.data.data;
+        this.ADD_ALL_CAT(this.categories);
+      }).catch((err)=>{console.log(err)});
+    },
+    getSubCategories(c) {
+      $http.get(`categories/${c.id}?sub_categories=yes`).then((res)=>{
+        this.sub_categories = res.data.data.sub_categories;
+      }).catch((err)=>{console.log(err)})
+    }
+  }
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <section class="mb-4 pt-3">
       <div class="card container">
         <div class="bg-white shadow-sm rounded p-3">
@@ -31,30 +30,10 @@
                           "
                         >
                           <div>
-                            <div
-                              class="carousel-box img-zoom rounded"
-                              style="width: 100%; display: inline-block"
-                            >
+                            <div class="carousel-box img-zoom rounded" style="width: 100%; display: inline-block"   >
                               <img
                                 class="img-fluid ls-is-cached lazyloaded"
-                                src="../assets/uploads/all/productOne.jpg"
-                              />
-                              <img
-                                role="presentation"
-                                alt=""
-                                src="../assets/uploads/all/productOne.jpg"
-                                class="zoomImg"
-                                style="
-                                  position: absolute;
-                                  top: -227.301px;
-                                  left: -1206.38px;
-                                  opacity: 0;
-                                  width: 1573.5px;
-                                  height: 2250px;
-                                  border: none;
-                                  max-width: none;
-                                  max-height: none;
-                                "
+                                :src="SHOW_Good.photos[0].name"
                               />
                             </div>
                           </div>
@@ -63,10 +42,6 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="col-12 col-md-auto w-md-80px order-2 order-md-1 mt-3 mt-md-0"
-                >
-                </div>
               </div>
             </div>
 <!--            Item-->
@@ -74,8 +49,7 @@
 <!--            Item Detail-->
             <div class="col-xl-7 col-lg-6">
               <div class="text-start">
-                <h1 class="mb-2 fs-20 fw-600">Bug</h1>
-
+                <h1 class="mb-2 fs-20 fw-600">{{ SHOW_Good.name }}</h1>
                 <div class="row align-items-center">
                   <div class="col-12">
                     <span class="rating">
@@ -83,7 +57,7 @@
                       ><i class="las la-star"></i><i class="las la-star"></i
                       ><i class="las la-star"></i>
                     </span>
-                    <span class="ml-1 opacity-50">(0 reviews)</span>
+                    <span class="ml-1 opacity-50">({{ SHOW_Good.view_count }} reviews)</span>
                   </div>
                 </div>
 
@@ -91,18 +65,21 @@
 
                 <div class="row align-items-center">
                   <div class="col-auto">
-                    <small class="mr-2 opacity-50">Sold by: </small><br />
-                    Inhouse product
+                    <small class="opacity-50 my-2">Category</small><br />
+                    {{ SHOW_Good.category.name }}
                   </div>
                   <div class="col-auto">
-                    <button
-                      class="btn btn-sm btn-primary"
-                      onclick=""
-                    >
-                      Message Seller
-                    </button>
+                    <small class="opacity-50 my-2">Brand</small><br />
+                    {{ SHOW_Good.brand.name }}
                   </div>
-
+                  <div class="col-auto">
+                    <small class="opacity-50 my-2">Recommended</small><br />
+                    {{ SHOW_Good.recommended_flag === 0 ? 'Yes' : 'No' }}
+                  </div>
+                  <div class="col-auto">
+                    <small class="opacity-50 my-2">Total Stock</small><br />
+                    {{ SHOW_Good.total_stock }}
+                  </div>
                 </div>
 
                 <hr />
@@ -114,16 +91,13 @@
                   <div class="col-sm-10">
                     <div class="">
                       <strong class="h2 fw-600 text-primary mb-0">
-                        $20,000.00
+                        {{  SHOW_Good.prices[0].price }}
                       </strong>
-                      <span class="opacity-70">/1pc</span>
                     </div>
                   </div>
                 </div>
 
                 <hr />
-
-                <form id="option-choice-form">
                   <!-- Quantity + Add to cart -->
                   <div class="row no-gutters">
                     <div class="col-sm-2">
@@ -184,7 +158,7 @@
                       </div>
                     </div>
                   </div>
-                </form>
+
 
                 <div class="mt-3">
                   <button
@@ -293,7 +267,6 @@
     <section class="mb-4">
       <div class="container">
         <div class="row gutters-10">
-
           <div class="col-xl-3 order-1 order-xl-0">
             <div class="card bg-white rounded shadow-sm mb-3">
               <div class="p-3 border-bottom fs-16 fw-600 text-start">
@@ -347,7 +320,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-xl-9 order-0 order-xl-1">
             <div class="card bg-white mb-3 shadow-sm rounded">
               <div class="nav border-bottom aiz-nav-tabs">
@@ -357,7 +329,7 @@
                 <div class="tab-pane fade active show" id="tab_default_1">
                   <div class="p-4">
                     <div class="mw-100 overflow-hidden text-start aiz-editor-data">
-                      <p>This is very cold bug.</p>
+                      <p>{{ SHOW_Good.description }}</p>
                     </div>
                   </div>
                 </div>
@@ -389,7 +361,6 @@
             </div>
 
           </div>
-
         </div>
       </div>
     </section>
@@ -398,8 +369,18 @@
 </template>
 
 <script>
+import $http from '../axios.js'
+import {mapGetters} from 'vuex'
 export default {
   name: "Detail",
+  computed: {
+    ...mapGetters([
+      'SHOW_Good'
+    ])
+  },
+  created() {
+    console.log(this.SHOW_Good)
+  }
 };
 </script>
 

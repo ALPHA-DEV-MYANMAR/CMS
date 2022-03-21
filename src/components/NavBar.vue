@@ -50,26 +50,21 @@
             </div>
 <!--            Search-->
 
-            <div class="" id="wishlist">
-                <router-link to="/wishlist"
-                    class="d-flex align-items-center nav-link">
-                  <i class="la la-heart-o la-2x opacity-80 text-black-50" style="font-size: 25px"></i>
-                  <span class="flex-grow-1">
-                      <span class="badge badge-primary badge-inline badge-pill" >0</span  >
-                      <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
-                  </span>
-                </router-link>
-            </div>
+              <div class="d-flex align-items-center nav-link">
+                <i class="la la-heart-o la-2x opacity-80 text-black-50" style="font-size: 25px"></i>
+                <span class="flex-grow-1">
+                    <span class="badge badge-primary badge-inline badge-pill" >0</span  >
+                    <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
+                </span>
+              </div>
 
-            <div class="" id="cart">
-              <router-link to="/cart" class="d-flex align-items-center nav-link">
+              <div class="d-flex align-items-center nav-link c-pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <i class="la la-shopping-cart la-2x opacity-80 text-black-50" style="font-size: 25px;"></i>
                 <span class="flex-grow-1">
-                      <span class="badge badge-primary badge-inline badge-pill">0</span>
-                      <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">Cart</span>
-                    </span>
-              </router-link>
-            </div>
+                      <span class="badge badge-primary badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
+                      <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">Cartlist</span>
+                 </span>
+              </div>
 
           </div>
         </div>
@@ -78,44 +73,36 @@
         <div class="container">
           <ul class="list-inline mb-0 pl-0 mobile-hor-swipe text-center">
             <li class="list-inline-item mr-0">
-              <a
-                  href=""
+              <router-link
+                  to=""
                   class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
               >
                 Home
-              </a>
+              </router-link>
             </li>
             <li class="list-inline-item mr-0">
-              <a
-                  href=""
+              <router-link
+                  to=""
                   class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
               >
                 Flash Sale
-              </a>
+              </router-link>
             </li>
             <li class="list-inline-item mr-0">
-              <a
-                  href=""
-                  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
-              >
-                Blogs
-              </a>
-            </li>
-            <li class="list-inline-item mr-0">
-              <a
-                  href=""
+              <router-link
+                  to=""
                   class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
               >
                 All Brands
-              </a>
+              </router-link>
             </li>
             <li class="list-inline-item mr-0">
-              <a
-                  href=""
+              <router-link
+                  to=""
                   class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
               >
                 All categories
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -264,32 +251,66 @@
     </section>
     <!--      End Content Info-->
 
-    <!-- FOOTER -->
-    <footer class="pt-3 pb-7 pb-xl-3 bg-black text-light">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-4">
-            <div
-                class="text-center text-md-left"
-                current-verison="5.5.5"
-            ></div>
-          </div>
-          <div class="col-lg-4"></div>
-          <div class="col-lg-4">
-            <div class="text-center text-md-right">
-              <ul class="list-inline mb-0"></ul>
-            </div>
-          </div>
-        </div>
+
+<!--    Offcanvas-->
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h4 class="mb-0 text-black-50">Cart Listing</h4>
       </div>
-    </footer>
-<!--    Bottom-->
+      <div class="offcanvas-body">
+         <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
+              <li v-for="c in GET_CART_DATA" :key="c.id">
+                  <span class=" d-flex align-items-center">
+                      <router-link to="" class="text-reset d-flex align-items-center flex-grow-1 nav-link">
+                          <img :src="c.photos.length === 0 ? '-': c.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
+                          <span class="minw-0 pl-2 flex-grow-1 text-start">
+                              <span class="fw-600 mb-1 text-truncate-2 text-black-50" style="font-size: 15px;">
+                                 {{ c.name }}
+                              </span>
+                             <span class="text-black-50" style="font-size: 12px;">
+                                 {{ c.category.name }}
+                              </span> <br>
+                              <span class="text-black-50" style="font-size: 12px;">{{ c.qty }}x</span>
+                              <span class="text-black-50" style="font-size: 12px;">{{ c.prices[0].price }}</span>
+                          </span>
+                      </router-link>
+                      <span class="">
+                          <button  class="btn btn-sm btn-icon stop-propagation" @click="DelCartData(c)">
+                              <i class="la la-close"></i>
+                          </button>
+                      </span>
+                  </span>
+              </li>
+         </ul>
+      </div>
+    </div>
+
+<!-- Offcanvas-->
+
   </div>
 </template>
 
 <script>
+import {mapGetters,mapMutations} from "vuex";
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  computed:{
+    ...mapGetters([
+        'GET_CART_COUNT',
+        'GET_CART_DATA',
+    ]),
+  },
+  methods:{
+    ...mapMutations([
+        'ADD_TO_CART',
+        'DEL_CART_DATA'
+    ]),
+    DelCartData(c){
+      this.DEL_CART_DATA(c);
+    }
+  }
 }
 </script>
 

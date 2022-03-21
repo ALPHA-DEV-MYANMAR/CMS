@@ -8,6 +8,7 @@ import ManageProfile from "@/views/ManageProfile";
 import Cart from "@/views/Cart";
 import Categories from "@/views/Categories";
 import Detail from "@/views/Detail";
+import SingleCategory from "@/views/SingleCategory";
 
 const routes = [
   {
@@ -54,12 +55,21 @@ const routes = [
     path: '/detail',
     name: 'detail',
     component: Detail
+  },
+  {
+    path: '/single-category',
+    name: 'single-category',
+    component: SingleCategory
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 }
+  },
 })
 
 export default router
