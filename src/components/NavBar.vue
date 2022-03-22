@@ -5,9 +5,14 @@
       <div class="container">
         <div class="row">
           <div class="col-6 col-md-12 d-flex justify-content-end">
-            <router-link to="profile" class="nav-link text-black-50 p-1" style="font-size: 15px;">Profile</router-link>
-            <router-link to="login" class="nav-link text-black-50 p-1" style="font-size: 15px;">Login</router-link>
-            <router-link to="register" class="nav-link text-black-50 p-1" style="font-size: 15px;">Register</router-link>
+            <div class="d-flex" v-if="GET_USER.length === 0">
+              <router-link to="login" class="nav-link text-black-50 p-1" style="font-size: 15px;">Login</router-link>
+              <router-link to="register" class="nav-link text-black-50 p-1" style="font-size: 15px;">Register</router-link>
+            </div>
+            <div class="d-flex" v-else>
+              <router-link  to="profile" class="nav-link text-black-50 p-1" style="font-size: 15px;">Profile</router-link>
+              <router-link  to="" @click="logout" class="nav-link text-black-50 p-1" style="font-size: 15px;">Logout</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -251,9 +256,7 @@
     </section>
     <!--      End Content Info-->
 
-
 <!--    Offcanvas-->
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
       <div class="offcanvas-header">
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -263,7 +266,7 @@
          <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
               <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">
-                      <router-link to="" class="text-reset d-flex align-items-center flex-grow-1 nav-link">
+                      <span class="text-reset d-flex align-items-center flex-grow-1 nav-link" @click="addGood(c)">
                           <img :src="c.photos.length === 0 ? '-': c.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
                           <span class="minw-0 pl-2 flex-grow-1 text-start">
                               <span class="fw-600 mb-1 text-truncate-2 text-black-50" style="font-size: 15px;">
@@ -275,7 +278,7 @@
                               <span class="text-black-50" style="font-size: 12px;">{{ c.qty }}x</span>
                               <span class="text-black-50" style="font-size: 12px;">{{ c.prices[0].price }}</span>
                           </span>
-                      </router-link>
+                      </span>
                       <span class="">
                           <button  class="btn btn-sm btn-icon stop-propagation" @click="DelCartData(c)">
                               <i class="la la-close"></i>
@@ -286,29 +289,42 @@
          </ul>
       </div>
     </div>
-
 <!-- Offcanvas-->
 
   </div>
 </template>
 
 <script>
-import {mapGetters,mapMutations} from "vuex";
+import {mapGetters,mapMutations} from "vuex"
+import $http from '../axios.js'
 export default {
   name: "NavBar",
   computed:{
     ...mapGetters([
         'GET_CART_COUNT',
         'GET_CART_DATA',
+        'GET_USER',
+        'GET_TOKEN'
     ]),
   },
   methods:{
     ...mapMutations([
         'ADD_TO_CART',
-        'DEL_CART_DATA'
+        'DEL_CART_DATA',
+        'ADD_Good',
+        'ADD_USER',
+        'ADD_TOKEN'
     ]),
     DelCartData(c){
       this.DEL_CART_DATA(c);
+    },
+    addGood(c){
+      this.ADD_Good(c);
+      this.$router.push('/detail');
+    },
+    logout(){
+      this.ADD_USER([]);
+      this.ADD_TOKEN([]);
     }
   }
 }

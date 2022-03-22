@@ -26,3 +26,53 @@ body {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
 }
+
+.modal-mask{
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    display: table;
+    transition: opacity .3s ease;
+}
+
+.modal-wrapper{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.modal-header-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-input{
+    margin-top: 20px;
+}
+
+.modal-btn{
+    margin-top: 20px;
+    float: end;
+}
+
+.two-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.invalid-text{
+    margin-bottom: 0;
+    font-size: 10px;
+    color: red !important;
+}
+
+.model-title{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+    width: 100%;
+}

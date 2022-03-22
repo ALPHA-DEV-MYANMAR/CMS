@@ -25,121 +25,23 @@
                       <i class="la la-filter la-2x"></i>
                     </button>
                   </div>
+                  <!-- Filter-->
                   <div class="col-6 col-lg-auto mb-3 w-lg-200px">
-                    <label class="mb-0 opacity-50">Brands</label>
-                    <div
-                      class="dropdown bootstrap-select form-control form-control-sm aiz-"
-                    >
-                      <select
-                        class="form-control form-control-sm aiz-selectpicker"
-                        data-live-search="true"
-                        name="brand"
-                        onchange="filter()"
-                        tabindex="-98"
-                      >
-                        <option value="">All Brands</option>
-                        <option value="Demo-brand-12">Demo brand</option>
-                        <option value="Demo-brand1">Demo brand1</option></select
-                      ><button
-                        type="button"
-                        class="btn dropdown-toggle btn-light"
-                        data-toggle="dropdown"
-                        role="combobox"
-                        aria-owns="bs-select-1"
-                        aria-haspopup="listbox"
-                        aria-expanded="false"
-                        title="All Brands"
-                      >
-                        <div class="filter-option">
-                          <div class="filter-option-inner">
-                            <div class="filter-option-inner-inner">
-                              All Brands
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                      <div class="dropdown-menu">
-                        <div class="bs-searchbox">
-                          <input
-                            type="search"
-                            class="form-control"
-                            autocomplete="off"
-                            role="combobox"
-                            aria-label="Search"
-                            aria-controls="bs-select-1"
-                            aria-autocomplete="list"
-                          />
-                        </div>
-                        <div
-                          class="inner show"
-                          role="listbox"
-                          id="bs-select-1"
-                          tabindex="-1"
-                        >
-                          <ul
-                            class="dropdown-menu inner show"
-                            role="presentation"
-                          ></ul>
-                        </div>
-                      </div>
-                    </div>
+                    <label class="mb-0 opacity-50">Sub Category</label>
+                    <select class="custom-select custom-select-sm " aria-label=".form-select-sm example" v-model="filter.sub_category_id">
+                      <option selected value="">Default</option>
+                      <option value="1">One</option>
+                    </select>
                   </div>
-                  <div class="col-6 col-lg-auto mb-3 w-lg-200px">
-                    <label class="mb-0 opacity-50">Sort by</label>
-                    <div
-                      class="dropdown bootstrap-select form-control form-control-sm aiz-"
-                    >
-                      <select
-                        class="form-control form-control-sm aiz-selectpicker"
-                        name="sort_by"
-                        onchange="filter()"
-                        tabindex="-98"
-                      >
-                        <option value="newest">Newest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="price-asc">Price low to high</option>
-                        <option value="price-desc">
-                          Price high to low
-                        </option></select
-                      ><button
-                        type="button"
-                        class="btn dropdown-toggle btn-light"
-                        data-toggle="dropdown"
-                        role="combobox"
-                        aria-owns="bs-select-2"
-                        aria-haspopup="listbox"
-                        aria-expanded="false"
-                        title="Newest"
-                      >
-                        <div class="filter-option">
-                          <div class="filter-option-inner">
-                            <div class="filter-option-inner-inner">Newest</div>
-                          </div>
-                        </div>
-                      </button>
-                      <div class="dropdown-menu">
-                        <div
-                          class="inner show"
-                          role="listbox"
-                          id="bs-select-2"
-                          tabindex="-1"
-                        >
-                          <ul
-                            class="dropdown-menu inner show"
-                            role="presentation"
-                          ></ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <!--Filter-->
                 </div>
               </div>
               <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
-<!--                Product-->
+                <!--Product-->
                 <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
-                        <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos[0].name" />
+                        <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
                       <div class="absolute-top-right aiz-p-hov-icon">
                         <router-link
                           to=""
@@ -185,12 +87,28 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
+              </div>
+
+              <!--Pagination-->
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" v-for="(p,index) in pagination.links" :key="index" :class="p.url === null ? 'disabled' : '' ">
+                    <router-link class="page-link" to="" @click="paginationStart(p)" :class="p.active ? 'bg-info' : '' ">
+                      {{ index === 0 ?  '&laquo;' : p.label && index === pagination.links.length-1 ? '&raquo;' : p.label }}
+                    </router-link>
+                  </li>
+                </ul>
+              </nav>
+
+            </div>
           </div>
       </div>
     </section>
+
+<!--    Modal -->
+    <Modal></Modal>
+
   </div>
 </template>
 
@@ -198,14 +116,19 @@
 import $http from '../axios.js'
 import {mapState,mapMutations,mapGetters} from 'vuex'
 import CategorySideBar from "@/components/CategorySideBar";
+import Modal from "@/components/Modal";
 export default {
   name: "Categories",
-  components: {CategorySideBar},
+  components: {Modal, CategorySideBar},
   data() {
     return {
+      filter: {
+        'sub_category_id' : '',
+      },
       goods: [],
       categories: [],
       sub_categories: [],
+      pagination: [],
     }
   },
   computed: {
@@ -213,7 +136,10 @@ export default {
       'get_good',
     ]),
     ...mapGetters([
-        'GET_CART_DATA'
+        'SHOW_CAT_BY_ID',
+        'GET_CART_DATA',
+        'GET_TOKEN',
+        'GET_USER'
     ])
   },
   created() {
@@ -225,16 +151,36 @@ export default {
         'ADD_Good',
         'ADD_ALL_CAT',
         'ADD_TO_CART',
+        'ADD_MODAL_STATUS'
     ]),
+    paginationStart(p){
+      $http.getPagination(p.url).then((res)=>{
+        this.goods = res.data.data.data;
+        this.pagination = res.data.data;
+        console.log(this.pagination)
+      }).catch((err)=>{console.log(err)});
+    },
     addToCart(g){
-      let is_same = this.GET_CART_DATA.filter(el=>{
-        return el.id === g.id;
-      });
-      if(is_same.length === 0){
-        // From Font End
-        this.ADD_TO_CART(g,g.qty = 1);
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
       }else{
-        alert('You already have been add to cart this item!');
+        let is_same = this.GET_CART_DATA.filter(el=>{
+          return el.id === g.id;
+        });
+        if(is_same.length === 0){
+          // From Font End
+          this.ADD_TO_CART(g,g.qty = 1);
+          //  From Back End
+          $http.create('carts',{
+            'user_id' : this.GET_USER.id,
+            'qty' : 1,
+            'price_id' : g.prices[0].id
+          }).then((res)=>{
+            console.log(res);
+          });
+        }else{
+          alert('You already have been add to cart this item!');
+        }
       }
     },
     addGood(c){
@@ -244,6 +190,7 @@ export default {
     getGood(){
       $http.getAll('goods').then((res)=>{
         this.goods = res.data.data.data;
+        this.pagination = res.data.data;
       }).catch((err)=>{console.log(err)});
     },
     getCategories(){

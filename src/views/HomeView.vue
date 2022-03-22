@@ -335,11 +335,15 @@ export default {
   },
   created() {
     this.getCategories();
+    this.getAllCart();
   },
   methods:{
     ...mapMutations([
       'ADD_ALL_CAT'
     ]),
+    getAllCart(){
+      // GET all cart from http
+    },
     getCategories(){
       $http.getAll('categories').then((res)=>{
         this.categories = res.data.data;

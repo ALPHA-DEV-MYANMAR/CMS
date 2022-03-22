@@ -1,10 +1,11 @@
 <template>
   <div>
+
     <section class="mb-4 pt-3">
       <div class="card container">
         <div class="bg-white shadow-sm rounded p-3">
           <div class="row">
-<!--            Item -->
+<!--        Item -->
             <div class="col-xl-5 col-lg-6 mb-4">
               <div class="sticky-top z-3 row gutters-10">
                 <div class="col order-1 order-md-2">
@@ -44,9 +45,9 @@
                 </div>
               </div>
             </div>
-<!--            Item-->
+<!--        Item-->
 
-<!--            Item Detail-->
+<!--        Item Detail-->
             <div class="col-xl-7 col-lg-6">
               <div class="text-start">
                 <h1 class="mb-2 fs-20 fw-600">{{ SHOW_Good.name }}</h1>
@@ -114,39 +115,35 @@
                             type="button"
                             data-type="minus"
                             data-field="quantity"
-                            disabled="disabled"
+                            @click=" quantity === 1 ? quantity : quantity-- "
                           >
                             <i class="las la-minus"></i>
                           </button>
                           <input
                             type="number"
-                            name="quantity"
                             class="col border-0 text-center flex-grow-1 fs-16 input-number"
                             placeholder="1"
-                            value="10"
-                            min="10"
-                            max="20"
-                          />
+                            v-model="quantity"/>
                           <button
                             class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                             type="button"
                             data-type="plus"
-                            data-field="quantity"
-                            disabled="disabled"
+                            @click=" quantity === 10 ? 10 : quantity++ "
                           >
                             <i class="las la-plus"></i>
                           </button>
                         </div>
                         <div class="avialable-amount opacity-60">
-                          (<span id="available-quantity">20</span> available)
+                          <span>{{ SHOW_Good.unit.name }}</span>
+                          (<span id="available-quantity">{{ SHOW_Good.prices[0].quantity }}</span> available)
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <hr />
+                <hr />
 
-                  <div class="row no-gutters pb-3" id="chosen_price_div">
+                <div class="row no-gutters pb-3">
                     <div class="col-sm-2">
                       <div class="opacity-50 my-2">Total Price:</div>
                     </div>
@@ -159,31 +156,23 @@
                     </div>
                   </div>
 
-
                 <div class="mt-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary mr-2 add-to-cart fw-600"
-                    onclick=""
-                  >
+<!--                  Add To Cart-->
+                  <button class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
                     <i class="las la-shopping-bag"></i>
-                    <span class="d-none d-md-inline-block"> Add to cart</span>
+                    <span class="d-none d-md-inline-block">Add to cart</span>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary buy-now fw-600"
-                    onclick=""
-                  >
+<!--                  Add To Cart-->
+
+<!--                  Add Buy-->
+                  <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600">
                     <i class="la la-shopping-cart"></i> Buy Now
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary out-of-stock fw-600 d-none"
-                    disabled=""
-                  >
+                  <button v-else class="btn btn-secondary fw-600 " disabled>
                     <i class="la la-cart-arrow-down"></i> Out of Stock
                   </button>
                 </div>
+<!--                Add Buy-->
 
                 <div class="d-table width-100 mt-3">
                   <div class="d-table-cell">
@@ -254,11 +243,12 @@
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
-<!--            Item Detail-->
+<!--        Item Detail-->
 
-<!--            Top Selling-->
+<!--       Top Selling-->
           </div>
         </div>
       </div>
@@ -365,22 +355,65 @@
       </div>
     </section>
 
+    <!-- Modal -->
+     <Modal></Modal>
+    <!--Modal-->
+
   </div>
 </template>
 
 <script>
 import $http from '../axios.js'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
+import Modal from "@/components/Modal";
 export default {
   name: "Detail",
+  components: {Modal},
+  data() {
+    return {
+      quantity : 1,
+      is_cart: true,
+    }
+  },
   computed: {
     ...mapGetters([
-      'SHOW_Good'
+      'SHOW_Good',
+      'GET_CART_DATA',
+      'GET_USER',
+      'GET_TOKEN'
     ])
   },
   created() {
-    console.log(this.SHOW_Good)
-  }
+  },
+  methods: {
+    ...mapMutations([
+      'ADD_TO_CART',
+      'ADD_MODAL_STATUS'
+    ]),
+    addToCart(g) {
+      if(this.GET_USER.length === 0){
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_CART_DATA.filter(el=>{
+          return el.id === g.id;
+        });
+        if(is_same.length === 0){
+          // From Font End
+          this.ADD_TO_CART(g,g.qty = this.quantity);
+          //From Back End
+          $http.create('carts',{
+            'user_id' : this.GET_USER.id,
+            'qty' : this.quantity,
+            'price_id' : g.prices[0].id
+          }).then((res)=>{
+            console.log(res);
+          });
+        }else{
+          alert('You already have been add to cart this item!');
+        }
+      }
+    }
+  },
 };
 </script>
 
