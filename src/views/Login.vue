@@ -91,6 +91,8 @@ export default {
           this.token = res.data.data.access_token;
           this.ADD_TOKEN(this.token);
           this.ADD_USER(this.user);
+          //Store Token
+          localStorage.setItem('token',this.token);
           this.form.email = "";
           this.form.password = "";
         //  Go Home

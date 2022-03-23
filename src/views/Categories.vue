@@ -3,38 +3,35 @@
     <section class="mb-4 pt-3">
       <div class="container sm-px-0">
           <div class="row">
-
             <div class="col-12 col-md-3">
               <CategorySideBar></CategorySideBar>
             </div>
-
             <div class="col-12 col-md-9">
               <div class="text-start">
-                <div class="row gutters-5 flex-wrap align-items-center">
-                  <div class="col-lg col-10">
+                <div class="row">
+                  <div class="col-12">
                     <h1 class="h6 fw-600 text-body">All Products</h1>
-                    <input type="hidden" name="keyword" value="" />
                   </div>
-                  <div class="col-2 col-lg-auto d-xl-none mb-lg-3 text-right">
-                    <button
-                      type="button"
-                      class="btn btn-icon p-0"
-                      data-toggle="class-toggle"
-                      data-target=".aiz-filter-sidebar"
-                    >
-                      <i class="la la-filter la-2x"></i>
-                    </button>
+                </div>
+<!--                Filter Start-->
+                <div class="row">
+                  <div class="col-6 col-md-3">
+                    <label class="mb-0 opacity-50 fs-12" >Min Price</label>
+                    <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
                   </div>
-                  <!-- Filter-->
-                  <div class="col-6 col-lg-auto mb-3 w-lg-200px">
-                    <label class="mb-0 opacity-50">Sub Category</label>
-                    <select class="custom-select custom-select-sm " aria-label=".form-select-sm example" v-model="filter.sub_category_id">
-                      <option selected value="">Default</option>
-                      <option value="1">One</option>
+                  <div class="col-6 col-md-3">
+                    <label class="mb-0 opacity-50 fs-12">Max Price</label>
+                    <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label class="mb-0 opacity-50 fs-12">Recommend</label>
+                    <select class="form-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
+                      <option value="">Default</option>
+                      <option value="true">Yes</option>
                     </select>
                   </div>
-                  <!--Filter-->
                 </div>
+<!--                Filter End-->
               </div>
               <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
                 <!--Product-->
@@ -89,7 +86,6 @@
                 </div>
 
               </div>
-
               <!--Pagination-->
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -100,7 +96,6 @@
                   </li>
                 </ul>
               </nav>
-
             </div>
           </div>
       </div>
@@ -123,7 +118,9 @@ export default {
   data() {
     return {
       filter: {
-        'sub_category_id' : '',
+        'min_price' : "",
+        'max_price' : "",
+        'recommend' : ""
       },
       goods: [],
       categories: [],
@@ -154,10 +151,10 @@ export default {
         'ADD_MODAL_STATUS'
     ]),
     paginationStart(p){
-      $http.getPagination(p.url).then((res)=>{
+      $http.getPagination(`${p.url}&min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
+          .then((res)=>{
         this.goods = res.data.data.data;
         this.pagination = res.data.data;
-        console.log(this.pagination)
       }).catch((err)=>{console.log(err)});
     },
     addToCart(g){
@@ -188,7 +185,8 @@ export default {
       this.$router.push('/detail');
     },
     getGood(){
-      $http.getAll('goods').then((res)=>{
+      $http.getAll(`goods?min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
+        .then((res)=>{
         this.goods = res.data.data.data;
         this.pagination = res.data.data;
       }).catch((err)=>{console.log(err)});
@@ -203,6 +201,9 @@ export default {
       $http.get(`categories/${c.id}?sub_categories=yes`).then((res)=>{
         this.sub_categories = res.data.data.sub_categories;
       }).catch((err)=>{console.log(err)})
+    },
+    filterStart(){
+      this.getGood();
     }
   }
 };

@@ -9,6 +9,7 @@ import Cart from "@/views/Cart";
 import Categories from "@/views/Categories";
 import Detail from "@/views/Detail";
 import SingleCategory from "@/views/SingleCategory";
+import fourofour from "@/components/fourofour";
 
 const routes = [
   {
@@ -29,22 +30,46 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: profile
+    component: profile,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
   },
   {
     path: '/wishlist',
     name: 'wishlist',
-    component: Wishlist
+    component: Wishlist,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
   },
   {
     path: '/manage-profile',
     name: 'manage-profile',
-    component: ManageProfile
+    component: ManageProfile,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
   },
   {
     path: '/cart',
     name: 'cart',
-    component: Cart
+    component: Cart,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
   },
   {
     path: '/categories',
@@ -60,6 +85,9 @@ const routes = [
     path: '/single-category',
     name: 'single-category',
     component: SingleCategory
+  },
+  {
+    path: '/:pathMatch(.*)*', component: fourofour
   }
 ]
 

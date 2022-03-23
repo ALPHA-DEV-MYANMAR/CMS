@@ -5,8 +5,8 @@ export default {
     getAll(name) {
         return axios.get(`${RESOURCE_NAME}/${name}`);
     },
-    get(id) {
-        return axios.get(`${RESOURCE_NAME}/${id}`);
+    get(name,id) {
+        return axios.get(`${RESOURCE_NAME}/${name}/${id}?sub_categories=yes`);
     },
     create(name,data) {
         return axios.post(`${RESOURCE_NAME}/${name}`, data);

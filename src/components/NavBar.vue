@@ -120,6 +120,7 @@
 <!--    Content-->
 
 <!--    Bottom-->
+
     <!--      Team And Policy-->
     <section class="bg-white border-top mt-auto">
       <div class="container">
@@ -258,13 +259,14 @@
 
 <!--    Offcanvas-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header">
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <h4 class="mb-0 text-black-50">Cart Listing</h4>
-      </div>
-      <div class="offcanvas-body">
-         <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
-              <li v-for="c in GET_CART_DATA" :key="c.id">
+      <div class="card min-vh-100">
+        <div class="card-header">
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <h4 class="mb-0 text-black-50">Cart Listing</h4>
+        </div>
+        <div class="card-body">
+          <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
+            <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">
                       <span class="text-reset d-flex align-items-center flex-grow-1 nav-link" @click="addGood(c)">
                           <img :src="c.photos.length === 0 ? '-': c.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
@@ -285,8 +287,12 @@
                           </button>
                       </span>
                   </span>
-              </li>
-         </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+           <router-link to="/cart" class="btn btn-outline-primary form-control">view Cart</router-link>
+        </div>
       </div>
     </div>
 <!-- Offcanvas-->
@@ -325,6 +331,8 @@ export default {
     logout(){
       this.ADD_USER([]);
       this.ADD_TOKEN([]);
+      localStorage.clear();
+      this.$router.push('/');
     }
   }
 }

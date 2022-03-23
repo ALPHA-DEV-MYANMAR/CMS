@@ -1,43 +1,54 @@
 <template>
   <div>
-    {{ getGoodByCategory }}
+    {{ getGoodByCategory }} {{ getGoodBySubCategory }}
     <section class="mb-4 pt-3">
       <div class="container sm-px-0">
         <div class="row">
-
           <div class="col-12 col-md-3">
             <CategorySideBar></CategorySideBar>
           </div>
-
           <div class="col-12 col-md-9">
             <div class="text-start">
-              <div class="row gutters-5 flex-wrap align-items-center">
-                <div class="col-lg col-10">
+              <div class="row ">
+                <div class="col-12">
                   <h1 class="h6 fw-600 text-body">{{ SHOW_CAT_BY_ID.name }}</h1>
                   <input type="hidden" name="keyword" value="" />
                 </div>
-                <div class="col-2 col-lg-auto d-xl-none mb-lg-3 text-right">
-                  <button
-                      type="button"
-                      class="btn btn-icon p-0"
-                      data-toggle="class-toggle"
-                      data-target=".aiz-filter-sidebar">
-                    <i class="la la-filter la-2x"></i>
-                  </button>
-                </div>
-<!--                Filter-->
-                <div class="col-6 col-lg-auto mb-3 w-lg-200px">
-                  <label class="mb-0 opacity-50">Sub Category</label>
-                  <select class="custom-select custom-select-sm " aria-label=".form-select-sm example">
-                    <option selected>Default</option>
-                    <option value="1">One</option>
+              </div>
+<!--              Filter Start-->
+              <div class="row">
+
+                <div class="col-6 col-md-3 " >
+                  <label class="mb-0 opacity-50 fs-12">Sub Category</label>
+                  <select class="custom-select" v-model="filter.sub_category_id" aria-label=".form-select-sm example" @change="filterStart">
+                    <option selected value="">Default</option>
+                    <option :value="s.id" v-for="s in subCategories" :key="s.id">{{ s.name }}</option>
                   </select>
                 </div>
-<!--                Filter-->
+
+                <div class="col-6 col-md-3 " >
+                  <label class="mb-0 opacity-50 fs-12" >Min Price</label>
+                  <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
+                </div>
+
+                <div class="col-6 col-md-3 " >
+                  <label class="mb-0 opacity-50 fs-12">Max Price</label>
+                  <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
+                </div>
+
+                <div class="col-6 col-md-3  " >
+                  <label class="mb-0 opacity-50 fs-12">Recommend</label>
+                  <select class="custom-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
+                    <option value="">Default</option>
+                    <option value="true">Yes</option>
+                  </select>
+                </div>
+
               </div>
+<!--              Filter End-->
             </div>
             <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
-              <!--                Product-->
+              <!--Product-->
               <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
                 <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                   <div class="position-relative">
@@ -88,7 +99,6 @@
                 </div>
               </div>
             </div>
-
             <!--Pagination-->
             <nav aria-label="Page navigation example">
               <ul class="pagination">
@@ -99,7 +109,6 @@
                 </li>
               </ul>
             </nav>
-
           </div>
         </div>
       </div>
@@ -122,7 +131,14 @@ export default {
   components: {Modal, CategorySideBar},
   data() {
     return {
+      filter: {
+        'sub_category_id' : "",
+        'min_price' : "",
+        'max_price' : "",
+        'recommend' : ""
+      },
       goods : [],
+      subCategories : [],
       pagination: [],
     }
   },
@@ -134,12 +150,17 @@ export default {
         'GET_USER'
     ]),
     getGoodByCategory(){
-      $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}`).then((res)=>{
+      $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}`)
+          .then((res)=>{
         this.goods = res.data.data.data;
         this.pagination = res.data.data;
-        console.log(this.pagination)
       });
     },
+    getGoodBySubCategory(){
+      $http.get('categories',this.SHOW_CAT_BY_ID.id).then((res)=>{
+        this.subCategories = res.data.data.sub_categories;
+      });
+    }
   },
   methods:{
     ...mapMutations([
@@ -148,6 +169,13 @@ export default {
       'ADD_TO_CART',
       'ADD_MODAL_STATUS'
     ]),
+    filterStart(){
+      $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}&sub_category_id=${this.filter.sub_category_id}&min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
+          .then((res)=>{
+        this.goods = res.data.data.data;
+        this.pagination = res.data.data;
+      });
+    },
     addToCart(g){
       if (this.GET_USER.length === 0) {
         this.ADD_MODAL_STATUS(true)
@@ -176,11 +204,10 @@ export default {
       this.$router.push('/detail');
     },
     paginationStart(p){
-      console.log(`${p.url}&category_id=2`)
-      $http.getPagination(`${p.url}&category_id=${this.SHOW_CAT_BY_ID.id}`).then((res)=>{
+      $http.getPagination(`${p.url}&category_id=${this.SHOW_CAT_BY_ID.id}&sub_category_id=${this.filter.sub_category_id}&min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
+          .then((res)=>{
         this.goods = res.data.data.data;
         this.pagination = res.data.data;
-        console.log(this.pagination)
       })
     },
   }

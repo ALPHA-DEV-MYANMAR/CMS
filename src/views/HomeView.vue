@@ -280,7 +280,7 @@
           </section>
           <!--Best-->
 
-          <!--          Category & Brand-->
+          <!--Category & Brand-->
           <section class="mb-4">
             <div class="card container">
               <div class="row gutters-10">
@@ -314,7 +314,7 @@
               </div>
             </div>
           </section>
-          <!--          Category & Brand-->
+          <!--Category & Brand-->
 
         </div>
       </div>
@@ -335,14 +335,38 @@ export default {
   },
   created() {
     this.getCategories();
-    this.getAllCart();
+    this.getOrderStatus();
+    this.getPaymentMethod();
+    this.getDeliveryAcceptTime();
+    this.getDeliveryAgent();
   },
   methods:{
     ...mapMutations([
-      'ADD_ALL_CAT'
+      'ADD_ALL_CAT',
+      'ADD_ORDER_STATUS',
+      'ADD_PAYMENT',
+      'ADD_ACCEPT_TIME',
+      'ADD_DELIVER_AGENT'
     ]),
-    getAllCart(){
-      // GET all cart from http
+    getOrderStatus(){
+      $http.getAll('order_status').then((res)=>{
+        this.ADD_ORDER_STATUS(res.data.data);
+      });
+    },
+    getPaymentMethod(){
+      $http.getAll('payment_methods').then((res)=>{
+        this.ADD_PAYMENT(res.data.data);
+      });
+    },
+    getDeliveryAcceptTime(){
+      $http.getAll('deliver_accept_times').then((res)=>{
+        this.ADD_ACCEPT_TIME(res.data.data.data);
+      });
+    },
+    getDeliveryAgent(){
+      $http.getAll('delivery_agents').then((res)=>{
+        this.ADD_DELIVER_AGENT(res.data.data);
+      });
     },
     getCategories(){
       $http.getAll('categories').then((res)=>{

@@ -75,7 +75,7 @@
                   </div>
                   <div class="col-auto">
                     <small class="opacity-50 my-2">Recommended</small><br />
-                    {{ SHOW_Good.recommended_flag === 0 ? 'Yes' : 'No' }}
+                    {{ SHOW_Good.recommended_flag === 1 ? 'No' : 'Yes'}}
                   </div>
                   <div class="col-auto">
                     <small class="opacity-50 my-2">Total Stock</small><br />
@@ -406,7 +406,7 @@ export default {
             'qty' : this.quantity,
             'price_id' : g.prices[0].id
           }).then((res)=>{
-            console.log(res);
+            //response
           });
         }else{
           alert('You already have been add to cart this item!');
