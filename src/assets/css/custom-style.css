@@ -4,9 +4,9 @@ body {
     font-weight: 400;
 }
 :root {
-    --primary: #e62e04;
-    --hov-primary: #e62e04;
-    --soft-primary: rgba(230, 46, 4, 0.15);
+    --primary: #a7f3d0;
+    --hov-primary: #ecfdf5;
+    --soft-primary: rgba(4, 230, 211, 0.15);
 }
 
 #map {
@@ -76,3 +76,5 @@ body {
     align-items: center;
     width: 100%;
 }
+
+

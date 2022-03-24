@@ -4,19 +4,15 @@
       <div class="container">
         <div class="d-flex align-items-start">
           <side-bar></side-bar>
-
           <div class="aiz-user-panel">
             <div class="aiz-titlebar mt-2 mb-4">
               <div class="row text-start">
                   <h1 class="h3">Dashboard</h1>
               </div>
             </div>
-
             <div class="row gutters-10">
               <div class="col-md-3">
-                <div
-                  class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden"
-                >
+                <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden" >
                   <div class="px-3 pt-3">
                     <div class="h3 fw-700">0</div>
                     <div class="opacity-50">Products</div>
@@ -97,156 +93,153 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
-              <div class="col-md-7">
+              <div class="col-12 col-md-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0 h6">Profile Detail</h5>
+                  </div>
+                  <div class="card-body">
+                    <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start table-borderless" >
+                      <tbody >
+                      <tr>
+                        <td class="footable-first-visible"  style="display: table-cell"  >
+                          Name:
+                        </td>
+                        <td class="footable-last-visible" style="display: table-cell"  >
+                          {{ GET_USER.name }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="footable-first-visible" style="display: table-cell" >
+                          Email:
+                        </td>
+                        <td class="footable-last-visible"  style="display: table-cell" >
+                          {{ GET_USER.email }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="footable-first-visible"  style="display: table-cell">
+                          Gender:
+                        </td>
+                        <td class="footable-last-visible" style="display: table-cell" >
+                          {{ GET_USER.profile.gender.name }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible" style="display: table-cell"  >
+                          Phone:
+                        </td>
+                        <td  class="footable-last-visible"  style="display: table-cell" >
+                          {{ GET_USER.phone_no }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible" style="display: table-cell"  >
+                          Birthday:
+                        </td>
+                        <td  class="footable-last-visible"  style="display: table-cell" >
+                          {{ GET_USER.profile.birthday }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible" style="display: table-cell"  >
+                          Roles:
+                        </td>
+                        <td  class="footable-first-visible" style="display: table-cell">
+                          <span v-for="r in GET_USER.roles" :key="r.id" class="fs-12 text-lowercase bg-info text-light p-1 rounded m-1">
+                              {{ r.name }}
+                          </span>
+<!--                          {{ GET_USER.roles }}-->
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible" style="display: table-cell"  >
+                          User Type
+                        </td>
+                        <td  class="footable-last-visible"  style="display: table-cell" >
+                          {{ GET_USER.user_type }}
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
                 <div class="card">
                   <div class="card-header">
                     <h5 class="mb-0 h6">Orders</h5>
                   </div>
                   <div class="card-body">
                     <table
-                      class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start"
-                      style=""
+                        class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start"
+                        style=""
                     >
                       <tbody >
-                        <tr>
-                          <td
+                      <tr>
+                        <td
                             class="footable-first-visible"
                             style="display: table-cell"
-                          >
-                            Total orders:
-                          </td>
-                          <td
+                        >
+                          Total orders:
+                        </td>
+                        <td
                             class="footable-last-visible"
                             style="display: table-cell"
-                          >
-                            0
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
+                        >
+                          0
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
                             class="footable-first-visible"
                             style="display: table-cell"
-                          >
-                            Pending orders:
-                          </td>
-                          <td
+                        >
+                          Pending orders:
+                        </td>
+                        <td
                             class="footable-last-visible"
                             style="display: table-cell"
-                          >
-                            0
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
+                        >
+                          0
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
                             class="footable-first-visible"
                             style="display: table-cell"
-                          >
-                            Cancelled orders:
-                          </td>
-                          <td
+                        >
+                          Cancelled orders:
+                        </td>
+                        <td
                             class="footable-last-visible"
                             style="display: table-cell"
-                          >
-                            0
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
+                        >
+                          0
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
                             class="footable-first-visible"
                             style="display: table-cell"
-                          >
-                            Successful orders:
-                          </td>
-                          <td
+                        >
+                          Successful orders:
+                        </td>
+                        <td
                             class="footable-last-visible"
                             style="display: table-cell"
-                          >
-                            0
-                          </td>
-                        </tr>
+                        >
+                          0
+                        </td>
+                      </tr>
                       </tbody>
                     </table>
                   </div>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="card p-5 text-center">
-                  <div class="mb-3">
-                    <img
-                      loading="lazy"
-                      src="../assets/img/non_verified.png"
-                      alt=""
-                      width="130"
-                    />
-                  </div>
-                  <a
-                    href="http://localhost/action/CMS/seller/shop/apply_for_verification"
-                    class="btn btn-primary"
-                    >Verify Now</a
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-8">
-                <div class="card">
-                  <div class="card-header">
-                    <h6 class="mb-0">Products</h6>
-                  </div>
-                  <div class="card-body">
-                    <table
-                      class="table aiz-table mb-0 footable footable-2 breakpoint-lg"
-                      style=""
-                    >
-                      <thead>
-                        <tr class="footable-header">
-                          <th style="display: table-cell">Category</th>
-                          <th style="display: table-cell">Product</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="footable-empty">
-                          <td colspan="2">Nothing found</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <br />
-                    <div class="text-center">
-                      <a
-                        href="http://localhost/action/CMS/seller/product/upload"
-                        class="btn btn-primary d-inline-block"
-                        >Add New Product</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card mb-4 p-4 text-center">
-                  <div class="h5 fw-600">Shop</div>
-                  <p>Manage &amp; organize your shop</p>
-                  <a
-                    href="http://localhost/action/CMS/shops"
-                    class="btn btn-soft-primary"
-                    >Go to setting</a
-                  >
-                </div>
-                <div class="card mb-4 p-4 text-center">
-                  <div class="h5 fw-600">Payment</div>
-                  <p>Configure your payment method</p>
-                  <a
-                    href="http://localhost/action/CMS/profile"
-                    class="btn btn-soft-primary"
-                    >Configure Now</a
-                  >
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -255,9 +248,15 @@
 
 <script>
 import SideBar from "@/components/SideBar";
+import {mapGetters} from "vuex";
 export default {
   name: "Profile",
   components: { SideBar },
+  computed: {
+    ...mapGetters([
+        'GET_USER'
+    ])
+  }
 };
 </script>
 
