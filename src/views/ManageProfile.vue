@@ -106,8 +106,8 @@
 </template>
 
 <script>
-import SideBar from "@/components/SideBar";
-import {mapGetters} from "vuex";
+import SideBar from "@/components/SideBar"
+import {mapGetters} from "vuex"
 import $http from '../axios.js'
 export default {
   name: "ManageProfile",
@@ -154,7 +154,9 @@ export default {
   },
   methods:{
     updateStart(){
-      console.log(this.customersForm)
+      $http.update('customers',this.GET_USER.id,this.customersForm).then((res)=>{
+        console.log(res)
+      });
     },
     getState(){
       $http.getAll('states').then((res)=>{  this.states = res.data.data  });

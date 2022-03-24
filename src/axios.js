@@ -11,8 +11,8 @@ export default {
     create(name,data) {
         return axios.post(`${RESOURCE_NAME}/${name}`, data);
     },
-    update(id, data) {
-        return axios.put(`${RESOURCE_NAME}/${id}`, data);
+    update(name , id, data) {
+        return axios.put(`${RESOURCE_NAME}/${name}/${id}`, data);
     },
     delete(id) {
         return axios.delete(`${RESOURCE_NAME}/${id}`);
