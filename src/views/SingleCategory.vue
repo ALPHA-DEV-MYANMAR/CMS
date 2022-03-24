@@ -177,25 +177,23 @@ export default {
       });
     },
     addToCart(g){
-      if (this.GET_USER.length === 0) {
-        this.ADD_MODAL_STATUS(true)
-      }else {
-        let is_same = this.GET_CART_DATA.filter(el => {
-          return el.id === g.id;
-        });
-        if (is_same.length === 0) {
-          // From Font End
-          this.ADD_TO_CART(g, g.qty = 1);
-          //  From Back End
-          $http.create('carts', {
-            'user_id': this.GET_USER.id,
-            'qty': 1,
-            'price_id': g.prices[0].id
-          }).then((res) => {
-            console.log(res);
-          });
-        } else {
-          alert('You already have been add to cart this item!');
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Back End Cart Create
+          $http.create('carts',{
+            'user_id' : this.GET_USER.id,
+            'price_id' : g.prices[0].id,
+            'qty' : 1,
+          }).then((res)=>{
+            // Font End Cart Create
+            this.ADD_TO_CART(res.data.data)
+          }).catch((err)=>{console.log(err)});
+        }
+        else{
+          alert('You already add to cart this items.');
         }
       }
     },

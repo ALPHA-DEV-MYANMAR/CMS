@@ -32,10 +32,7 @@
                         >
                           <div>
                             <div class="carousel-box img-zoom rounded" style="width: 100%; display: inline-block"   >
-                              <img
-                                class="img-fluid ls-is-cached lazyloaded"
-                                :src="SHOW_Good.photos[0].name"
-                              />
+                              <img  class="img-fluid ls-is-cached lazyloaded"  :src="SHOW_Good.photos[0].name" />
                             </div>
                           </div>
                         </div>
@@ -149,9 +146,7 @@
                     </div>
                     <div class="col-sm-10">
                       <div class="product-price">
-                        <strong id="chosen_price" class="h4 fw-600 text-primary"
-                          >$200,000.00</strong
-                        >
+                        <strong id="chosen_price" class="h4 fw-600 text-primary">{{ SHOW_Good.prices[0].price * quantity }}</strong>
                       </div>
                     </div>
                   </div>
@@ -381,7 +376,7 @@ export default {
       'GET_CART_DATA',
       'GET_USER',
       'GET_TOKEN'
-    ])
+    ]),
   },
   created() {
   },
@@ -390,31 +385,28 @@ export default {
       'ADD_TO_CART',
       'ADD_MODAL_STATUS'
     ]),
-    addToCart(g) {
-      if(this.GET_USER.length === 0){
+    addToCart(g){
+      if(this.GET_USER.length === 0) {
         this.ADD_MODAL_STATUS(true);
       }else{
-        let is_same = this.GET_CART_DATA.filter(el=>{
-          return el.id === g.id;
-        });
-        if(is_same.length === 0){
-          // From Font End
-          this.ADD_TO_CART(g,g.qty = this.quantity);
-          //From Back End
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Back End Cart Create
           $http.create('carts',{
             'user_id' : this.GET_USER.id,
+            'price_id' : g.prices[0].id,
             'qty' : this.quantity,
-            'price_id' : g.prices[0].id
           }).then((res)=>{
-            //response
-          });
-        }else{
-          alert('You already have been add to cart this item!');
+            // Font End Cart Create
+            this.ADD_TO_CART(res.data.data)
+          }).catch((err)=>{console.log(err)});
+        }
+        else{
+          alert('You already add to cart this items.');
         }
       }
-    }
+    },
   },
 };
 </script>
 
-<style scoped></style>

@@ -178,7 +178,8 @@ export default {
       'ADD_ORDER_STATUS',
       'ADD_PAYMENT',
       'ADD_ACCEPT_TIME',
-      'ADD_DELIVER_AGENT'
+      'ADD_DELIVER_AGENT',
+      'ADD_TO_CART_FROM_DB'
     ]),
     getOrderStatus(){
       $http.getAll('order_status').then((res)=>{
@@ -207,15 +208,26 @@ export default {
           this.token = res.data.data.access_token;
           this.ADD_TOKEN(this.token);
           this.ADD_USER(this.user);
-          //Store Token
-          localStorage.setItem('token',this.token);
+          localStorage.setItem('user_id',res.data.data.data.id);
+          localStorage.setItem('token',res.data.data.access_token);
           this.form.email = "";
           this.form.password = "";
           this.ADD_MODAL_STATUS(false);
+          this.getCartFromDB();
+          this.getFavFromDB();
+          this.getUser();
         }else{
           alert(res.data.message)
         }
       });
+    },
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+          .then((res)=>{
+            this.User = res.data.data;
+            this.ADD_TOKEN(localStorage.getItem('token'));
+            this.ADD_USER(this.User);
+          });
     },
     orderStart(){
       this.orderForm.user_id = this.GET_USER.id;
@@ -227,13 +239,28 @@ export default {
         console.log(err);
         alert('something was wrong')
       });
-
     },
     close(){
       this.ADD_MODAL_STATUS(false);
       this.ADD_MODAL_TYPE('');
       this.form.email = '';
       this.form.password = '';
+    },
+    getCartFromDB(){
+      $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
+      .then((res)=>{
+        let cart = res.data.data;
+        //Add To Cart To Vuex
+        this.ADD_TO_CART_FROM_DB(cart);
+      });
+    },
+    getFavFromDB(){
+      $http.getAll('favorites?user_id='+localStorage.getItem('user_id'))
+          .then((res)=>{
+            let fav = res.data.data;
+            //Add To Cart To Vuex
+            this.ADD_FAVOURITES_DB(fav);
+          });
     }
   }
 }

@@ -82,26 +82,54 @@ export default {
   methods:{
     ...mapMutations([
         'ADD_TOKEN',
-        'ADD_USER'
+        'ADD_USER',
+        'ADD_TO_CART',
+        'ADD_TO_CART_FROM_DB',
+        'ADD_FAVOURITES_DB'
     ]),
     loginUser(){
-      $http.create('login',this.form).then((res)=>{
-        if(res.data.message === 'success' ) {
+      $http.create('login',this.form)
+      .then((res)=>{
+        if(res.data.message === 'success') {
           this.user = res.data.data.data;
           this.token = res.data.data.access_token;
+          localStorage.setItem('user_id',res.data.data.data.id);
+          localStorage.setItem('token',res.data.data.access_token);
           this.ADD_TOKEN(this.token);
           this.ADD_USER(this.user);
-          //Store Token
-          localStorage.setItem('token',this.token);
-          this.form.email = "";
-          this.form.password = "";
-        //  Go Home
-          this.$router.push('/')
+          this.getUser();
+          this.$router.push('/');
         }else{
-          alert(res.data.message)
+          alert(res.data.message);
         }
       });
-    }
+    },
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+      .then((res)=>{
+        this.User = res.data.data;
+        this.ADD_TOKEN(localStorage.getItem('token'));
+        this.ADD_USER(this.User);
+        this.getCartFromDB();
+        this.getFavFromDB();
+      });
+    },
+    getFavFromDB(){
+      $http.getAll('favorites?user_id='+localStorage.getItem('user_id'))
+          .then((res)=>{
+            let fav = res.data.data;
+            //Add To Cart To Vuex
+            this.ADD_FAVOURITES_DB(fav);
+          });
+    },
+    getCartFromDB(){
+      $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
+      .then((res)=>{
+        let cart = res.data.data;
+        //Add To Cart To Vuex
+        this.ADD_TO_CART_FROM_DB(cart);
+      });
+    },
   }
 }
 </script>

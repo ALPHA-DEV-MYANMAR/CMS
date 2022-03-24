@@ -107,15 +107,15 @@
                           Name:
                         </td>
                         <td class="footable-last-visible" style="display: table-cell"  >
-                          {{ GET_USER.name }}
+                          {{ User.name }}
                         </td>
                       </tr>
                       <tr>
-                        <td class="footable-first-visible" style="display: table-cell" >
+                        <td class="footable-first-visible"  style="display: table-cell"  >
                           Email:
                         </td>
-                        <td class="footable-last-visible"  style="display: table-cell" >
-                          {{ GET_USER.email }}
+                        <td class="footable-last-visible" style="display: table-cell"  >
+                          {{ User.email }}
                         </td>
                       </tr>
                       <tr>
@@ -123,7 +123,7 @@
                           Gender:
                         </td>
                         <td class="footable-last-visible" style="display: table-cell" >
-                          {{ GET_USER.profile.gender.name }}
+                          {{ User.gender.name }}
                         </td>
                       </tr>
                       <tr>
@@ -131,7 +131,7 @@
                           Phone:
                         </td>
                         <td  class="footable-last-visible"  style="display: table-cell" >
-                          {{ GET_USER.phone_no }}
+                          {{ User.phone_no }}
                         </td>
                       </tr>
                       <tr>
@@ -139,26 +139,7 @@
                           Birthday:
                         </td>
                         <td  class="footable-last-visible"  style="display: table-cell" >
-                          {{ GET_USER.profile.birthday }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td  class="footable-first-visible" style="display: table-cell"  >
-                          Roles:
-                        </td>
-                        <td  class="footable-first-visible" style="display: table-cell">
-                          <span v-for="r in GET_USER.roles" :key="r.id" class="fs-12 text-lowercase bg-info text-light p-1 rounded m-1">
-                              {{ r.name }}
-                          </span>
-<!--                          {{ GET_USER.roles }}-->
-                        </td>
-                      </tr>
-                      <tr>
-                        <td  class="footable-first-visible" style="display: table-cell"  >
-                          User Type
-                        </td>
-                        <td  class="footable-last-visible"  style="display: table-cell" >
-                          {{ GET_USER.user_type }}
+                          {{ User.birthday }}
                         </td>
                       </tr>
                       </tbody>
@@ -248,14 +229,39 @@
 
 <script>
 import SideBar from "@/components/SideBar";
-import {mapGetters} from "vuex";
+import  {mapGetters,mapMutations} from "vuex";
+import $http from '../axios.js';
 export default {
   name: "Profile",
+  data() {
+    return {
+      User : {}
+    }
+  },
   components: { SideBar },
   computed: {
     ...mapGetters([
-        'GET_USER'
+        'GET_USER',
+        'GET_TOKEN'
     ])
+  },
+  created() {
+      this.getUser();
+      this.User = this.GET_USER;
+  },
+  methods:{
+    ...mapMutations([
+        'ADD_USER',
+        'ADD_TOKEN'
+    ]),
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+          .then((res)=>{
+            this.User = res.data.data;
+            this.ADD_TOKEN(localStorage.getItem('token'));
+            this.ADD_USER(this.User);
+          });
+    }
   }
 };
 </script>

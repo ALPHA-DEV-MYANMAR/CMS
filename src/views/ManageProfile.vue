@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ if_user_null }}
     <section class="py-5">
       <div class="container">
         <div class="d-flex align-items-start">
@@ -107,13 +106,14 @@
 
 <script>
 import SideBar from "@/components/SideBar"
-import {mapGetters} from "vuex"
+import {mapGetters, mapMutations} from "vuex"
 import $http from '../axios.js'
 export default {
   name: "ManageProfile",
   data() {
     return {
       states: [],
+      User: {},
       customersForm: {
         'name' : '',
         'email' : '',
@@ -130,33 +130,63 @@ export default {
     ...mapGetters([
         'GET_USER'
     ]),
-    if_user_null(){
-      if(this.GET_USER.length === 0){
-       this.$router.push('/');
-      }else{
-        return false;
-      }
-    }
   },
   components: { SideBar },
   created() {
     this.getState();
-    this.customersForm = {
-          'name' : this.GET_USER.name,
-          'email' : this.GET_USER.email,
-          'gender_id' : this.GET_USER.gender_id,//1=male , 2=female
-          'birthday' : this.GET_USER.profile.birthday,
-          'postal_code' : this.GET_USER.address === null ? '' : this.GET_USER.address.postal_code,
-          'state_id' : this.GET_USER.address === null ? '' : this.GET_USER.address.state_id,
-          'address' : this.GET_USER.address === null ? '' : this.GET_USER.address.address,
-          'phone_no' : this.GET_USER.phone_no,
-    }
+    this.getUser();
+    this.getStoreUser();
   },
   methods:{
+    ...mapMutations([
+      'ADD_TOKEN',
+      'ADD_USER'
+    ]),
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+          .then((res)=>{
+            this.User = res.data.data;
+            this.ADD_TOKEN(localStorage.getItem('token'));
+            this.ADD_USER(this.User);
+            this.customersForm = {
+                  'name' : this.User.name,
+                  'email' : this.User.email,
+                  'gender_id' : this.User.gender_id,//1=male , 2=female
+                  'birthday' : this.User.birthday,
+                  'postal_code' : this.User.address === null ? '' : this.User.address.postal_code,
+                  'state_id' : this.User.address === null ? '' : this.User.address.state_id,
+                  'address' : this.User.address === null ? '' : this.User.address.address,
+                  'phone_no' : this.User.address === null ? '' : this.User.phone_no,
+            }
+          });
+    },
     updateStart(){
       $http.update('customers',this.GET_USER.id,this.customersForm).then((res)=>{
         console.log(res)
+        if(res.data.message === "Customer successfully updated") {
+          this.user = res.data.data.data;
+          this.token = res.data.data.access_token;
+          this.ADD_TOKEN(this.token);
+          this.ADD_USER(this.user);
+          //Store Token
+          localStorage.setItem('token',this.token);
+          this.getStoreUser();
+        }else{
+          alert(res.data.message)
+        }
       });
+    },
+    getStoreUser(){
+      this.customersForm = {
+        'name' : this.GET_USER.name,
+        'email' : this.GET_USER.email,
+        'gender_id' : this.GET_USER.gender_id,//1=male , 2=female
+        'birthday' : this.GET_USER.birthday,
+        'postal_code' : this.GET_USER.address === null ? '' : this.GET_USER.address.postal_code,
+        'state_id' : this.GET_USER.address === null ? '' : this.GET_USER.address.state_id,
+        'address' :  this.GET_USER.address === null ? '' :this.GET_USER.address.address,
+        'phone_no' : this.GET_USER.address === null ? '' : this.GET_USER.phone_no,
+      }
     },
     getState(){
       $http.getAll('states').then((res)=>{  this.states = res.data.data  });

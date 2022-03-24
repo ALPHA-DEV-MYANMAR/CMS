@@ -55,13 +55,13 @@
             </div>
 <!--            Search-->
 
-              <div class="d-flex align-items-center nav-link">
+              <router-link to="/wishlist" class="d-flex align-items-center nav-link">
                 <i class="la la-heart-o la-2x opacity-80 text-black-50" style="font-size: 25px"></i>
                 <span class="flex-grow-1">
-                    <span class="badge badge-primary badge-inline badge-pill" >0</span  >
+                    <span class="badge badge-primary badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
                     <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
                 </span>
-              </div>
+              </router-link>
 
               <div class="d-flex align-items-center nav-link c-pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <i class="la la-shopping-cart la-2x opacity-80 text-black-50" style="font-size: 25px;"></i>
@@ -269,16 +269,16 @@
             <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">
                       <span class="text-reset d-flex align-items-center flex-grow-1 nav-link" @click="addGood(c)">
-                          <img :src="c.photos.length === 0 ? '-': c.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
+                          <img :src="c.price.good.photos.length === 0 ? '-': c.price.good.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
                           <span class="minw-0 pl-2 flex-grow-1 text-start">
                               <span class="fw-600 mb-1 text-truncate-2 text-black-50" style="font-size: 15px;">
-                                 {{ c.name }}
+                                 {{ c.price.good.name }}
                               </span>
                              <span class="text-black-50" style="font-size: 12px;">
-                                 {{ c.category.name }}
+                                 {{ c.price.good.category.name }}
                               </span> <br>
                               <span class="text-black-50" style="font-size: 12px;">{{ c.qty }}x</span>
-                              <span class="text-black-50" style="font-size: 12px;">{{ c.prices[0].price }}</span>
+                              <span class="text-black-50" style="font-size: 12px;">{{ c.price.price }}</span>
                           </span>
                       </span>
                       <span class="">
@@ -291,7 +291,7 @@
           </ul>
         </div>
         <div class="card-footer">
-           <router-link to="/cart" class="btn btn-outline-primary form-control">view Cart</router-link>
+           <router-link to="/cart" class="btn btn-outline-primary form-control">View Cart</router-link>
         </div>
       </div>
     </div>
@@ -310,9 +310,14 @@ export default {
         'GET_CART_COUNT',
         'GET_CART_DATA',
         'GET_USER',
-        'GET_TOKEN'
+        'GET_TOKEN',
+        'GET_FAVOURITES',
+        'GET_FAVOURITES_TOTAL'
     ]),
   },
+  created() {
+    this.getUser();
+    },
   methods:{
     ...mapMutations([
         'ADD_TO_CART',
@@ -321,11 +326,23 @@ export default {
         'ADD_USER',
         'ADD_TOKEN'
     ]),
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+          .then((res)=>{
+            this.User = res.data.data;
+            this.ADD_TOKEN(localStorage.getItem('token'));
+            this.ADD_USER(this.User);
+          });
+    },
     DelCartData(c){
-      this.DEL_CART_DATA(c);
+      //Delete From Back-End
+      $http.delete('carts',c.id).then((res)=>{
+        //Delete From Font-End
+        this.DEL_CART_DATA(c);
+      });
     },
     addGood(c){
-      this.ADD_Good(c);
+      this.ADD_Good(c.price.good);
       this.$router.push('/detail');
     },
     logout(){

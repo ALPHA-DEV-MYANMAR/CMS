@@ -29,16 +29,16 @@
                   <tbody>
                   <tr v-for="c in GET_CART_DATA" :key="c.id">
                     <td>
-                      <img :src="c.photos.length === 0 ? '' : c.photos[0].name "  class="img-fit size-60px rounded" alt="">
+                      <img :src="c.price.good.photos.length === 0 ? '' : c.price.good.photos[0].name "  class="img-fit size-60px rounded" alt="">
                     </td>
                     <td>
-                      {{ c.name }}
+                      {{ c.price.good.name }}
                     </td>
                     <td>
-                      {{ c.category.length === 0 ? 'No category' : c.category.name }}
+                      {{ c.price.good.category.length === 0 ? 'No category' : c.price.good.category.name }}
                     </td>
                     <td>
-                      {{ c.description }}
+                      {{ c.price.good.description }}
                     </td>
                     <td class="align-items-center">
                       <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === 1 ? c.qty : c.qty--,CartUpdate(c)]" >
@@ -55,10 +55,10 @@
                       </button>
                     </td>
                     <td class="align-items-center">
-                      {{ c.prices[0].price }}
+                      {{ c.price.good.prices[0].price }}
                     </td>
                     <td class="align-items-center">
-                      {{ c.prices[0].price * c.qty }}
+                      {{ c.price.good.prices[0].price * c.qty }}
                     </td>
                     <td>
                       <button class="btn btn-outline-primary btn-sm" @click="DelCartData(c)">
@@ -104,6 +104,9 @@ export default {
       total : ""
     }
   },
+  created(){
+    this.getCartFromDB();
+  },
   computed:{
     ...mapGetters([
       'GET_CART_COUNT',
@@ -136,21 +139,33 @@ export default {
       }
     },
     DelCartData(c){
-      this.DEL_CART_DATA(c);
+      //Delete From Back-End
+      $http.delete('carts',c.id).then((res)=>{
+        //Delete From Font-End
+        this.DEL_CART_DATA(c);
+      });
     },
     CartUpdate(c){
       if(this.GET_USER.length === 0){
         this.ADD_MODAL_STATUS(true);
       }else {
-        $http.create('carts',{
-          'user_id' : this.GET_USER.id,
+        $http.update('carts',c.id,{
+          'user_id' : c.user_id,
+          'price_id' : c.price_id,
           'qty' : c.qty,
-          'price_id' : c.prices[0].id
         }).then((res)=>{
-          console.log(res);
+          // action
         });
       }
-    }
+    },
+    getCartFromDB(){
+      $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
+          .then((res)=>{
+            let cart = res.data.data;
+            //Add To Cart To Vuex
+            this.ADD_TO_CART_FROM_DB(cart);
+          });
+    },
   },
 };
 </script>

@@ -8,6 +8,7 @@ export default createStore({
     get_all_categories: [],
     get_good_by_category_id: [],
     get_cart:  [] ,
+    get_favourites: [],
     get_token: "",
     get_user: [],
     get_order_status: [],
@@ -54,6 +55,12 @@ export default createStore({
     },
     GET_MODAL_TYPE: (state) => {
       return state.modal_type;
+    },
+    GET_FAVOURITES: (state) => {
+      return state.get_favourites;
+    },
+    GET_FAVOURITES_TOTAL: (state) => {
+      return state.get_favourites.length;
     }
   },
   mutations: {
@@ -69,6 +76,9 @@ export default createStore({
     ADD_DELIVER_AGENT: (state,list) => {
       state.get_delivery_agent = list;
     },
+    ADD_FAVOURITES_DB: (state,list) => {
+      state.get_favourites = list;
+    },
     ADD_Good: (state,good) => {
       state.get_good = good;
     },
@@ -80,6 +90,9 @@ export default createStore({
     },
     ADD_TO_CART: (state,good) =>{
       state.get_cart.push(good);
+    },
+    ADD_TO_CART_FROM_DB: (state,good) => {
+      state.get_cart = good;
     },
     DEL_CART_DATA: (state,good) =>{
       state.get_cart = state.get_cart.filter((el)=>{

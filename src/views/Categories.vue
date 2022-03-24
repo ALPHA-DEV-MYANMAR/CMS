@@ -78,7 +78,7 @@
                         ><i class="las la-star"></i><i class="las la-star"></i
                         ><i class="las la-star"></i>
                       </div>
-                      <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px" @click="addGood(g)"  >
+                      <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
                         {{ g.name }}
                       </h3>
                     </div>
@@ -161,22 +161,20 @@ export default {
       if(this.GET_USER.length === 0) {
         this.ADD_MODAL_STATUS(true);
       }else{
-        let is_same = this.GET_CART_DATA.filter(el=>{
-          return el.id === g.id;
-        });
-        if(is_same.length === 0){
-          // From Font End
-          this.ADD_TO_CART(g,g.qty = 1);
-          //  From Back End
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Back End Cart Create
           $http.create('carts',{
             'user_id' : this.GET_USER.id,
+            'price_id' : g.prices[0].id,
             'qty' : 1,
-            'price_id' : g.prices[0].id
           }).then((res)=>{
-            console.log(res);
-          });
-        }else{
-          alert('You already have been add to cart this item!');
+            // Font End Cart Create
+            this.ADD_TO_CART(res.data.data)
+          }).catch((err)=>{console.log(err)});
+        }
+        else{
+          alert('You already add to cart this items.');
         }
       }
     },

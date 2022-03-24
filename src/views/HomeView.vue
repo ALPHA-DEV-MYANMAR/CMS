@@ -339,6 +339,9 @@ export default {
     this.getPaymentMethod();
     this.getDeliveryAcceptTime();
     this.getDeliveryAgent();
+    this.getCartFromDB();
+    this.getUser();
+    this.getFavFromDB();
   },
   methods:{
     ...mapMutations([
@@ -346,8 +349,20 @@ export default {
       'ADD_ORDER_STATUS',
       'ADD_PAYMENT',
       'ADD_ACCEPT_TIME',
-      'ADD_DELIVER_AGENT'
+      'ADD_DELIVER_AGENT',
+      'ADD_TOKEN',
+      'ADD_USER',
+      'ADD_TO_CART_FROM_DB',
+      'ADD_FAVOURITES_DB'
     ]),
+    getUser(){
+      $http.get('customers',localStorage.getItem('user_id'))
+          .then((res)=>{
+            this.User = res.data.data;
+            this.ADD_TOKEN(localStorage.getItem('token'));
+            this.ADD_USER(this.User);
+          });
+    },
     getOrderStatus(){
       $http.getAll('order_status').then((res)=>{
         this.ADD_ORDER_STATUS(res.data.data);
@@ -378,6 +393,22 @@ export default {
       $http.get(`categories/${c.id}?sub_categories=yes`).then((res)=>{
         this.sub_categories = res.data.data.sub_categories;
       }).catch((err)=>{console.log(err)})
+    },
+    getCartFromDB(){
+      $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
+          .then((res)=>{
+            let cart = res.data.data;
+            //Add To Cart To Vuex
+            this.ADD_TO_CART_FROM_DB(cart);
+          });
+    },
+    getFavFromDB(){
+      $http.getAll('favorites?user_id='+localStorage.getItem('user_id'))
+          .then((res)=>{
+            let fav = res.data.data;
+            //Add To Cart To Vuex
+            this.ADD_FAVOURITES_DB(fav);
+          });
     }
   }
 };
