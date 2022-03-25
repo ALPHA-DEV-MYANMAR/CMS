@@ -63,6 +63,7 @@
 import SideBar from "@/components/SideBar";
 import { mapGetters,mapMutations } from "vuex";
 import $http from "@/axios";
+import Swal from "sweetalert2";
 export default {
   name: "Wishlist",
   components: {SideBar},
@@ -99,7 +100,13 @@ export default {
               this.ADD_TO_CART(res.data.data)
             }).catch((err)=>{console.log(err)});
           }else{
-            alert('You already add to cart this items.');
+            Swal.fire({
+              position: 'center',
+              icon: 'warning',
+              title: 'You already add to cart this items.',
+              showConfirmButton: false,
+              timer: 1500
+            });
           }
       }
     },

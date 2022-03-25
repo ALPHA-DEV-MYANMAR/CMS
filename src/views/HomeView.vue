@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
     <div class="home-banner-area mb-4 pt-3">
       <div class="container">
         <div class="row">
@@ -16,7 +17,14 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" v-if="spinner">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center align-items-center p-5">
+                    <Spinner></Spinner>
+                  </div>
+                </div>
+              </div>
+              <div class="row " v-else>
                 <div class="col-6 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
                   <div class="card rounded-lg shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
                     <div class="card-body">
@@ -36,7 +44,7 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
+                <div class="d-none d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Lasted Products</span>
                   </div>
@@ -45,7 +53,14 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" v-if="spinner">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center align-items-center p-5">
+                    <Spinner></Spinner>
+                  </div>
+                </div>
+              </div>
+              <div class="row" v-else>
                 <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
@@ -116,7 +131,14 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" v-if="spinner">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center align-items-center p-5">
+                    <Spinner></Spinner>
+                  </div>
+                </div>
+              </div>
+              <div class="row" v-else>
                 <div class="col-6 col-md-3" v-for="g in recommend_goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
@@ -173,16 +195,22 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import $http from '../axios.js'
 import { mapGetters , mapState , mapMutations } from 'vuex'
+import Spinner from "@/components/Spinner";
+import Swal from "sweetalert2";
+
 export default {
   name: "HomeView",
+  components: {Spinner},
   data() {
     return {
+      spinner : true,
       categories : [],
       total_category: "",
       sub_categories : [],
@@ -231,17 +259,20 @@ export default {
         this.total_category = res.data.data.length;
         this.categories = res.data.data.splice(0,9);
         this.ADD_ALL_CAT(this.categories);
+        this.spinner = false;
       }).catch((err)=>{console.log(err)});
     },
     getGood(){
       $http.getAll(`goods?sorting=desc`)
           .then((res)=>{
             this.goods = res.data.data.data.splice(0,8);
+            this.spinner = false;
           }).catch((err)=>{console.log(err)});
     },
     getRecommendGood(){
       $http.getAll(`goods?recommended=true`)
           .then((res)=>{
+            this.spinner = false;
             this.recommend_goods = res.data.data.data.splice(0,8);
           }).catch((err)=>{console.log(err)});
     },
@@ -262,7 +293,13 @@ export default {
           }).catch((err)=>{console.log(err)});
         }
         else{
-          alert('You already add to cart this items.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'You already add to cart this items.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     },
@@ -285,13 +322,20 @@ export default {
             this.ADD_FAVOURITES(res.data.data);
           }).catch((err)=>{console.log(err)});
         }else{
-          alert('You already add to cart this items.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'You already add to wishlist this items.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     },
     getSubCategories(c) {
       $http.get(`categories/${c.id}?sub_categories=yes`).then((res)=>{
         this.sub_categories = res.data.data.sub_categories;
+        this.spinner = false;
       }).catch((err)=>{console.log(err)})
     },
     action(c){

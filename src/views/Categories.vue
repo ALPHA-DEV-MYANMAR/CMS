@@ -34,9 +34,16 @@
                 </div>
 <!--                Filter End-->
               </div>
-              <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
+              <div class="row" v-if="spinner">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center align-items-center p-5">
+                    <Spinner></Spinner>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
                 <!--Product-->
-                <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
+                <div class=" col-6 col-md-3" v-for="g in goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
                         <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
@@ -113,9 +120,11 @@ import $http from '../axios.js'
 import {mapState,mapMutations,mapGetters} from 'vuex'
 import CategorySideBar from "@/components/CategorySideBar";
 import Modal from "@/components/Modal";
+import Spinner from "@/components/Spinner";
+import Swal from "sweetalert2";
 export default {
   name: "Categories",
-  components: {Modal, CategorySideBar},
+  components: {Spinner, Modal, CategorySideBar},
   data() {
     return {
       filter: {
@@ -123,6 +132,7 @@ export default {
         'max_price' : "",
         'recommend' : ""
       },
+      spinner: true,
       goods: [],
       categories: [],
       sub_categories: [],
@@ -178,7 +188,13 @@ export default {
           }).catch((err)=>{console.log(err)});
         }
         else{
-          alert('You already add to cart this items.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'You already add to cart this items.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     },
@@ -197,7 +213,13 @@ export default {
             this.ADD_FAVOURITES(res.data.data);
           }).catch((err)=>{console.log(err)});
         }else{
-          alert('You already add to cart this items.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'You already add to wishlist this items.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     },
@@ -210,6 +232,7 @@ export default {
         .then((res)=>{
         this.goods = res.data.data.data;
         this.pagination = res.data.data;
+        this.spinner = false;
       }).catch((err)=>{console.log(err)});
     },
     getCategories(){

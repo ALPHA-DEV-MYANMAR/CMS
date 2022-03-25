@@ -268,7 +268,7 @@
     </section>
 
     <!-- Modal -->
-     <Modal></Modal>
+    <Modal></Modal>
     <!--Modal-->
 
   </div>

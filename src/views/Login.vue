@@ -61,6 +61,7 @@
 <script>
 import $http from '../axios.js'
 import { mapGetters,mapMutations,mapState } from 'vuex'
+import Swal from "sweetalert2";
 export default {
   name: "Login",
   data() {
@@ -99,8 +100,20 @@ export default {
           this.ADD_USER(this.user);
           this.getUser();
           this.$router.push('/');
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Successfully Login',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }else{
-          alert(res.data.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: res.data.message,
+          });
+          this.form.password = "";
         }
       });
     },

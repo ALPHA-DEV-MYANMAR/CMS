@@ -66,6 +66,7 @@
 <script>
   import { mapMutations,mapGetters } from "vuex"
   import $http from '../axios.js'
+  import Swal from "sweetalert2";
   export default {
     computed: {
       ...mapGetters([
@@ -80,12 +81,24 @@
           'DEL_ALL_CART_DATA'
       ]),
       logout(){
-        this.ADD_USER([]);
-        this.ADD_TOKEN([]);
-        this.DEL_ALL_FAVOURITES_DATA();
-        this.DEL_ALL_CART_DATA();
-        localStorage.clear();
-        this.$router.push('/');
+        Swal.fire({
+          title: 'Do you want to logout?',
+          icon: 'warning',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            Swal.fire('Successfully Logout!', '', 'success')
+            this.ADD_USER([]);
+            this.ADD_TOKEN([]);
+            this.DEL_ALL_FAVOURITES_DATA();
+            this.DEL_ALL_CART_DATA();
+            localStorage.clear();
+            this.$router.push('/');
+          }
+        });
       }
     }
   }
