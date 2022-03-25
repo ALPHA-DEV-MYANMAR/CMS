@@ -12,7 +12,7 @@
             </div>
             <div class="row gutters-10">
               <div class="col-md-3">
-                <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden" >
+                <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden table-borderless" >
                   <div class="px-3 pt-3">
                     <div class="h3 fw-700">0</div>
                     <div class="opacity-50">Products</div>
@@ -153,10 +153,7 @@
                     <h5 class="mb-0 h6">Orders</h5>
                   </div>
                   <div class="card-body">
-                    <table
-                        class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start"
-                        style=""
-                    >
+                    <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start" style="" >
                       <tbody >
                       <tr>
                         <td
@@ -212,6 +209,51 @@
                             style="display: table-cell"
                         >
                           0
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0 h6">Location</h5>
+                  </div>
+                  <div class="card-body">
+                    <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start table-borderless"  >
+                      <tbody >
+                      <tr>
+                        <td  class="footable-first-visible"
+                            style="display: table-cell" >
+                          Address:
+                        </td>
+                        <td  class="footable-last-visible"
+                            style="display: table-cell"  >
+                          {{ User.address.address }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible"
+                             style="display: table-cell" >
+                          Postal Code:
+                        </td>
+                        <td  class="footable-last-visible"
+                             style="display: table-cell"  >
+                          {{ User.address.postal_code }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  class="footable-first-visible"
+                             style="display: table-cell" >
+                          State:
+                        </td>
+                        <td  class="footable-last-visible"
+                             style="display: table-cell"  >
+                          {{ User.address.state.name }}
                         </td>
                       </tr>
                       </tbody>

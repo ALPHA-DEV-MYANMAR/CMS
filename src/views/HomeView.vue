@@ -2,320 +2,174 @@
   <div class="home">
     <div class="home-banner-area mb-4 pt-3">
       <div class="container">
-        <div class="row gutters-10 position-relative">
+        <div class="row">
           <!--Category-->
-          <div class="col-lg-3 position-static d-none d-lg-block">
-            <div class="card">
-              <div class="cart-body">
-                <div
-                  class="p-3 bg-soft-primary d-none d-lg-block rounded-top all-category position-relative text-start"
-                >
-                  <span class="fw-600 fs-16 mr-3">Categories</span>
-                  <router-link to="/categories" class="text-reset">
-                    <span
-                      class="d-none d-lg-inline-block"
-                      style="font-size: 15px"
-                      >See All</span
-                    >
-                  </router-link>
-                </div>
-                <ul  class="list-unstyled categories no-scrollbar py-2 mb-0 text-start"  >
-
-                  <li class="category-nav-element c-pointer hov-text-dark" data-id="1" v-for="c in categories" :key="c.id" >
-                      <span @click="getSubCategories(c)" class="nav-link text-black-50 hov-text-dark" style="font-size: 15px">{{ c.name }}</span>
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!--Category-->
-
-          <!--Category list-->
-          <div class="col-lg-9">
-            <div
-              class="aiz-carousel dots-inside-bottom mobile-img-auto-height"
-              data-arrows="true"
-              data-dots="true"
-              data-autoplay="true"
-            ></div>
-            <ul class="list-unstyled mb-0 row gutters-5">
-
-              <li class="card col-4 col-md-4 m-3 p-2" v-for="s in sub_categories" :key="s.id" >
-                  <div class="text-center text-black-50 ">
-                    {{ s.name }}
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
+                  <div class="h5 fw-700 mb-0">
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">All Categories</span>
                   </div>
-              </li>
-
-            </ul>
-          </div>
-          <!--Category list-->
-
-          <!--Best-->
-          <section class="mb-4">
-            <div class="card container">
-              <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
-                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between">
-                  <h3 class="h5 fw-700 mb-0">
-                    <span
-                      class="border-bottom border-primary border-width-2 pb-3 d-inline-block"
-                      >Best Selling</span
-                    >
-                  </h3>
                   <div>
-                    <router-link
-                        to=""
-                        class="ml-auto mr-0 btn btn-primary btn-sm shadow-md"
-                    >Top 20</router-link >
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">Total {{ total_category }}</router-link>
                   </div>
                 </div>
-                <div
-                  class="aiz-carousel gutters-10 half-outside-arrow slick-initialized slick-slider"
-                  data-items="6"
-                  data-xl-items="5"
-                  data-lg-items="4"
-                  data-md-items="3"
-                  data-sm-items="2"
-                  data-xs-items="2"
-                  data-arrows="true"
-                  data-infinite="true"
-                >
-                  <div class="slick-list draggable">
-                    <div class="slick-track"  >
-
-                      <div class="row">
-                        <!--Product-->
-                        <div class="col-12 col-md-3">
-                          <div
-                              class="slick-slide slick-current slick-active"
-                              data-slick-index="0"
-                              aria-hidden="false"
-                              style="width: 217px"
-                          >
-                            <div>
-                              <div
-                                  class="carousel-box"
-                                  style="width: 100%; display: inline-block"
-                              >
-                                <div
-                                    class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"
-                                >
-                                  <div class="position-relative">
-                                    <router-link
-                                        to=""
-                                        class="d-block"
-                                        tabindex="0"
-                                    >
-                                      <img
-                                          class="img-fit mx-auto h-140px h-md-210px lazyloaded"
-                                          src="../assets/uploads/all/productOne.jpg"
-                                          alt="Mens Casual Premium Slim Fit T-Shirts"
-                                      />
-                                    </router-link>
-                                    <div class="absolute-top-right aiz-p-hov-icon">
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to wishlist"
-                                          data-placement="left"
-                                          tabindex="0"
-                                      >
-                                        <i class="la la-heart-o"></i>
-                                      </router-link>
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to compare"
-                                          data-placement="left"
-                                          tabindex="0"
-                                      >
-                                        <i class="las la-sync"></i>
-                                      </router-link>
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to cart"
-                                          data-placement="left"
-                                          tabindex="0"
-                                          data-original-title=""
-                                          title=""
-                                      >
-                                        <i class="las la-shopping-cart"></i>
-                                      </router-link>
-                                    </div>
-                                  </div>
-                                  <div class="p-md-3 p-2 text-left">
-                                    <div class="fs-15">
-                                  <span class="fw-700 text-primary"
-                                  >$5,000.00</span
-                                  >
-                                    </div>
-                                    <div class="rating rating-sm mt-1">
-                                      <i class="las la-star"></i
-                                      ><i class="las la-star"></i
-                                    ><i class="las la-star"></i
-                                    ><i class="las la-star"></i
-                                    ><i class="las la-star"></i>
-                                    </div>
-                                    <h3
-                                        class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px"
-                                    >
-                                      <router-link
-                                          to=""
-                                          class="d-block text-reset"
-                                          tabindex="0"
-                                      >Mens Casual Premium Slim Fit T-Shirts</router-link
-                                      >
-                                    </h3>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!--Product-->
-                        <!--Product-->
-                        <div class="col-12 col-md-3">
-                          <div
-                              class="slick-slide slick-current slick-active"
-                              data-slick-index="0"
-                              aria-hidden="false"
-                              style="width: 217px"
-                          >
-                            <div>
-                              <div
-                                  class="carousel-box"
-                                  style="width: 100%; display: inline-block"
-                              >
-                                <div
-                                    class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"
-                                >
-                                  <div class="position-relative">
-                                    <router-link
-                                        to=""
-                                        class="d-block"
-                                        tabindex="0"
-                                    >
-                                      <img
-                                          class="img-fit mx-auto h-140px h-md-210px lazyloaded"
-                                          src="../assets/uploads/all/productTwo.jpg"
-                                          alt="Mens Casual Premium Slim Fit T-Shirts"
-                                      />
-                                    </router-link>
-                                    <div class="absolute-top-right aiz-p-hov-icon">
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to wishlist"
-                                          data-placement="left"
-                                          tabindex="0"
-                                      >
-                                        <i class="la la-heart-o"></i>
-                                      </router-link>
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to compare"
-                                          data-placement="left"
-                                          tabindex="0"
-                                      >
-                                        <i class="las la-sync"></i>
-                                      </router-link>
-                                      <router-link
-                                          to=""
-                                          onclick=""
-                                          data-toggle="tooltip"
-                                          data-title="Add to cart"
-                                          data-placement="left"
-                                          tabindex="0"
-                                          data-original-title=""
-                                          title=""
-                                      >
-                                        <i class="las la-shopping-cart"></i>
-                                      </router-link>
-                                    </div>
-                                  </div>
-                                  <div class="p-md-3 p-2 text-left">
-                                    <div class="fs-15">
-                                  <span class="fw-700 text-primary"
-                                  >$5,000.00</span
-                                  >
-                                    </div>
-                                    <div class="rating rating-sm mt-1">
-                                      <i class="las la-star"></i
-                                      ><i class="las la-star"></i
-                                    ><i class="las la-star"></i
-                                    ><i class="las la-star"></i
-                                    ><i class="las la-star"></i>
-                                    </div>
-                                    <h3
-                                        class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px"
-                                    >
-                                      <router-link
-                                          to=""
-                                          class="d-block text-reset"
-                                          tabindex="0"
-                                      >Mens Casual Premium Slim Fit T-Shirts</router-link
-                                      >
-                                    </h3>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!--Product-->
+              </div>
+              <div class="row">
+                <div class="col-6 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
+                  <div class="card rounded-lg shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
+                    <div class="card-body">
+                      <span class="text-uppercase fw-bolder text-primary">{{ c.name }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Category-->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <!--Product-->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
+                  <div class="h5 fw-700 mb-0">
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Lasted Products</span>
+                  </div>
+                  <div>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">See More >> </router-link>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
+                  <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
+                    <div class="position-relative">
+                      <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
+                      <div class="absolute-top-right aiz-p-hov-icon">
+                        <router-link
+                            to=""
+                            data-toggle="tooltip"
+                            data-title="Add to wishlist"
+                            data-placement="left"
+                            @click="addWishList(g)"
+                        >
+                          <i class="la la-heart-o"></i>
+                        </router-link>
+                        <router-link
+                            to=""
+                            @click=""
+                            data-toggle="tooltip"
+                            data-title="Add to compare"
+                            data-placement="left"
+                        >
+                          <i class="las la-sync"></i>
+                        </router-link>
+                        <router-link
+                            to=""
+                            @click="addToCart(g)"
+                            data-toggle="tooltip"
+                            data-title="Add to cart"
+                            data-placement="left"
+                        >
+                          <i class="las la-shopping-cart"></i>
+                        </router-link>
                       </div>
-
+                    </div>
+                    <div class="p-md-3 p-2 text-start">
+                      <div class="fs-15">
+                        <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
+                      </div>
+                      <div class="rating rating-sm mt-1">
+                        <i class="las la-star"></i><i class="las la-star"></i
+                      ><i class="las la-star"></i><i class="las la-star"></i
+                      ><i class="las la-star"></i>
+                      </div>
+                      <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
+                        {{ g.name }}
+                      </h3>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <!--Best-->
-
-          <!--Category & Brand-->
-          <section class="mb-4">
-            <div class="card container">
-              <div class="row gutters-10">
-
-                <div class="col-lg-6">
-                  <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between">
-                    <h3 class="h5 fw-700 mb-0 p-3">
-                      <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Top 10 Categories</span>
-                    </h3>
-                    <div>
-                      <router-link to="" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">View All Categories</router-link>
-                    </div>
+          </div>
+          <!--Product-->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <!--Product-->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
+                  <div class="h5 fw-700 mb-0">
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Recommend Products</span>
                   </div>
-                  <div class="row gutters-5">
+                  <div>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">See More >> </router-link>
                   </div>
                 </div>
-
-                <div class="col-lg-6">
-                  <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between" >
-                    <h3 class="h5 fw-700 mb-0 p-3">
-                      <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Top 10 Brands</span>
-                    </h3>
-                    <div>
-                      <router-link to="" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">View All Brands</router-link>
+              </div>
+              <div class="row">
+                <div class="col-6 col-md-3" v-for="g in recommend_goods" :key="g.id">
+                  <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
+                    <div class="position-relative">
+                      <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
+                      <div class="absolute-top-right aiz-p-hov-icon">
+                        <router-link
+                            to=""
+                            data-toggle="tooltip"
+                            data-title="Add to wishlist"
+                            data-placement="left"
+                            @click="addWishList(g)"
+                        >
+                          <i class="la la-heart-o"></i>
+                        </router-link>
+                        <router-link
+                            to=""
+                            @click=""
+                            data-toggle="tooltip"
+                            data-title="Add to compare"
+                            data-placement="left"
+                        >
+                          <i class="las la-sync"></i>
+                        </router-link>
+                        <router-link
+                            to=""
+                            @click="addToCart(g)"
+                            data-toggle="tooltip"
+                            data-title="Add to cart"
+                            data-placement="left"
+                        >
+                          <i class="las la-shopping-cart"></i>
+                        </router-link>
+                      </div>
+                    </div>
+                    <div class="p-md-3 p-2 text-start">
+                      <div class="fs-15">
+                        <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
+                      </div>
+                      <div class="rating rating-sm mt-1">
+                        <i class="las la-star"></i><i class="las la-star"></i
+                      ><i class="las la-star"></i><i class="las la-star"></i
+                      ><i class="las la-star"></i>
+                      </div>
+                      <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
+                        {{ g.name }}
+                      </h3>
                     </div>
                   </div>
-                  <div class="row gutters-5">
-                  </div>
                 </div>
-
               </div>
             </div>
-          </section>
-          <!--Category & Brand-->
-
+          </div>
+          <!--Product-->
         </div>
       </div>
     </div>
@@ -324,17 +178,34 @@
 
 <script>
 import $http from '../axios.js'
-import { mapState , mapMutations } from 'vuex'
+import { mapGetters , mapState , mapMutations } from 'vuex'
 export default {
   name: "HomeView",
   data() {
     return {
       categories : [],
+      total_category: "",
       sub_categories : [],
+      goods : [],
+      recommend_goods : [],
     }
   },
   created() {
     this.getCategories();
+    this.getGood();
+    this.getRecommendGood();
+  },
+  computed: {
+    ...mapState([
+      'get_good',
+    ]),
+    ...mapGetters([
+      'SHOW_CAT_BY_ID',
+      'GET_CART_DATA',
+      'GET_FAVOURITES',
+      'GET_TOKEN',
+      'GET_USER',
+    ])
   },
   methods:{
     ...mapMutations([
@@ -346,19 +217,87 @@ export default {
       'ADD_TOKEN',
       'ADD_USER',
       'ADD_TO_CART_FROM_DB',
-      'ADD_FAVOURITES_FROM_DB'
+      'ADD_FAVOURITES_FROM_DB',
+      'ADD_GOOD_WITH_ID',
+      'ADD_Good',
+      'ADD_ALL_CAT',
+      'ADD_TO_CART',
+      'ADD_MODAL_STATUS',
+      'ADD_FAVOURITES_FROM_DB',
+      'ADD_FAVOURITES'
     ]),
     getCategories(){
       $http.getAll('categories').then((res)=>{
-        this.categories = res.data.data;
+        this.total_category = res.data.data.length;
+        this.categories = res.data.data.splice(0,9);
         this.ADD_ALL_CAT(this.categories);
       }).catch((err)=>{console.log(err)});
+    },
+    getGood(){
+      $http.getAll(`goods?sorting=desc`)
+          .then((res)=>{
+            this.goods = res.data.data.data.splice(0,8);
+          }).catch((err)=>{console.log(err)});
+    },
+    getRecommendGood(){
+      $http.getAll(`goods?recommended=true`)
+          .then((res)=>{
+            this.recommend_goods = res.data.data.data.splice(0,8);
+          }).catch((err)=>{console.log(err)});
+    },
+    addToCart(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Back End Cart Create
+          $http.create('carts',{
+            'user_id' : this.GET_USER.id,
+            'price_id' : g.prices[0].id,
+            'qty' : 1,
+          }).then((res)=>{
+            // Font End Cart Create
+            this.ADD_TO_CART(res.data.data)
+          }).catch((err)=>{console.log(err)});
+        }
+        else{
+          alert('You already add to cart this items.');
+        }
+      }
+    },
+    addGood(c){
+      this.ADD_Good(c);
+      this.$router.push('/detail');
+    },
+    addWishList(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_FAVOURITES.filter(el => { return el.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Store To DB
+          $http.create('favorites',{
+            'user_id' : this.GET_USER.id,
+            'good_id' : g.id
+          }).then((res)=>{
+            // Store To Vuex
+            this.ADD_FAVOURITES(res.data.data);
+          }).catch((err)=>{console.log(err)});
+        }else{
+          alert('You already add to cart this items.');
+        }
+      }
     },
     getSubCategories(c) {
       $http.get(`categories/${c.id}?sub_categories=yes`).then((res)=>{
         this.sub_categories = res.data.data.sub_categories;
       }).catch((err)=>{console.log(err)})
     },
+    action(c){
+      this.$router.push('/single-category');
+      this.ADD_GOOD_WITH_ID(c);
+    }
   }
 };
 </script>

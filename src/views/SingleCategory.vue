@@ -41,6 +41,7 @@
                   <select class="custom-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
                     <option value="">Default</option>
                     <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                 </div>
 

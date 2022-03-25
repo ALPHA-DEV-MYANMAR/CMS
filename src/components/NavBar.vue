@@ -6,12 +6,12 @@
         <div class="row">
           <div class="col-6 col-md-12 d-flex justify-content-end">
             <div class="d-flex" v-if="GET_USER.length === 0">
-              <router-link to="login" class="nav-link text-black-50 p-1" style="font-size: 15px;">Login</router-link>
-              <router-link to="register" class="nav-link text-black-50 p-1" style="font-size: 15px;">Register</router-link>
+              <router-link to="login" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Login</router-link>
+              <router-link to="register" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Register</router-link>
             </div>
             <div class="d-flex" v-else>
-              <router-link  to="profile" class="nav-link text-black-50 p-1" style="font-size: 15px;">Profile</router-link>
-              <router-link  to="" @click="logout" class="nav-link text-black-50 p-1" style="font-size: 15px;">Logout</router-link>
+              <router-link  to="profile" class="nav-link text-black-50 p-1 hov-text-primary fw-bolder " style="font-size: 15px;">{{ GET_USER.name }}</router-link>
+              <router-link  to="" @click="logout" class="nav-link text-danger p-1  fw-bolder" style="font-size: 15px;">Logout</router-link>
             </div>
           </div>
         </div>
@@ -41,10 +41,8 @@
             <div class="flex-grow-1 front-header-search d-flex align-items-center mr-1">
               <div class="position-relative flex-grow-1">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="I'm shopping for ..."  @keyup="SearchStart" v-model="keyword">
-                    <button class="btn btn-primary" type="button" >
-                      <i class="la la-search la-flip-horizontal fs-18"></i>
-                    </button>
+                    <input type="text" class="form-control rounded-pill" placeholder="I'm shopping for ..."  @keyup="SearchStart" v-model="keyword">
+
                   </div>
 <!--                Search Data-->
                 <div v-if="is_serach" class="typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
@@ -75,7 +73,7 @@
             </div>
 <!--            Search-->
 
-              <router-link to="/wishlist" class="d-flex align-items-center nav-link">
+            <router-link to="/wishlist" class="d-flex align-items-center nav-link">
                 <i class="la la-heart-o la-2x opacity-80 text-black-50" style="font-size: 25px"></i>
                 <span class="flex-grow-1">
                     <span class="badge badge-primary badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
@@ -83,7 +81,7 @@
                 </span>
               </router-link>
 
-              <div class="d-flex align-items-center nav-link c-pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <div class="d-flex align-items-center nav-link c-pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <i class="la la-shopping-cart la-2x opacity-80 text-black-50" style="font-size: 25px;"></i>
                 <span class="flex-grow-1">
                       <span class="badge badge-primary badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
@@ -98,35 +96,18 @@
         <div class="container">
           <ul class="list-inline mb-0 pl-0 mobile-hor-swipe text-center">
             <li class="list-inline-item mr-0">
-              <router-link
-                  to=""
-                  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
-              >
+              <router-link  to="/" class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-primary nav-link" >
                 Home
               </router-link>
             </li>
             <li class="list-inline-item mr-0">
-              <router-link
-                  to=""
-                  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
-              >
-                Flash Sale
+              <router-link  to="/categories"  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-primary nav-link" >
+                Products
               </router-link>
             </li>
             <li class="list-inline-item mr-0">
-              <router-link
-                  to=""
-                  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
-              >
-                All Brands
-              </router-link>
-            </li>
-            <li class="list-inline-item mr-0">
-              <router-link
-                  to=""
-                  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-reset"
-              >
-                All categories
+              <router-link  to="/profile" class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100  text-primary nav-link" >
+                Dashboard
               </router-link>
             </li>
           </ul>
@@ -315,7 +296,7 @@
         </div>
       </div>
     </div>
-<!-- Offcanvas-->
+<!--    Offcanvas-->
 
   </div>
 </template>
