@@ -41,32 +41,32 @@
             <div class="flex-grow-1 front-header-search d-flex align-items-center mr-1">
               <div class="position-relative flex-grow-1">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="I'm shopping for ..."  @keydown.enter="SearchStart" v-model="keyword">
+                    <input type="text" class="form-control" placeholder="I'm shopping for ..."  @keyup="SearchStart" v-model="keyword">
                     <button class="btn btn-primary" type="button" >
                       <i class="la la-search la-flip-horizontal fs-18"></i>
                     </button>
                   </div>
 <!--                Search Data-->
-                <div  class="d-none typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" style="min-height: 200px">
+                <div v-if="is_serach" class="typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
                   <div>
                     <ul class="list-group list-group-raw">
-                      <li class="list-group-item">
-                        <router-link  to="">
+                      <li class="list-group-item" v-for="g in searchGood" :key="g.id">
+                        <router-link  to="" class="text-start nav-link text-black-50 hov-text-primary c-pointer" @click="addGoodSearch(g)">
                           <div class="d-flex align-items-start">
                             <div class="mr-3">
-                              <img class="size-40px img-fit rounded" src="../assets/uploads/all/productOne.jpg">
+                              <img class="size-40px img-fit rounded" :src="g.photos === null ? '' : g.photos[0].name ">
                             </div>
                             <div>
                               <div class="text-truncate fs-14 mb-5px">
-                                Product One
+                                {{ g.name }}
                               </div>
                               <div class="">
-                                <span class="fw-600 fs-16 text-primary">$20,000.00</span>
+                                <span class="fw-600 fs-16 text-warning">{{ g.prices[0].price }}</span>
                               </div>
                             </div>
                           </div>
                         </router-link>
-                      </li>
+                      </li >
                     </ul>
                   </div>
                 </div>
@@ -327,7 +327,9 @@ export default {
   name: "NavBar",
   data() {
     return {
-      keyword : ""
+      keyword : "",
+      searchGood : [],
+      is_serach : false,
     }
   },
   computed:{
@@ -362,11 +364,15 @@ export default {
           });
     },
     SearchStart(){
-      console.log(this.keyword);
-      $http.getAll(`goods?q=${this.keyword}`)
-      .then((res)=>{
-        console.log(res.data.data.data);
-      }).catch((err)=>console.log(err));
+      if(this.keyword === "") {
+        this.is_serach = false;
+      }else{
+        this.is_serach = true;
+        $http.getAll(`goods?q=${this.keyword}`)
+            .then((res)=>{
+              this.searchGood  = res.data.data.data;
+            }).catch((err)=>console.log(err));
+      }
     },
     DelCartData(c){
       //Delete From Back-End
@@ -374,6 +380,12 @@ export default {
         //Delete From Font-End
         this.DEL_CART_DATA(c);
       });
+    },
+    addGoodSearch(c){
+      this.ADD_Good(c);
+      this.$router.push('/detail');
+      this.is_serach = false;
+      this.keyword = "";
     },
     addGood(c){
       this.ADD_Good(c.price.good);
