@@ -10,6 +10,10 @@ import Categories from "@/views/Categories";
 import Detail from "@/views/Detail";
 import SingleCategory from "@/views/SingleCategory";
 import fourofour from "@/components/fourofour";
+import StepOne from "@/views/StepOne";
+import StepTwo from "@/views/StepTwo";
+import StepThree from "@/views/StepThree";
+import StepFour from "@/views/StepFour";
 
 const routes = [
   {
@@ -85,6 +89,26 @@ const routes = [
     path: '/single-category',
     name: 'single-category',
     component: SingleCategory
+  },
+  {
+    path: '/step-one',
+    name: 'StepOne',
+    component: StepOne
+  },
+  {
+    path: '/step-two',
+    name: 'StepTwo',
+    component: StepTwo
+  },
+  {
+    path: '/step-three',
+    name: 'StepThree',
+    component: StepThree
+  },
+  {
+    path: '/step-four',
+    name: 'StepFour',
+    component: StepFour
   },
   {
     path: '/:pathMatch(.*)*', component: fourofour

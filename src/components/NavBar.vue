@@ -41,16 +41,36 @@
             <div class="flex-grow-1 front-header-search d-flex align-items-center mr-1">
               <div class="position-relative flex-grow-1">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="I'm shopping for ..." >
+                    <input type="text" class="form-control" placeholder="I'm shopping for ..."  @keydown.enter="SearchStart" v-model="keyword">
                     <button class="btn btn-primary" type="button" >
                       <i class="la la-search la-flip-horizontal fs-18"></i>
                     </button>
                   </div>
-                <div
-                    class="typed-search-box stop-propagation document-click-d-none d-none bg-white rounded shadow-lg position-absolute left-0 top-100 w-100"
-                    style="min-height: 200px"
-                >
+<!--                Search Data-->
+                <div  class="d-none typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" style="min-height: 200px">
+                  <div>
+                    <ul class="list-group list-group-raw">
+                      <li class="list-group-item">
+                        <router-link  to="">
+                          <div class="d-flex align-items-start">
+                            <div class="mr-3">
+                              <img class="size-40px img-fit rounded" src="../assets/uploads/all/productOne.jpg">
+                            </div>
+                            <div>
+                              <div class="text-truncate fs-14 mb-5px">
+                                Product One
+                              </div>
+                              <div class="">
+                                <span class="fw-600 fs-16 text-primary">$20,000.00</span>
+                              </div>
+                            </div>
+                          </div>
+                        </router-link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+<!--                Search Data-->
               </div>
             </div>
 <!--            Search-->
@@ -305,6 +325,11 @@ import {mapGetters,mapMutations} from "vuex"
 import $http from '../axios.js'
 export default {
   name: "NavBar",
+  data() {
+    return {
+      keyword : ""
+    }
+  },
   computed:{
     ...mapGetters([
         'GET_CART_COUNT',
@@ -335,6 +360,13 @@ export default {
             this.ADD_TOKEN(localStorage.getItem('token'));
             this.ADD_USER(this.User);
           });
+    },
+    SearchStart(){
+      console.log(this.keyword);
+      $http.getAll(`goods?q=${this.keyword}`)
+      .then((res)=>{
+        console.log(res.data.data.data);
+      }).catch((err)=>console.log(err));
     },
     DelCartData(c){
       //Delete From Back-End

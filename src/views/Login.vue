@@ -88,7 +88,7 @@ export default {
         'ADD_FAVOURITES_FROM_DB'
     ]),
     loginUser(){
-      $http.create('login',this.form)
+      $http.create('login',this.form )
       .then((res)=>{
         if(res.data.message === 'success') {
           this.user = res.data.data.data;

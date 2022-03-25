@@ -156,7 +156,7 @@ export default {
       'ADD_TOKEN',
       'ADD_USER',
       'ADD_TO_CART_FROM_DB',
-      'ADD_FAVOURITES_DB'
+      'ADD_FAVOURITES_FROM_DB'
     ]),
     getState(){
       $http.getAll('states').then((res)=>{  this.states = res.data.data  });
@@ -168,6 +168,7 @@ export default {
           this.token = res.data.data.access_token;
           this.ADD_TOKEN(this.token);
           this.ADD_USER(this.user);
+          console.log(res);
           //Store Token
           localStorage.setItem('token',this.token);
           localStorage.setItem('user_id',this.user.id);
@@ -186,7 +187,7 @@ export default {
           .then((res)=>{
             let fav = res.data.data;
             //Add To Cart To Vuex
-            this.ADD_FAVOURITES_DB(fav);
+            this.ADD_FAVOURITES_FROM_DB(fav);
           });
     },
     getCartFromDB(){
