@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import $http from '../axios.js'
 
 export default createStore({
   state: {
@@ -76,7 +77,10 @@ export default createStore({
     ADD_DELIVER_AGENT: (state,list) => {
       state.get_delivery_agent = list;
     },
-    ADD_FAVOURITES_DB: (state,list) => {
+    ADD_FAVOURITES : (state,list) => {
+      state.get_favourites.push(list);
+    },
+    ADD_FAVOURITES_FROM_DB: (state,list) => {
       state.get_favourites = list;
     },
     ADD_Good: (state,good) => {
@@ -98,6 +102,14 @@ export default createStore({
       state.get_cart = state.get_cart.filter((el)=>{
         return el.id !== good.id;
       })
+    },
+    DEL_FAVOURITES_DATA: (state,good) => {
+      state.get_favourites = state.get_favourites.filter((el)=>{
+        return el.id !== good.id;
+      })
+    },
+    DEL_ALL_FAVOURITES_DATA: (state) =>{
+      state.get_favourites = []
     },
     DEL_ALL_CART_DATA: (state) => {
       state.get_cart = []

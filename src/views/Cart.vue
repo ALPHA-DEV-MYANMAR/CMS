@@ -13,7 +13,24 @@
                 </div>
               </div>
               <div class="card-body">
-                <table class="table table-borderless align-middle text-center">
+
+<!--                If Cart Null-->
+                <div class="container" v-if="GET_CART_DATA.length === 0">
+                  <div class="row">
+                    <div class="col-xl-8 mx-auto">
+                      <div class="shadow-sm bg-white p-4 rounded">
+                        <div class="text-center p-3">
+                          <i class="las la-frown la-3x opacity-60 mb-3"></i>
+                          <h3 class="h4 fw-700">Your Cart is empty</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<!--                If Cart Null End-->
+
+<!--                If Cart Not Null-->
+                <table  v-else class="table table-borderless align-middle text-center">
                   <thead>
                   <tr>
                     <th scope="col">Image</th>
@@ -68,6 +85,8 @@
                   </tr>
                   </tbody>
                 </table>
+<!--                If Cart Not Null End-->
+
               </div>
               <div class="card-footer w-100">
                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -125,6 +144,7 @@ export default {
       'ADD_TOKEN',
       'ADD_MODAL_STATUS',
       'ADD_MODAL_TYPE',
+      'ADD_TO_CART_FROM_DB',
       'DEL_ALL_CART_DATA'
     ]),
     Ordered(){

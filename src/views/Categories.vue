@@ -42,10 +42,10 @@
                       <div class="absolute-top-right aiz-p-hov-icon">
                         <router-link
                           to=""
-                          onclick=""
                           data-toggle="tooltip"
                           data-title="Add to wishlist"
                           data-placement="left"
+                          @click="addWishList(g)"
                         >
                           <i class="la la-heart-o"></i>
                         </router-link>
@@ -135,6 +135,7 @@ export default {
     ...mapGetters([
         'SHOW_CAT_BY_ID',
         'GET_CART_DATA',
+        'GET_FAVOURITES',
         'GET_TOKEN',
         'GET_USER'
     ])
@@ -148,7 +149,9 @@ export default {
         'ADD_Good',
         'ADD_ALL_CAT',
         'ADD_TO_CART',
-        'ADD_MODAL_STATUS'
+        'ADD_MODAL_STATUS',
+        'ADD_FAVOURITES_FROM_DB',
+        'ADD_FAVOURITES'
     ]),
     paginationStart(p){
       $http.getPagination(`${p.url}&min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
@@ -178,6 +181,25 @@ export default {
         }
       }
     },
+    addWishList(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_FAVOURITES.filter(el => { return el.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Store To DB
+          $http.create('favorites',{
+            'user_id' : this.GET_USER.id,
+            'good_id' : g.id
+          }).then((res)=>{
+            // Store To Vuex
+            this.ADD_FAVOURITES(res.data.data);
+          }).catch((err)=>{console.log(err)});
+        }else{
+          alert('You already add to cart this items.');
+        }
+      }
+    },
     addGood(c){
       this.ADD_Good(c);
       this.$router.push('/detail');
@@ -202,7 +224,7 @@ export default {
     },
     filterStart(){
       this.getGood();
-    }
+    },
   }
 };
 </script>

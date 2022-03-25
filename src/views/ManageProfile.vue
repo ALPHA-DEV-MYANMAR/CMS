@@ -115,6 +115,7 @@ export default {
       states: [],
       User: {},
       customersForm: {
+        'user_id' : '',
         'name' : '',
         'email' : '',
         'gender_id' : 1,//1=male , 2=female
@@ -149,6 +150,7 @@ export default {
             this.ADD_TOKEN(localStorage.getItem('token'));
             this.ADD_USER(this.User);
             this.customersForm = {
+                  'user_id' : this.User.id,
                   'name' : this.User.name,
                   'email' : this.User.email,
                   'gender_id' : this.User.gender_id,//1=male , 2=female
@@ -170,6 +172,7 @@ export default {
           this.ADD_USER(this.user);
           //Store Token
           localStorage.setItem('token',this.token);
+          alert('Profile Update Successfully.')
           this.getStoreUser();
         }else{
           alert(res.data.message)
@@ -178,6 +181,7 @@ export default {
     },
     getStoreUser(){
       this.customersForm = {
+        'user_id' : this.GET_USER.id,
         'name' : this.GET_USER.name,
         'email' : this.GET_USER.email,
         'gender_id' : this.GET_USER.gender_id,//1=male , 2=female

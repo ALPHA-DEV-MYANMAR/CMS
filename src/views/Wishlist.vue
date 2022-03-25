@@ -24,7 +24,7 @@
                       </router-link>
                       <div class="text-start">
                         <h5 class="fs-14 mb-0 lh-1-5 fw-600 text-truncate-2">
-                          <router-link to="" class="text-reset">{{ f.good.name }}</router-link>
+                          <router-link to="" class="text-reset c-pointer" @click="addGood(f.good)">{{ f.good.name }}</router-link>
                         </h5>
                         <div class="rating rating-sm mb-1">
                           <i class="las la-star"></i>
@@ -40,19 +40,18 @@
 
                     </div>
                     <div class="card-footer">
-                      <a href="#" class="link link--style-3" data-toggle="tooltip" data-placement="top" title="Remove from wishlist">
+                      <button  class="btn btn-sm hov-text-danger"  @click="delFav(f)">
                         <i class="la la-trash la-2x"></i>
-                      </a>
-                      <button type="button" class="btn btn-sm btn-block btn-primary ml-3" onclick="">
-                        <i class="la la-shopping-cart mr-2"></i>Add to cart
+                      </button>
+                      <button type="button" class="btn btn-sm btn-block btn-primary ml-3"  @click="addToCart(f)">
+                        <i class="la la-shopping-cart mr-2"></i>
+                        Add to cart
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </section>
@@ -63,23 +62,61 @@
 <script>
 import SideBar from "@/components/SideBar";
 import { mapGetters,mapMutations } from "vuex";
+import $http from "@/axios";
 export default {
   name: "Wishlist",
   components: {SideBar},
-  data() {
-    return {
-
-    }
-  },
   created() {
   },
   computed:{
     ...mapGetters([
-        'GET_FAVOURITES'
+        'GET_FAVOURITES',
+        'GET_USER',
+        'GET_CART_DATA',
+        'GET_FAVOURITES',
     ]),
   },
   methods:{
-
+    ...mapMutations([
+        'ADD_FAVOURITES',
+        'ADD_TO_CART',
+        'DEL_FAVOURITES_DATA',
+        'ADD_Good'
+    ]),
+    addToCart(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.good_id });
+          if(is_same.length === 0){
+            // Back End Cart Create
+            $http.create('carts',{
+              'user_id' : this.GET_USER.id,
+              'price_id' : g.good.prices[0].id,
+              'qty' : 1,
+            }).then((res)=>{
+              // Font End Cart Create
+              this.ADD_TO_CART(res.data.data)
+            }).catch((err)=>{console.log(err)});
+          }else{
+            alert('You already add to cart this items.');
+          }
+      }
+    },
+    delFav(g){
+      //Delete from DB
+      $http.delete('favorites',g.id)
+      .then((res)=>{
+        //Delete from Vuex
+        this.DEL_FAVOURITES_DATA(g);
+      })
+    },
+    //Show Detail
+    addGood(g){
+      console.log(g)
+      this.ADD_Good(g);
+      this.$router.push('/detail');
+    },
   }
 }
 </script>

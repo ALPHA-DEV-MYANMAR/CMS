@@ -85,7 +85,7 @@ export default {
         'ADD_USER',
         'ADD_TO_CART',
         'ADD_TO_CART_FROM_DB',
-        'ADD_FAVOURITES_DB'
+        'ADD_FAVOURITES_FROM_DB'
     ]),
     loginUser(){
       $http.create('login',this.form)
@@ -119,7 +119,7 @@ export default {
           .then((res)=>{
             let fav = res.data.data;
             //Add To Cart To Vuex
-            this.ADD_FAVOURITES_DB(fav);
+            this.ADD_FAVOURITES_FROM_DB(fav);
           });
     },
     getCartFromDB(){

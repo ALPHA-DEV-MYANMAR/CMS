@@ -160,7 +160,7 @@
 <!--                  Add To Cart-->
 
 <!--                  Add Buy-->
-                  <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600">
+                  <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600" @click="BuyNow(SHOW_Good)">
                     <i class="la la-shopping-cart"></i> Buy Now
                   </button>
                   <button v-else class="btn btn-secondary fw-600 " disabled>
@@ -175,8 +175,7 @@
                     <button
                       type="button"
                       class="btn pl-0 btn-link nav-link text-danger fw-600"
-                      onclick=""
-                    >
+                      @click="addWishList(SHOW_Good)">
                       Add to wishlist
                     </button>
                     <!-- Add to compare button -->
@@ -375,7 +374,8 @@ export default {
       'SHOW_Good',
       'GET_CART_DATA',
       'GET_USER',
-      'GET_TOKEN'
+      'GET_TOKEN',
+      'GET_FAVOURITES'
     ]),
   },
   created() {
@@ -383,8 +383,55 @@ export default {
   methods: {
     ...mapMutations([
       'ADD_TO_CART',
-      'ADD_MODAL_STATUS'
+      'ADD_MODAL_STATUS',
+      'ADD_FAVOURITES',
+        'ADD_MODAL_TYPE'
     ]),
+    BuyNow(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+        this.ADD_MODAL_TYPE('');
+      }else{
+        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Back End Cart Create
+          $http.create('carts',{
+            'user_id' : this.GET_USER.id,
+            'price_id' : g.prices[0].id,
+            'qty' : this.quantity,
+          }).then((res)=>{
+            // Font End Cart Create
+          this.ADD_TO_CART(res.data.data);
+          // Ordered Now
+          this.ADD_MODAL_STATUS(true);
+          this.ADD_MODAL_TYPE('order');
+          }).catch((err)=>{console.log(err)});
+        }else{
+          // Ordered Now
+          this.ADD_MODAL_STATUS(true);
+          this.ADD_MODAL_TYPE('order');
+        }
+      }
+    },
+    addWishList(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_FAVOURITES.filter(el => { return el.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Store To DB
+          $http.create('favorites',{
+            'user_id' : this.GET_USER.id,
+            'good_id' : g.id
+          }).then((res)=>{
+            // Store To Vuex
+            this.ADD_FAVOURITES(res.data.data);
+          }).catch((err)=>{console.log(err)});
+        }else{
+          alert('You already add to cart this items.');
+        }
+      }
+    },
     addToCart(g){
       if(this.GET_USER.length === 0) {
         this.ADD_MODAL_STATUS(true);

@@ -59,20 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="fixed-bottom d-xl-none bg-white border-top d-flex justify-content-between px-2"  style="box-shadow: 0 -5px 10px rgb(0 0 0 / 10%)" >
-      <router-link   class="btn btn-sm p-2 d-flex align-items-center nav-link"  to=""  >
-        <i class="las la-sign-out-alt fs-18 mr-2"></i>
-        <span>Logout</span>
-      </router-link>
-      <button
-          class="btn btn-sm p-2"
-          data-toggle="class-toggle"
-          data-backdrop="static"
-          data-target=".aiz-mobile-side-nav"
-          data-same=".mobile-side-nav-thumb">
-        <i class="las la-times la-2x"></i>
-      </button>
-    </div>
+    <button class="btn btn-danger w-100" @click="logout">Logout</button>
   </div>
 </template>
 
@@ -85,6 +72,22 @@
           'GET_USER'
       ])
     },
+    methods:{
+      ...mapMutations([
+          'ADD_USER',
+          'ADD_TOKEN',
+          'DEL_ALL_FAVOURITES_DATA',
+          'DEL_ALL_CART_DATA'
+      ]),
+      logout(){
+        this.ADD_USER([]);
+        this.ADD_TOKEN([]);
+        this.DEL_ALL_FAVOURITES_DATA();
+        this.DEL_ALL_CART_DATA();
+        localStorage.clear();
+        this.$router.push('/');
+      }
+    }
   }
 </script>
 

@@ -147,7 +147,8 @@ export default {
         'SHOW_CAT_BY_ID',
         'GET_CART_DATA',
         'GET_TOKEN',
-        'GET_USER'
+        'GET_USER',
+        'GET_FAVOURITES'
     ]),
     getGoodByCategory(){
       $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}`)
@@ -167,7 +168,8 @@ export default {
       'ADD_Good',
       'ADD_ALL_CAT',
       'ADD_TO_CART',
-      'ADD_MODAL_STATUS'
+      'ADD_MODAL_STATUS',
+      'ADD_FAVOURITES'
     ]),
     filterStart(){
       $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}&sub_category_id=${this.filter.sub_category_id}&min_price=${this.filter.min_price}&max_price=${this.filter.max_price}&recommend=${this.filter.recommend}`)
@@ -193,6 +195,25 @@ export default {
           }).catch((err)=>{console.log(err)});
         }
         else{
+          alert('You already add to cart this items.');
+        }
+      }
+    },
+    addWishList(g){
+      if(this.GET_USER.length === 0) {
+        this.ADD_MODAL_STATUS(true);
+      }else{
+        let is_same = this.GET_FAVOURITES.filter(el => { return el.good_id === g.id });
+        if(is_same.length === 0 ){
+          // Store To DB
+          $http.create('favorites',{
+            'user_id' : this.GET_USER.id,
+            'good_id' : g.id
+          }).then((res)=>{
+            // Store To Vuex
+            this.ADD_FAVOURITES(res.data.data);
+          }).catch((err)=>{console.log(err)});
+        }else{
           alert('You already add to cart this items.');
         }
       }

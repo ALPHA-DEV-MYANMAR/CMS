@@ -179,7 +179,8 @@ export default {
       'ADD_PAYMENT',
       'ADD_ACCEPT_TIME',
       'ADD_DELIVER_AGENT',
-      'ADD_TO_CART_FROM_DB'
+      'ADD_TO_CART_FROM_DB',
+        'ADD_FAVOURITES_FROM_DB'
     ]),
     getOrderStatus(){
       $http.getAll('order_status').then((res)=>{
@@ -234,7 +235,9 @@ export default {
       //Back End
       $http.create('orders',this.orderForm).then((res)=>{
         this.close();
-        this.DEL_ALL_CART_DATA();
+        alert('You successfully ordered to this items.');
+        console.log(res);
+        // this.DEL_ALL_CART_DATA();
       }).catch((err)=>{
         console.log(err);
         alert('something was wrong')
@@ -259,7 +262,7 @@ export default {
           .then((res)=>{
             let fav = res.data.data;
             //Add To Cart To Vuex
-            this.ADD_FAVOURITES_DB(fav);
+            this.ADD_FAVOURITES_FROM_DB(fav);
           });
     }
   }

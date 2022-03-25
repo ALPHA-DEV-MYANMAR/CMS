@@ -324,7 +324,9 @@ export default {
         'DEL_CART_DATA',
         'ADD_Good',
         'ADD_USER',
-        'ADD_TOKEN'
+        'ADD_TOKEN',
+        'DEL_ALL_FAVOURITES_DATA',
+        'DEL_ALL_CART_DATA'
     ]),
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))
@@ -348,6 +350,8 @@ export default {
     logout(){
       this.ADD_USER([]);
       this.ADD_TOKEN([]);
+      this.DEL_ALL_FAVOURITES_DATA();
+      this.DEL_ALL_CART_DATA();
       localStorage.clear();
       this.$router.push('/');
     }
