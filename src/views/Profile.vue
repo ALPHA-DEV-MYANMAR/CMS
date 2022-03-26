@@ -12,10 +12,10 @@
             </div>
             <div class="row gutters-10">
               <div class="col-md-3">
-                <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden table-borderless" >
+                <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden table-borderless hov-shadow-2xl" >
                   <div class="px-3 pt-3">
-                    <div class="h3 fw-700">0</div>
-                    <div class="opacity-50">Products</div>
+                    <div class="h3 fw-700">{{ GET_CART_COUNT }}</div>
+                    <div class="opacity-50">Total Carts</div>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -32,11 +32,11 @@
 
               <div class="col-md-3">
                 <div
-                  class="bg-grad-1 text-white rounded-lg mb-4 overflow-hidden"
+                  class="bg-grad-1 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
                 >
                   <div class="px-3 pt-3">
-                    <div class="h3 fw-700">0</div>
-                    <div class="opacity-50">Total sale</div>
+                    <div class="h3 fw-700">{{ GET_FAVOURITES_TOTAL }}</div>
+                    <div class="opacity-50">Total Wishlist</div>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -53,11 +53,11 @@
 
               <div class="col-md-3">
                 <div
-                  class="bg-grad-2 text-white rounded-lg mb-4 overflow-hidden"
+                  class="bg-grad-2 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
                 >
                   <div class="px-3 pt-3">
                     <div class="h3 fw-700">$0.00</div>
-                    <div class="opacity-50">Total earnings</div>
+                    <div class="opacity-50">Total Sold Amount</div>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -74,10 +74,10 @@
 
               <div class="col-md-3">
                 <div
-                  class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden"
+                  class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
                 >
                   <div class="px-3 pt-3">
-                    <div class="h3 fw-700">0</div>
+                    <div class="h3 fw-700">{{ order_count }}</div>
                     <div class="opacity-50">Successful orders</div>
                   </div>
                   <svg
@@ -150,77 +150,6 @@
               <div class="col-12 col-md-6">
                 <div class="card">
                   <div class="card-header">
-                    <h5 class="mb-0 h6">Orders</h5>
-                  </div>
-                  <div class="card-body">
-                    <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start" style="" >
-                      <tbody >
-                      <tr>
-                        <td
-                            class="footable-first-visible"
-                            style="display: table-cell"
-                        >
-                          Total orders:
-                        </td>
-                        <td
-                            class="footable-last-visible"
-                            style="display: table-cell"
-                        >
-                          0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                            class="footable-first-visible"
-                            style="display: table-cell"
-                        >
-                          Pending orders:
-                        </td>
-                        <td
-                            class="footable-last-visible"
-                            style="display: table-cell"
-                        >
-                          0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                            class="footable-first-visible"
-                            style="display: table-cell"
-                        >
-                          Cancelled orders:
-                        </td>
-                        <td
-                            class="footable-last-visible"
-                            style="display: table-cell"
-                        >
-                          0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                            class="footable-first-visible"
-                            style="display: table-cell"
-                        >
-                          Successful orders:
-                        </td>
-                        <td
-                            class="footable-last-visible"
-                            style="display: table-cell"
-                        >
-                          0
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-12">
-                <div class="card">
-                  <div class="card-header">
                     <h5 class="mb-0 h6">Location</h5>
                   </div>
                   <div class="card-body">
@@ -228,11 +157,11 @@
                       <tbody >
                       <tr>
                         <td  class="footable-first-visible"
-                            style="display: table-cell" >
+                             style="display: table-cell" >
                           Address:
                         </td>
                         <td  class="footable-last-visible"
-                            style="display: table-cell"  >
+                             style="display: table-cell"  >
                           {{ User.address.address }}
                         </td>
                       </tr>
@@ -277,25 +206,35 @@ export default {
   name: "Profile",
   data() {
     return {
-      User : {}
+      User : {},
+      order_count : '',
     }
   },
   components: { SideBar },
   computed: {
     ...mapGetters([
         'GET_USER',
-        'GET_TOKEN'
+        'GET_TOKEN',
+        'GET_CART_COUNT',
+        'GET_FAVOURITES_TOTAL'
     ])
   },
   created() {
       this.getUser();
+      this.getOrder();
       this.User = this.GET_USER;
+       window.scrollTo(0,0);
   },
   methods:{
     ...mapMutations([
         'ADD_USER',
         'ADD_TOKEN'
     ]),
+    getOrder(){
+      $http.getAll('orders').then((res)=>{
+        this.order_count =  res.data.data.data.length;
+      });
+    },
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))
           .then((res)=>{

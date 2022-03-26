@@ -21,7 +21,7 @@
                       <div class="shadow-sm bg-white p-4 rounded">
                         <div class="text-center p-3">
                           <i class="las la-frown la-3x opacity-60 mb-3"></i>
-                          <h3 class="h4 fw-700">Your Cart is empty</h3>
+                          <h3 class="h4 fw-700  text-black-50">Your Cart is empty</h3>
                         </div>
                       </div>
                     </div>
@@ -83,22 +83,32 @@
                       </button>
                     </td>
                   </tr>
+                  <tr>
+                    <td colspan="5">
+                    </td>
+                    <td class="fw-600" colspan="2">
+                      Sub Total:
+                    </td>
+                    <td class="fw-bold text-warning h5" colspan="2">
+                      {{ total.price_total }}
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
 <!--                If Cart Not Null End-->
 
               </div>
-              <div class="card-footer w-100">
+              <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                  <div>
-                    <router-link class="btn btn-outline-primary" to="/categories">
-                      <i class="las la-arrow-left"></i>Return To Shop
-                    </router-link>
-                  </div>
-                  <div>
-                    <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered</router-link>
-                  </div>
-                </div>
+                      <div>
+                        <router-link class="btn btn-outline-primary" to="/categories">
+                          <i class="las la-arrow-left"></i>Return To Shop
+                        </router-link>
+                      </div>
+                      <div>
+                        <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered</router-link>
+                      </div>
+                    </div>
               </div>
             </div>
           </div>
@@ -115,15 +125,23 @@
 import $http from '../axios.js'
 import { mapGetters, mapMutations } from 'vuex'
 import Modal from "@/components/Modal";
+import Swal from "sweetalert2";
 export default {
   name: "Cart",
   components: {Modal},
   data() {
     return {
-      total : ""
+      total : [
+        {
+          'price_total' : '',
+          'qty_total ' : '',
+        }
+      ],
+      cart : [],
     }
   },
   created(){
+    window.scrollTo(0,0);
     this.getCartFromDB();
   },
   computed:{
@@ -145,17 +163,21 @@ export default {
       'ADD_MODAL_STATUS',
       'ADD_MODAL_TYPE',
       'ADD_TO_CART_FROM_DB',
-      'DEL_ALL_CART_DATA'
+      'DEL_ALL_CART_DATA',
+      'ADD_ORDER_TOTAL'
     ]),
     Ordered(){
       if(this.GET_CART_DATA.length !== 0){
         this.ADD_MODAL_STATUS(true);
-        this.ADD_MODAL_TYPE('order')
+        this.ADD_MODAL_TYPE('order');
       }else if(this.GET_USER.length === 0){
         this.ADD_MODAL_STATUS(true);
         this.ADD_MODAL_TYPE('')
       }else{
-        alert('There is no cart data for ordered.')
+        Swal.fire({
+          icon: 'warning',
+          text: 'There is no data in your cart!',
+        })
       }
     },
     DelCartData(c){
@@ -163,6 +185,8 @@ export default {
       $http.delete('carts',c.id).then((res)=>{
         //Delete From Font-End
         this.DEL_CART_DATA(c);
+        console.log(res);
+       this.getCartFromDB()
       });
     },
     CartUpdate(c){
@@ -174,18 +198,34 @@ export default {
           'price_id' : c.price_id,
           'qty' : c.qty,
         }).then((res)=>{
-          // action
+          this.getTotal();
         });
       }
     },
     getCartFromDB(){
       $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
           .then((res)=>{
-            let cart = res.data.data;
+            this.cart = res.data.data;
+
+            this.getTotal();
+
             //Add To Cart To Vuex
-            this.ADD_TO_CART_FROM_DB(cart);
+            this.ADD_TO_CART_FROM_DB(this.cart);
           });
     },
+    getTotal(){
+      let c =this.cart.map((el)=>el.price.price * el.qty);
+      let q = this.cart.map((el)=>el.qty);
+      let t = this.cart.length;
+
+      this.total.qty_total = q.map((el)=>el).reduce((p,n)=>p+n);
+      this.total.price_total =  c.map((el)=>el).reduce((p,n)=>p+n);
+      this.ADD_ORDER_TOTAL({
+        'item' : t,
+        'qty' : this.total.qty_total,
+        'price' : this.total.price_total
+      });
+    }
   },
 };
 </script>

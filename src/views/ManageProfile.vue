@@ -108,6 +108,7 @@
 import SideBar from "@/components/SideBar"
 import {mapGetters, mapMutations} from "vuex"
 import $http from '../axios.js'
+import Swal from "sweetalert2";
 export default {
   name: "ManageProfile",
   data() {
@@ -137,6 +138,7 @@ export default {
     this.getState();
     this.getUser();
     this.getStoreUser();
+    window.scrollTo(0,0);
   },
   methods:{
     ...mapMutations([
@@ -172,10 +174,20 @@ export default {
           this.ADD_USER(this.user);
           //Store Token
           localStorage.setItem('token',this.token);
-          alert('Profile Update Successfully.')
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your profile have been update.',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.getStoreUser();
         }else{
-          alert(res.data.message)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: res.data.message,
+          })
         }
       });
     },

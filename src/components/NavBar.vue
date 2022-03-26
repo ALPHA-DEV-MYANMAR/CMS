@@ -105,7 +105,7 @@
                 Products
               </router-link>
             </li>
-            <li class="list-inline-item mr-0">
+            <li class="list-inline-item mr-0" v-if="GET_USER.length !== 0">
               <router-link  to="/profile" class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100  text-primary nav-link" >
                 Dashboard
               </router-link>
@@ -265,7 +265,13 @@
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           <h4 class="mb-0 text-black-50">Cart Listing</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body" v-if="GET_CART_DATA.length === 0">
+          <div class="text-center">
+            <i class="las la-frown la-3x opacity-60 mb-3"></i>
+            <h3 class="h4 fw-700 text-black-50">Your Cart is empty</h3>
+          </div>
+        </div>
+        <div class="card-body" v-if="GET_CART_DATA.length !== 0">
           <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
             <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">

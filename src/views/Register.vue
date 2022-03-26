@@ -144,6 +144,7 @@ export default {
   },
   created() {
     this.getState();
+    window.scrollTo(0,0);
   },
   computed: {
     ...mapGetters([

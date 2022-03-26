@@ -14,6 +14,7 @@ import StepOne from "@/views/StepOne";
 import StepTwo from "@/views/StepTwo";
 import StepThree from "@/views/StepThree";
 import StepFour from "@/views/StepFour";
+import Order from "@/views/Order";
 
 const routes = [
   {
@@ -65,6 +66,17 @@ const routes = [
     },
   },
   {
+    path: '/order',
+    name: 'order',
+    component: Order,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
     path: '/cart',
     name: 'cart',
     component: Cart,
@@ -83,7 +95,7 @@ const routes = [
   {
     path: '/detail',
     name: 'detail',
-    component: Detail
+    component: Detail,
   },
   {
     path: '/single-category',
@@ -118,10 +130,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    // always scroll to top
-    return { top: 0 }
-  },
 })
 
 export default router

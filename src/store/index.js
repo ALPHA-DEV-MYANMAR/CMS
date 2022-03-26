@@ -15,7 +15,8 @@ export default createStore({
     get_order_status: [],
     get_payment_method: [],
     get_delivery_accept_time: [],
-    get_delivery_agent: []
+    get_delivery_agent: [],
+    get_order_total: {},
   },
   getters: {
     GET_ORDER_STATUS: (state) => {
@@ -62,6 +63,9 @@ export default createStore({
     },
     GET_FAVOURITES_TOTAL: (state) => {
       return state.get_favourites.length;
+    },
+    GET_ORDER_TOTAL: (state) => {
+      return state.get_order_total;
     }
   },
   mutations: {
@@ -126,6 +130,9 @@ export default createStore({
     ADD_MODAL_TYPE: (state,type) => {
       state.modal_type = type;
     },
+    ADD_ORDER_TOTAL : (state,order) => {
+      state.get_order_total = order;
+    }
   },
   actions: {
   },

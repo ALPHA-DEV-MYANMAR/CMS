@@ -154,15 +154,15 @@
 
                   <div class="mt-3">
                     <!--                  Add To Cart-->
-                    <button class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
+                    <button v-if="SHOW_Good.total_stock > 0"  class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
                       <i class="las la-shopping-bag"></i>
                       <span class="d-none d-md-inline-block">Add to cart</span>
                     </button>
                     <!--                  Add To Cart-->
 
                     <!--                  Add Buy-->
-                    <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600" @click="BuyNow(SHOW_Good)">
-                      <i class="la la-shopping-cart"></i> Buy Now
+                    <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600" @click="OrderNow(SHOW_Good)">
+                      <i class="la la-shopping-cart"></i> Order Now
                     </button>
                     <button v-else class="btn btn-secondary fw-600 " disabled>
                       <i class="la la-cart-arrow-down"></i> Out of Stock
@@ -278,6 +278,7 @@
 import $http from '../axios.js'
 import {mapGetters, mapMutations} from 'vuex'
 import Modal from "@/components/Modal";
+import Swal from "sweetalert2";
 export default {
   name: "Detail",
   components: {Modal},
@@ -297,6 +298,7 @@ export default {
     ]),
   },
   created() {
+    window.scrollTo(0,0);
   },
   methods: {
     ...mapMutations([
@@ -305,10 +307,9 @@ export default {
       'ADD_FAVOURITES',
         'ADD_MODAL_TYPE'
     ]),
-    BuyNow(g){
+    OrderNow(g){
       if(this.GET_USER.length === 0) {
         this.ADD_MODAL_STATUS(true);
-        this.ADD_MODAL_TYPE('');
       }else{
         let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
         if(is_same.length === 0 ){
@@ -319,15 +320,13 @@ export default {
             'qty' : this.quantity,
           }).then((res)=>{
             // Font End Cart Create
-          this.ADD_TO_CART(res.data.data);
-          // Ordered Now
-          this.ADD_MODAL_STATUS(true);
-          this.ADD_MODAL_TYPE('order');
+            this.ADD_TO_CART(res.data.data);
+            // Go To Cart Route
+            this.$router.push('/cart');
           }).catch((err)=>{console.log(err)});
-        }else{
-          // Ordered Now
-          this.ADD_MODAL_STATUS(true);
-          this.ADD_MODAL_TYPE('order');
+        }
+        else{
+          this.$router.push('/cart');
         }
       }
     },
@@ -346,28 +345,51 @@ export default {
             this.ADD_FAVOURITES(res.data.data);
           }).catch((err)=>{console.log(err)});
         }else{
-          alert('You already add to cart this items.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'You already add to wishlist this items.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     },
     addToCart(g){
-      if(this.GET_USER.length === 0) {
-        this.ADD_MODAL_STATUS(true);
+
+      if(g.total_stock === 0){
+        Swal.fire({
+          position: 'center',
+          icon: 'info',
+          title: 'Sorry!This item is out of stock.',
+          showConfirmButton: false,
+          timer: 1500
+        });
       }else{
-        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
-        if(is_same.length === 0 ){
-          // Back End Cart Create
-          $http.create('carts',{
-            'user_id' : this.GET_USER.id,
-            'price_id' : g.prices[0].id,
-            'qty' : this.quantity,
-          }).then((res)=>{
-            // Font End Cart Create
-            this.ADD_TO_CART(res.data.data)
-          }).catch((err)=>{console.log(err)});
-        }
-        else{
-          alert('You already add to cart this items.');
+        if(this.GET_USER.length === 0) {
+          this.ADD_MODAL_STATUS(true);
+        }else{
+          let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+          if(is_same.length === 0 ){
+            // Back End Cart Create
+            $http.create('carts',{
+              'user_id' : this.GET_USER.id,
+              'price_id' : g.prices[0].id,
+              'qty' : this.quantity,
+            }).then((res)=>{
+              // Font End Cart Create
+              this.ADD_TO_CART(res.data.data)
+            }).catch((err)=>{console.log(err)});
+          }
+          else{
+            Swal.fire({
+              position: 'center',
+              icon: 'warning',
+              title: 'You already add to cart this items.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
         }
       }
     },

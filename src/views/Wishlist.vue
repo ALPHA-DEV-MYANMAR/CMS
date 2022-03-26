@@ -68,6 +68,7 @@ export default {
   name: "Wishlist",
   components: {SideBar},
   created() {
+    window.scrollTo(0,0);
   },
   computed:{
     ...mapGetters([
@@ -85,21 +86,34 @@ export default {
         'ADD_Good'
     ]),
     addToCart(g){
-      if(this.GET_USER.length === 0) {
-        this.ADD_MODAL_STATUS(true);
-      }else{
-        let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.good_id });
-          if(is_same.length === 0){
+      if(g.total_stock === 0){
+        Swal.fire({
+          position: 'center',
+          icon: 'info',
+          title: 'Sorry!This item is out of stock.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }else {
+        if (this.GET_USER.length === 0) {
+          this.ADD_MODAL_STATUS(true);
+        } else {
+          let is_same = this.GET_CART_DATA.filter(el => {
+            return el.price.good_id === g.good_id
+          });
+          if (is_same.length === 0) {
             // Back End Cart Create
-            $http.create('carts',{
-              'user_id' : this.GET_USER.id,
-              'price_id' : g.good.prices[0].id,
-              'qty' : 1,
-            }).then((res)=>{
+            $http.create('carts', {
+              'user_id': this.GET_USER.id,
+              'price_id': g.good.prices[0].id,
+              'qty': 1,
+            }).then((res) => {
               // Font End Cart Create
               this.ADD_TO_CART(res.data.data)
-            }).catch((err)=>{console.log(err)});
-          }else{
+            }).catch((err) => {
+              console.log(err)
+            });
+          } else {
             Swal.fire({
               position: 'center',
               icon: 'warning',
@@ -108,6 +122,7 @@ export default {
               timer: 1500
             });
           }
+        }
       }
     },
     delFav(g){

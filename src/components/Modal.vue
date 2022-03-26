@@ -42,9 +42,9 @@
   <div v-if="GET_MODAL_TYPE === 'order'">
     <transition name="modal">
       <div class="modal-mask">
-        <div class="modal-wrapper animate__animated animate__bounceIn">
-          <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-wrapper">
+          <div class="modal-dialog" style="max-width:80%;!important;">
+            <div class="modal-content ">
               <div class="modal-header">
                 <div class="modal-header-title w-100">
                   <div class="model-title">
@@ -55,10 +55,10 @@
               </div>
               <div class="modal-body text-start">
                 <!-- Add Order-->
-                <form @submit.prevent="orderStart">
+                <form @submit.prevent="confirm">
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-12 col-md-6">
+                      <div class="col-12 col-md-3">
                         <div>
                           <label class="text-black-50 fs-12">Ordered Status</label>
                           <select v-model="orderForm.order_status_id" class="form-control" required>
@@ -69,7 +69,7 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-12 col-md-6">
+                      <div class="col-12 col-md-3">
                         <div>
                           <label class="text-black-50 fs-12">Payment Method</label>
                           <select v-model="orderForm.payment_method_id" class="form-control" required>
@@ -80,11 +80,7 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-12 col-md-6">
+                      <div class="col-12 col-md-3">
                         <label class="text-black-50 fs-12">Delivery Accept Time</label>
                         <select v-model="orderForm.delivery_accepttime_id" class="form-control" required>
                           <option value="" selected disabled  class="text-black-50">selected delivery accept time</option>
@@ -93,7 +89,7 @@
                           </option>
                         </select>
                       </div>
-                      <div class="col-12 col-md-6">
+                      <div class="col-12 col-md-3">
                         <label class="text-black-50 fs-12">Delivery Agent</label>
                         <select v-model="orderForm.delivery_agent_id" class="form-control" required>
                           <option value='' selected disabled  class="text-black-50">selected delivery agent</option>
@@ -106,18 +102,87 @@
                   </div>
                   <!--delivery_tracking_code-->
                   <div class="form-group">
-                    <label class="text-black-50 fs-12">Delivery Tracking Code</label>
-                    <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div>
+                          <label class="text-black-50 fs-12">Delivery Tracking Code</label>
+                          <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
+                        </div>
+                        <div>
+                          <div class="card mt-2">
+                            <div class="card-body">
+                              <span class="text-black-50 fw-600">Order Items</span>
+                              <div class="div">
+                                <table class="table table-borderless align-middle text-center">
+                                  <thead>
+                                  <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr class="text-warning">
+                                    <th>{{ GET_ORDER_TOTAL.item }}</th>
+                                    <td>{{ GET_ORDER_TOTAL.qty }}</td>
+                                    <td>{{ GET_ORDER_TOTAL.price }}</td>
+                                  </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <label class="text-black-50 fs-12">Remark</label>
+                        <textarea cols="10" rows="9" placeholder="Enter Remark" class="form-control" v-model="orderForm.remark"></textarea>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-black-50 fs-12">Remark</label>
-                    <textarea cols="10" rows="5" placeholder="Enter Remark" class="form-control" v-model="orderForm.remark"></textarea>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row justify-content-between align-items-center">
+                              <div class="col-11 col-md-11">
+                                <span class="text-black-50 fw-600 ">Name: </span>
+                                <span class="">
+                              {{ GET_USER.name }}
+                            </span> |
+                                <span  class="text-black-50 fw-600 ">Email: </span>
+                                <span class="">
+                              {{ GET_USER.email }}
+                            </span> |
+                                <span  class="text-black-50 fw-600 ">State: </span>
+                                <span class="">
+                              {{ GET_USER.address.state.name }}
+                            </span> |
+                                <span  class="text-black-50 fw-600 ">Postal Code: </span>
+                                <span class="">
+                              {{ GET_USER.address.postal_code }}
+                            </span> |
+                                <span class="text-black-50 fw-600">Address: </span>
+                                <span>
+                              {{ GET_USER.address.address }}
+                            </span>
+                              </div>
+                              <div class="col-1 col-md-1">
+                                <button type="button" class="btn btn-outline-primary btn-sm" @click="$router.push('/manage-profile')">
+                                  <i class="fas fa-edit"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group text-end">
                     <button class="btn btn-primary" >Order Now</button>
                   </div>
                 </form>
-
                 <!--Add Order-->
               </div>
             </div>
@@ -132,6 +197,7 @@
 <script>
 import $http from '../axios.js'
 import { mapGetters,mapMutations,mapState } from 'vuex'
+import Swal from "sweetalert2";
 export default {
   name: "Modal",
   data() {
@@ -163,6 +229,7 @@ export default {
       'GET_PAYMENT',
       'GET_ACCEPT_TIME',
       'GET_DELIVER_AGENT',
+      'GET_ORDER_TOTAL'
     ]),
     status(){
       return this.GET_MODAL_STATUS;
@@ -230,12 +297,36 @@ export default {
             this.ADD_USER(this.User);
           });
     },
+    confirm(){
+      this.ADD_MODAL_STATUS(false);
+      this.ADD_MODAL_TYPE('');
+      Swal.fire({
+        icon: 'question',
+        title: 'Are your sure you want to ordered?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Order Confirmed', '', 'success');
+          this.orderStart();
+        } else if (result.isDenied) {
+          Swal.fire('Order Cancel', '', 'error');
+          this.close();
+        }
+      })
+    },
     orderStart(){
       this.orderForm.user_id = this.GET_USER.id;
       //Back End
       $http.create('orders',this.orderForm).then((res)=>{
-        this.close();
-        alert('You successfully ordered to this items.');
+        this.orderForm.user_id = '';
+        this.orderForm.delivery_accepttime_id = '';
+        this.orderForm.delivery_tracking_code = '';
+        this.orderForm.order_status_id = '';
+        this.orderForm.payment_method_id = '';
+        this.orderForm.delivery_agent_id = '';
+        this.orderForm.remark = '';
         console.log(res);
         // this.DEL_ALL_CART_DATA();
       }).catch((err)=>{
@@ -248,6 +339,13 @@ export default {
       this.ADD_MODAL_TYPE('');
       this.form.email = '';
       this.form.password = '';
+      this.orderForm.user_id = '';
+      this.orderForm.delivery_accepttime_id = '';
+      this.orderForm.delivery_tracking_code = '';
+      this.orderForm.order_status_id = '';
+      this.orderForm.payment_method_id = '';
+      this.orderForm.delivery_agent_id = '';
+      this.orderForm.remark = '';
     },
     getCartFromDB(){
       $http.getAll('carts?user_id='+localStorage.getItem('user_id'))

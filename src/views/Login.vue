@@ -80,6 +80,9 @@ export default {
         'GET_USER'
     ])
   },
+  created() {
+    window.scrollTo(0,0);
+    },
   methods:{
     ...mapMutations([
         'ADD_TOKEN',
