@@ -165,19 +165,20 @@ export default {
     RegisterStart(){
       $http.create('customers',this.customersForm).then((res)=>{
         if(res.data.message === "Customer successfully created" ) {
-          this.user = res.data.data.data;
+          // this.user = res.data.data.data;
           this.token = res.data.data.access_token;
-          this.ADD_TOKEN(this.token);
-          this.ADD_USER(this.user);
+          // this.ADD_TOKEN(this.token);
+          // this.ADD_USER(this.user);
           console.log(res);
           //Store Token
           localStorage.setItem('token',this.token);
-          localStorage.setItem('user_id',this.user.id);
-          //  Go Home
+          // localStorage.setItem('user_id',this.user.id);
+          // Go Home
           // Store Data to Vuex
-          this.getCartFromDB();
-          this.getFavFromDB();
-          this.$router.push('/login');
+          // this.getCartFromDB();
+          // this.getFavFromDB();
+          // this.$router.push('/login');
+          window.location = '/login';
         }else{
           alert(res.data.message)
         }

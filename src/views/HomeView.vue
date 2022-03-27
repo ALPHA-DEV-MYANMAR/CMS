@@ -196,6 +196,8 @@
       </div>
     </div>
 
+    <Modal></Modal>
+
   </div>
 </template>
 
@@ -204,10 +206,11 @@ import $http from '../axios.js'
 import { mapGetters , mapState , mapMutations } from 'vuex'
 import Spinner from "@/components/Spinner";
 import Swal from "sweetalert2";
+import Modal from "@/components/Modal";
 
 export default {
   name: "HomeView",
-  components: {Spinner},
+  components: {Modal, Spinner},
   data() {
     return {
       spinner : true,
@@ -291,7 +294,7 @@ export default {
           this.ADD_MODAL_STATUS(true);
         } else {
           let is_same = this.GET_CART_DATA.filter(el => {
-            return el.price.good_id === g.id
+            return el.price === null ? '' :  el.price.good_id === g.id
           });
           if (is_same.length === 0) {
             // Back End Cart Create

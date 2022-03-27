@@ -64,10 +64,10 @@
                     <div class="absolute-top-right aiz-p-hov-icon">
                       <router-link
                           to=""
-                          onclick=""
                           data-toggle="tooltip"
                           data-title="Add to wishlist"
                           data-placement="left"
+                          @click="addWishList(g)"
                       >
                         <i class="la la-heart-o"></i>
                       </router-link>
@@ -208,7 +208,7 @@ export default {
           this.ADD_MODAL_STATUS(true);
         } else {
           let is_same = this.GET_CART_DATA.filter(el => {
-            return el.price.good_id === g.id
+            return el.price === null ? '' : el.price.good_id === g.id
           });
           if (is_same.length === 0) {
             // Back End Cart Create

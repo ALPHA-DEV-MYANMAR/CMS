@@ -162,7 +162,7 @@
                         </td>
                         <td  class="footable-last-visible"
                              style="display: table-cell"  >
-                          {{ User.address.address }}
+                          {{ User.address === null ? '' : User.address.address }}
                         </td>
                       </tr>
                       <tr>
@@ -172,7 +172,7 @@
                         </td>
                         <td  class="footable-last-visible"
                              style="display: table-cell"  >
-                          {{ User.address.postal_code }}
+                          {{ User.address === null ? '' :  User.address.postal_code }}
                         </td>
                       </tr>
                       <tr>
@@ -182,7 +182,7 @@
                         </td>
                         <td  class="footable-last-visible"
                              style="display: table-cell"  >
-                          {{ User.address.state.name }}
+                          {{ User.address === null ? '' :  User.address.state.name }}
                         </td>
                       </tr>
                       </tbody>

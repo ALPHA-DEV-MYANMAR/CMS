@@ -191,6 +191,40 @@
       </div>
     </transition>
   </div>
+  <div v-if="GET_MODAL_TYPE === 'opt'">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content ">
+              <div class="modal-header">
+                <div class="modal-header-title w-100">
+                  <div class="model-title d-flex justify-content-between">
+                    <div class="h5 text-black-50 mb-0">Opt Code</div>
+                    <button class="btn btn-close" @click="close"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-body text-start">
+                <!-- Add Order-->
+                <form @submit.prevent="optStart">
+                  <div class="form-group">
+                    <input type="number" placeholder="Enter Opt Code Here" class="form-control" v-model="opt" >
+                    <div class="text-center">
+                      <button class="btn btn-primary mt-2">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <!--Add Order-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
   <!--Model-->
 </template>
 
@@ -204,6 +238,7 @@ export default {
     return {
       user: {},
       token: "",
+      opt: "",
       form: {
         'email' : "",
         'password' : "",
@@ -247,8 +282,16 @@ export default {
       'ADD_ACCEPT_TIME',
       'ADD_DELIVER_AGENT',
       'ADD_TO_CART_FROM_DB',
-        'ADD_FAVOURITES_FROM_DB'
+      'ADD_FAVOURITES_FROM_DB',
     ]),
+    optStart(){
+      $http.create('validate_opt',{
+        'code' : this.opt
+      }).then((res)=>{
+        console.log(res);
+        this.close();
+      })
+    },
     getOrderStatus(){
       $http.getAll('order_status').then((res)=>{
         this.ADD_ORDER_STATUS(res.data.data);
@@ -317,10 +360,8 @@ export default {
       })
     },
     orderStart(){
-      this.orderForm.user_id = this.GET_USER.id;
       //Back End
       $http.create('orders',this.orderForm).then((res)=>{
-        this.orderForm.user_id = '';
         this.orderForm.delivery_accepttime_id = '';
         this.orderForm.delivery_tracking_code = '';
         this.orderForm.order_status_id = '';
@@ -328,7 +369,7 @@ export default {
         this.orderForm.delivery_agent_id = '';
         this.orderForm.remark = '';
         console.log(res);
-        // this.DEL_ALL_CART_DATA();
+        this.DEL_ALL_CART_DATA();
       }).catch((err)=>{
         console.log(err);
         alert('something was wrong')

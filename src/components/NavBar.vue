@@ -276,16 +276,16 @@
             <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">
                       <span class="text-reset d-flex align-items-center flex-grow-1 nav-link" @click="addGood(c)">
-                          <img :src="c.price.good.photos.length === 0 ? '-': c.price.good.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
+                          <img :src="c.price === null ? '': c.price.good.photos[0].name " class="img-fit size-60px rounded ls-is-cached lazyloaded" >
                           <span class="minw-0 pl-2 flex-grow-1 text-start">
                               <span class="fw-600 mb-1 text-truncate-2 text-black-50" style="font-size: 15px;">
-                                 {{ c.price.good.name }}
+                                 {{ c.price === null ? 'Null' : c.price.good.name }}
                               </span>
                              <span class="text-black-50" style="font-size: 12px;">
-                                 {{ c.price.good.category.name }}
+                                 {{ c.price === null ? 'Null' : c.price.good.category.name }}
                               </span> <br>
-                              <span class="text-black-50" style="font-size: 12px;">{{ c.qty }}x</span>
-                              <span class="text-black-50" style="font-size: 12px;">{{ c.price.price }}</span>
+                              <span class="text-black-50" style="font-size: 12px;">{{ c.price === null ? 'Null' : c.qty }}x</span>
+                              <span class="text-black-50" style="font-size: 12px;">{{ c.price === null ? 'Null' : c.price.price }}</span>
                           </span>
                       </span>
                       <span class="">

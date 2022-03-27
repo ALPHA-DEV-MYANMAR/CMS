@@ -173,7 +173,7 @@ export default {
       }).catch((err)=>{console.log(err)});
     },
     addToCart(g){
-
+      console.log(g)
       if(g.total_stock === 0){
         Swal.fire({
           position: 'center',
@@ -186,7 +186,7 @@ export default {
         if(this.GET_USER.length === 0) {
           this.ADD_MODAL_STATUS(true);
         }else{
-          let is_same = this.GET_CART_DATA.filter(el => { return el.price.good_id === g.id });
+          let is_same = this.GET_CART_DATA.filter(el => { return el.price === null ? '' : el.price.good_id === g.id });
           if(is_same.length === 0 ){
             // Back End Cart Create
             $http.create('carts',{

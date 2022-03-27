@@ -46,16 +46,16 @@
                   <tbody>
                   <tr v-for="c in GET_CART_DATA" :key="c.id">
                     <td>
-                      <img :src="c.price.good.photos.length === 0 ? '' : c.price.good.photos[0].name "  class="img-fit size-60px rounded" alt="">
+                      <img :src=" c.price === null ? '' : c.price.good.photos.length === 0 ? '' : c.price.good.photos[0].name "  class="img-fit size-60px rounded" alt="">
                     </td>
                     <td>
-                      {{ c.price.good.name }}
+                      {{ c.price === null ? 'Null' : c.price.good.name }}
                     </td>
                     <td>
-                      {{ c.price.good.category.length === 0 ? 'No category' : c.price.good.category.name }}
+                      {{ c.price === null ? 'Null' : c.price.good.category.length === 0 ? 'No category' : c.price.good.category.name }}
                     </td>
                     <td>
-                      {{ c.price.good.description }}
+                      {{ c.price === null ? 'Null' : c.price.good.description }}
                     </td>
                     <td class="align-items-center">
                       <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === 1 ? c.qty : c.qty--,CartUpdate(c)]" >
@@ -72,10 +72,10 @@
                       </button>
                     </td>
                     <td class="align-items-center">
-                      {{ c.price.good.prices[0].price }}
+                      {{ c.price === null ? 'Null' : c.price.good.prices[0].price }}
                     </td>
                     <td class="align-items-center">
-                      {{ c.price.good.prices[0].price * c.qty }}
+                      {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}
                     </td>
                     <td>
                       <button class="btn btn-outline-primary btn-sm" @click="DelCartData(c)">

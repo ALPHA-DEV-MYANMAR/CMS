@@ -99,7 +99,7 @@ export default {
           this.ADD_MODAL_STATUS(true);
         } else {
           let is_same = this.GET_CART_DATA.filter(el => {
-            return el.price.good_id === g.good_id
+            return el.price === null ? '' : el.price.good_id === g.good_id
           });
           if (is_same.length === 0) {
             // Back End Cart Create

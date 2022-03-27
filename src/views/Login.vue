@@ -55,6 +55,8 @@
         </div>
       </div>
     </section>
+
+    <Modal></Modal>
   </div>
 </template>
 
@@ -62,12 +64,15 @@
 import $http from '../axios.js'
 import { mapGetters,mapMutations,mapState } from 'vuex'
 import Swal from "sweetalert2";
+import Modal from "@/components/Modal";
 export default {
   name: "Login",
+  components: {Modal},
   data() {
     return {
       user: {},
       token: "",
+      opt: "",
       form: {
         'email' : "",
         'password' : "",
@@ -89,7 +94,9 @@ export default {
         'ADD_USER',
         'ADD_TO_CART',
         'ADD_TO_CART_FROM_DB',
-        'ADD_FAVOURITES_FROM_DB'
+        'ADD_FAVOURITES_FROM_DB',
+        'ADD_MODAL_STATUS',
+        'ADD_MODAL_TYPE'
     ]),
     loginUser(){
       $http.create('login',this.form )
@@ -111,14 +118,28 @@ export default {
             timer: 1500
           });
         }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: res.data.message,
-          });
-          this.form.password = "";
-        }
+          if(res.data.message === 'please_verify_opt_first'){
+              // opt input
+            this.ADD_MODAL_STATUS(true);
+            this.ADD_MODAL_TYPE('opt');
+              // opt input end
+            }else{
+              // Error Message
+              {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: res.data.message,
+                });
+                this.form.password = "";
+              }
+              // Error Message
+            }
+          }
       });
+    },
+    optStart(){
+      console.log(this.opt)
     },
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))
