@@ -1,102 +1,111 @@
 <template>
   <div>
-    <section class="mb-4 pt-3">
-      <div class="container sm-px-0">
+
+<!--    Categories-->
+    <div class="container text-start">
+      <div class="row">
+        <div class="col-12 d-none d-md-block col-md-3">
+          <CategorySideBar></CategorySideBar>
+        </div>
+        <div class="col-12 col-md-9">
+<!--          Filter-->
           <div class="row">
-            <div class="col-12 col-md-3">
-              <CategorySideBar></CategorySideBar>
+            <div class="col-6 col-md-4">
+              <label class="text-black-50 fs-12" >Min Price</label>
+              <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
             </div>
-            <div class="col-12 col-md-9">
-              <div class="text-start">
-                <div class="row">
-                  <div class="col-12">
-                    <h1 class="h6 fw-600 text-body">All Products</h1>
-                  </div>
-                </div>
-<!--                Filter Start-->
-                <div class="row">
-                  <div class="col-6 col-md-3">
-                    <label class="mb-0 opacity-50 fs-12" >Min Price</label>
-                    <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
-                  </div>
-                  <div class="col-6 col-md-3">
-                    <label class="mb-0 opacity-50 fs-12">Max Price</label>
-                    <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
-                  </div>
-                  <div class="col-6 col-md-3">
-                    <label class="mb-0 opacity-50 fs-12">Recommend</label>
-                    <select class="form-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
-                      <option value="">Default</option>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    </select>
-                  </div>
-                </div>
-<!--                Filter End-->
+            <div class="col-6 col-md-4">
+              <label class="text-black-50 fs-12">Max Price</label>
+              <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
+            </div>
+            <div class="col-6 col-md-4 fs-12">
+              <label class="text-black-50">Recommend</label>
+              <select class="form-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
+                <option value="">Default</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+          </div>
+<!--          Filter End-->
+
+<!--          Title-->
+          <div class="row">
+            <div class="col-12 mt-2">
+              <div class="fw-600 h6">ကုန်ပစ္စည်းအားလုံး</div>
+            </div>
+          </div>
+<!--          Title-->
+
+          <!--Spinner-->
+          <div class="row" v-if="spinner">
+            <div class="col-12">
+              <div class="d-flex justify-content-center align-items-center p-5">
+                <Spinner></Spinner>
               </div>
-              <div class="row" v-if="spinner">
-                <div class="col-12">
-                  <div class="d-flex justify-content-center align-items-center p-5">
-                    <Spinner></Spinner>
-                  </div>
-                </div>
-              </div>
-              <div v-else class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
-                <!--Product-->
-                <div class=" col-6 col-md-3" v-for="g in goods" :key="g.id">
-                  <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
-                    <div class="position-relative">
-                        <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
-                      <div class="absolute-top-right aiz-p-hov-icon">
-                        <router-link
+            </div>
+          </div>
+          <!--Spinner-->
+
+<!--          Category -->
+          <div class="row">
+            <div class="col-6 col-md-3 mt-2" v-for="g in goods" :key="g.id">
+                <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
+                  <div class="position-relative">
+                    <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
+                    <div class="absolute-top-right aiz-p-hov-icon">
+                      <router-link
                           to=""
                           data-toggle="tooltip"
                           data-title="Add to wishlist"
                           data-placement="left"
                           @click="addWishList(g)"
-                        >
-                          <i class="la la-heart-o"></i>
-                        </router-link>
-                        <router-link
+                      >
+                        <i class="la la-heart-o"></i>
+                      </router-link>
+                      <router-link
                           to=""
                           @click=""
                           data-toggle="tooltip"
                           data-title="Add to compare"
                           data-placement="left"
-                        >
-                          <i class="las la-sync"></i>
-                        </router-link>
-                        <router-link
+                      >
+                        <i class="las la-sync"></i>
+                      </router-link>
+                      <router-link
                           to=""
                           @click="addToCart(g)"
                           data-toggle="tooltip"
                           data-title="Add to cart"
                           data-placement="left"
-                        >
-                          <i class="las la-shopping-cart"></i>
-                        </router-link>
-                      </div>
-                    </div>
-                    <div class="p-md-3 p-2 text-start">
-                      <div class="fs-15">
-                        <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
-                      </div>
-                      <div class="rating rating-sm mt-1">
-                        <i class="las la-star"></i><i class="las la-star"></i
-                        ><i class="las la-star"></i><i class="las la-star"></i
-                        ><i class="las la-star"></i>
-                      </div>
-                      <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
-                        {{ g.name }}
-                      </h3>
+                      >
+                        <i class="las la-shopping-cart"></i>
+                      </router-link>
                     </div>
                   </div>
+                  <div class="p-md-3 p-2 text-start">
+                    <div class="fs-15">
+                      <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
+                    </div>
+                    <div class="rating rating-sm mt-1">
+                      <i class="las la-star"></i><i class="las la-star"></i
+                    ><i class="las la-star"></i><i class="las la-star"></i
+                    ><i class="las la-star"></i>
+                    </div>
+                    <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
+                      {{ g.name }}
+                    </h3>
+                  </div>
                 </div>
+            </div>
+          </div>
+<!--          Category-->
 
-              </div>
-              <!--Pagination-->
-              <nav aria-label="Page navigation example">
-                <ul class="pagination">
+<!--          Pagination-->
+          <div class="row">
+            <div class="col-12 ">
+              <nav>
+                <ul class="pagination flex-wrap">
                   <li class="page-item" v-for="(p,index) in pagination.links" :key="index" :class="p.url === null ? 'disabled' : '' ">
                     <router-link class="page-link" to="" @click="paginationStart(p)" :class="p.active ? 'bg-info' : '' ">
                       {{ index === 0 ?  '&laquo;' : p.label && index === pagination.links.length-1 ? '&raquo;' : p.label }}
@@ -106,8 +115,12 @@
               </nav>
             </div>
           </div>
+<!--          Pagination-->
+
+        </div>
       </div>
-    </section>
+    </div>
+<!--    Categories-->
 
 <!--    Modal -->
     <Modal></Modal>

@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  name: "StepFour"
+  name: "StepFour",
+  created() {
+    window.scrollTo(0,0);
+  }
 }
 </script>
 

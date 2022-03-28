@@ -345,13 +345,12 @@ export default {
       this.ADD_MODAL_TYPE('');
       Swal.fire({
         icon: 'question',
-        title: 'Are your sure you want to ordered?',
+        title: 'အော်ဒါမှာယူဖို့သေချာပါသလား။',
         showDenyButton: true,
         confirmButtonText: 'Yes',
         denyButtonText: `No`,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Order Confirmed', '', 'success');
           this.orderStart();
         } else if (result.isDenied) {
           Swal.fire('Order Cancel', '', 'error');
@@ -368,8 +367,17 @@ export default {
         this.orderForm.payment_method_id = '';
         this.orderForm.delivery_agent_id = '';
         this.orderForm.remark = '';
-        console.log(res);
-        this.DEL_ALL_CART_DATA();
+
+        if(res.data.data === null ){
+            //order failed
+            Swal.fire(res.data.message, '', 'error');
+        }else{
+          //success order
+          Swal.fire('အော်ဒါမှာယူမူအောင်မြင်ပါသည်။', '', 'success');
+            console.log(res.data.data)
+          this.DEL_ALL_CART_DATA();
+        }
+
       }).catch((err)=>{
         console.log(err);
         alert('something was wrong')

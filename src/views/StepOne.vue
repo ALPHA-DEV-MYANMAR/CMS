@@ -318,7 +318,10 @@
 
 <script>
 export default {
-  name: "StepOne"
+  name: "StepOne",
+  created() {
+    window.scrollTo(0,0);
+  }
 }
 </script>
 

@@ -514,7 +514,10 @@
 
 <script>
 export default {
-  name: "StepTwo"
+  name: "StepTwo",
+  created() {
+    window.scrollTo(0,0);
+  }
 }
 </script>
 

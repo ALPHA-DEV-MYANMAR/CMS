@@ -119,14 +119,14 @@
                           </button>
                           <input
                               type="number"
-                              class="col border-0 text-center flex-grow-1 fs-16 input-number"
+                              class="col border-0 text-center flex-grow-1 fs-16 input-number text-reset"
                               placeholder="1"
-                              v-model="quantity"/>
+                              :value="getQty" />
                           <button
                               class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                               type="button"
                               data-type="plus"
-                              @click=" quantity === 10 ? 10 : quantity++ "
+                              @click=" quantity === SHOW_Good.total_stock ? SHOW_Good.total_stock : quantity++ "
                           >
                             <i class="las la-plus"></i>
                           </button>
@@ -153,14 +153,13 @@
                   </div>
 
                   <div class="mt-3">
-                    <!--                  Add To Cart-->
+                    <!-- Add To Cart-->
                     <button v-if="SHOW_Good.total_stock > 0"  class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
                       <i class="las la-shopping-bag"></i>
-                      <span class="d-none d-md-inline-block">Add to cart</span>
+                      <span class="d-md-inline-block">Add to cart</span>
                     </button>
-                    <!--                  Add To Cart-->
-
-                    <!--                  Add Buy-->
+                    <!--Add To Cart-->
+                    <!--Add Buy-->
                     <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600" @click="OrderNow(SHOW_Good)">
                       <i class="la la-shopping-cart"></i> Order Now
                     </button>
@@ -168,7 +167,7 @@
                       <i class="la la-cart-arrow-down"></i> Out of Stock
                     </button>
                   </div>
-                  <!--                Add Buy-->
+                  <!-- Add Buy-->
 
                   <div class="d-table width-100 mt-3">
                     <div class="d-table-cell">
@@ -284,7 +283,7 @@ export default {
   components: {Modal},
   data() {
     return {
-      quantity : 1,
+      quantity : 1 ,
       is_cart: true,
     }
   },
@@ -296,6 +295,13 @@ export default {
       'GET_TOKEN',
       'GET_FAVOURITES'
     ]),
+    getQty(){
+      if(this.quantity > this.SHOW_Good.total_stock){
+        return this.quantity = 1;
+      }else{
+        return this.quantity;
+      }
+    }
   },
   created() {
     window.scrollTo(0,0);
@@ -356,7 +362,6 @@ export default {
       }
     },
     addToCart(g){
-
       if(g.total_stock === 0){
         Swal.fire({
           position: 'center',

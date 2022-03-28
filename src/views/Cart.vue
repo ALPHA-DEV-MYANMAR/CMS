@@ -67,7 +67,7 @@
                         placeholder="1"
                         :value="c.qty"
                       />
-                      <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === 10 ? c.qty : c.qty++,CartUpdate(c)]">
+                      <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === c.price.stock ? c.price.stock : c.qty++,CartUpdate(c)]">
                         <i class="las la-plus"></i>
                       </button>
                     </td>

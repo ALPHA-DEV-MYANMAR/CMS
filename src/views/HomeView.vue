@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="row " v-else>
-                <div class="col-6 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
+                <div class="col-12 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
                   <div class="card rounded-lg shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
                     <div class="card-body">
                       <span class="text-uppercase fw-bolder text-primary">{{ c.name }}</span>

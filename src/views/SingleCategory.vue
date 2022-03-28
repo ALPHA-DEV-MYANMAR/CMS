@@ -1,63 +1,65 @@
 <template>
   <div>
     {{ getGoodByCategory }} {{ getGoodBySubCategory }}
-    <section class="mb-4 pt-3">
-      <div class="container sm-px-0">
-        <div class="row">
-          <div class="col-12 col-md-3">
-            <CategorySideBar></CategorySideBar>
+
+    <!--Categories-->
+    <div class="container text-start">
+      <div class="row">
+        <div class="col-12 d-none d-md-block col-md-3">
+          <CategorySideBar></CategorySideBar>
+        </div>
+        <div class="col-12 col-md-9">
+
+          <!--Filter Start-->
+          <div class="row">
+            <div class="col-6 col-md-3 " >
+              <label class="mb-0 opacity-50 fs-12">Sub Category</label>
+              <select class="custom-select" v-model="filter.sub_category_id" aria-label=".form-select-sm example" @change="filterStart">
+                <option selected value="">Default</option>
+                <option :value="s.id" v-for="s in subCategories" :key="s.id">{{ s.name }}</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3" >
+              <label class="mb-0 opacity-50 fs-12">Recommend</label>
+              <select class="custom-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
+                <option value="">Default</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3 " >
+              <label class="mb-0 opacity-50 fs-12" >Min Price</label>
+              <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
+            </div>
+            <div class="col-6 col-md-3 " >
+              <label class="mb-0 opacity-50 fs-12">Max Price</label>
+              <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
+            </div>
           </div>
-          <div class="col-12 col-md-9">
-            <div class="text-start">
-              <div class="row ">
-                <div class="col-12">
-                  <h1 class="h6 fw-600 text-body">{{ SHOW_CAT_BY_ID.name }}</h1>
-                  <input type="hidden" name="keyword" value="" />
-                </div>
-              </div>
-<!--              Filter Start-->
-              <div class="row">
+          <!--Filter End-->
 
-                <div class="col-6 col-md-3 " >
-                  <label class="mb-0 opacity-50 fs-12">Sub Category</label>
-                  <select class="custom-select" v-model="filter.sub_category_id" aria-label=".form-select-sm example" @change="filterStart">
-                    <option selected value="">Default</option>
-                    <option :value="s.id" v-for="s in subCategories" :key="s.id">{{ s.name }}</option>
-                  </select>
-                </div>
-
-                <div class="col-6 col-md-3 " >
-                  <label class="mb-0 opacity-50 fs-12" >Min Price</label>
-                  <input type="number" class="form-control" placeholder="0" v-model="filter.min_price" @keyup="filterStart">
-                </div>
-
-                <div class="col-6 col-md-3 " >
-                  <label class="mb-0 opacity-50 fs-12">Max Price</label>
-                  <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
-                </div>
-
-                <div class="col-6 col-md-3  " >
-                  <label class="mb-0 opacity-50 fs-12">Recommend</label>
-                  <select class="custom-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
-                    <option value="">Default</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </div>
-
-              </div>
-<!--              Filter End-->
+          <!--Title-->
+          <div class="row">
+            <div class="col-12 mt-2 mt-2">
+              <div class="fw-600 h6">{{ SHOW_CAT_BY_ID.name }}</div>
             </div>
-            <div class="row" v-if="spinner">
-              <div class="col-12">
-                <div class="d-flex justify-content-center align-items-center p-5">
-                  <Spinner></Spinner>
-                </div>
+          </div>
+          <!--Title-->
+
+          <!--Spinner-->
+          <div class="row" v-if="spinner">
+            <div class="col-12">
+              <div class="d-flex justify-content-center align-items-center p-5">
+                <Spinner></Spinner>
               </div>
             </div>
-            <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" >
-              <!--Product-->
-              <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
+          </div>
+          <!-- Spinner-->
+
+          <!--Category -->
+          <div class="row">
+            <div class="col-6 col-md-3 mt-2" v-for="g in goods" :key="g.id">
+              <div class="mt-3" >
                 <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                   <div class="position-relative">
                     <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '-' : g.photos[0].name" />
@@ -107,20 +109,29 @@
                 </div>
               </div>
             </div>
-            <!--Pagination-->
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item" v-for="(p,index) in pagination.links" :key="index" :class="p.url === null ? 'disabled' : '' ">
-                  <router-link class="page-link" to="" @click="paginationStart(p)" :class="p.active ? 'bg-info' : '' ">
-                    {{ index === 0 ?  '&laquo;' : p.label && index === pagination.links.length-1 ? '&raquo;' : p.label }}
-                  </router-link>
-                </li>
-              </ul>
-            </nav>
           </div>
+          <!-- Category-->
+
+          <!--Pagination-->
+          <div class="row">
+            <div class="col-12 ">
+              <nav>
+                <ul class="pagination flex-wrap">
+                  <li class="page-item" v-for="(p,index) in pagination.links" :key="index" :class="p.url === null ? 'disabled' : '' ">
+                    <router-link class="page-link" to="" @click="paginationStart(p)" :class="p.active ? 'bg-info' : '' ">
+                      {{ index === 0 ?  '&laquo;' : p.label && index === pagination.links.length-1 ? '&raquo;' : p.label }}
+                    </router-link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <!--Pagination-->
+
         </div>
       </div>
-    </section>
+    </div>
+    <!--Categories-->
 
 <!--    Modal -->
     <Modal></Modal>

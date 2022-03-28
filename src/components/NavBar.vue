@@ -1,10 +1,9 @@
 <template>
   <div>
 <!--    Top Bar-->
-    <div class="top-navbar bg-white border-bottom border-soft-secondary z-1035">
-      <div class="container">
+    <div class="container">
         <div class="row">
-          <div class="col-6 col-md-12 d-flex justify-content-end">
+          <div class="col-12 col-md-12 d-flex justify-content-end">
             <div class="d-flex" v-if="GET_USER.length === 0">
               <router-link to="login" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Login</router-link>
               <router-link to="register" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Register</router-link>
@@ -16,103 +15,103 @@
           </div>
         </div>
       </div>
-    </div>
 <!--    Top Bar-->
 
 <!--    Header-->
-    <header class="sticky-top z-1020 bg-white border-bottom shadow-sm">
-      <div class="position-relative logo-bar-area z-1">
-        <div class="container">
-          <div class="d-flex align-items-center ">
-<!--            Logo-->
-            <div class="ml-2">
-              <router-link class="d-block py-20px mr-3 ml-0" to="/">
-                <img
-                    src="../assets/img/logo.png"
-                    alt=""
-                    class="mw-100 h-30px h-md-40px"
-                    height="40"
-                />
-              </router-link>
-            </div>
-<!--            Logo-->
+    <header class="position-sticky top-0 bg-white p-3 z-1020">
+     <div class="container">
+       <div class="row justify-content-between align-items-center text-center p">
 
-<!--            Search-->
-            <div class="flex-grow-1 front-header-search d-flex align-items-center mr-1">
-              <div class="position-relative flex-grow-1">
-                  <div class="input-group">
-                    <input type="text" class="form-control rounded-pill" placeholder="I'm shopping for ..."  @keyup="SearchStart" v-model="keyword">
+<!--        Logo-->
+         <div class="col-8 col-md-3" :class="is_show === true ? 'd-none': '' ">
+           <router-link to="/">
+             <img
+                 src="../assets/img/logo.png"
+                 alt=""
+                 class="mw-100 h-30px h-md-40px"
+                 height="40"
+             />
+           </router-link>
+         </div>
+<!--        Logo-->
 
-                  </div>
-<!--                Search Data-->
-                <div v-if="is_serach" class="typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
-                  <div>
-                    <ul class="list-group list-group-raw">
-                      <li class="list-group-item" v-for="g in searchGood" :key="g.id">
-                        <router-link  to="" class="text-start nav-link text-black-50 hov-text-primary c-pointer" @click="addGoodSearch(g)">
-                          <div class="d-flex align-items-start">
-                            <div class="mr-3">
-                              <img class="size-40px img-fit rounded" :src="g.photos === null ? '' : g.photos[0].name ">
-                            </div>
-                            <div>
-                              <div class="text-truncate fs-14 mb-5px">
-                                {{ g.name }}
-                              </div>
-                              <div class="">
-                                <span class="fw-600 fs-16 text-warning">{{ g.prices[0].price }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </router-link>
-                      </li >
-                    </ul>
-                  </div>
-                </div>
-<!--                Search Data-->
-              </div>
-            </div>
-<!--            Search-->
+<!--       Search-->
+         <div class="col-12 col-md-6 d-md-block" :class="is_show === false ? 'd-none' : '' ">
+           <div class="d-flex justify-content-center align-items-center "  >
+               <input type="search" class="form-control rounded-pill " placeholder="search product here..." @keyup="SearchStart" v-model="keyword">
+               <i class="fa-solid fa-xmark position-relative ml-3 fa-2x text-black-50 d-inline-block d-md-none d-lg-none"  @click="is_show = false"></i>
+           </div>
+           <!--Search Data Form-->
+           <div v-if="is_serach" class="typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
+             <div>
+               <ul class="list-group list-group-raw">
+                 <li class="list-group-item" v-for="g in searchGood" :key="g.id">
+                   <router-link  to="" class="text-start nav-link text-black-50 hov-text-primary c-pointer" @click="addGoodSearch(g)">
+                     <div class="d-flex align-items-start">
+                       <div class="mr-3">
+                         <img class="size-40px img-fit rounded" :src="g.photos === null ? '' : g.photos[0].name ">
+                       </div>
+                       <div>
+                         <div class="text-truncate fs-14 mb-5px">
+                           {{ g.name }}
+                         </div>
+                         <div class="">
+                           <span class="fw-600 fs-16 text-warning">{{ g.prices[0].price }}</span>
+                         </div>
+                       </div>
+                     </div>
+                   </router-link>
+                 </li >
+               </ul>
+             </div>
+           </div>
+           <!--Search Data Form End-->
+         </div>
+<!--       Search-->
 
-            <router-link to="/wishlist" class="d-flex align-items-center nav-link">
-                <i class="la la-heart-o la-2x opacity-80 text-black-50" style="font-size: 25px"></i>
+<!--       favourites & Cart & Search-->
+         <div class="col-4 col-md-3 " :class="is_show === true ? 'd-none': '' ">
+<!--           search-->
+           <div class="d-md-none d-block d-lg-none d-flex justify-content-center align-items-center"  @click="is_show = true">
+             <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+           </div>
+<!--           search end-->
+
+           <div class="justify-content-around d-none d-md-flex align-items-center">
+             <!--favourites-->
+             <router-link to="/wishlist" class="nav-link">
+               <i class="fa-solid fa-heart fa-lg text-danger"></i>
                 <span class="flex-grow-1">
-                    <span class="badge badge-primary badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
-                    <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
+                  <span class="badge badge-warning badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
+                  <span class="nav-box-text d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
                 </span>
-              </router-link>
+             </router-link>
+             <!--favourites end-->
 
-            <div class="d-flex align-items-center nav-link c-pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                <i class="la la-shopping-cart la-2x opacity-80 text-black-50" style="font-size: 25px;"></i>
-                <span class="flex-grow-1">
-                      <span class="badge badge-primary badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
-                      <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">Cartlist</span>
-                 </span>
-              </div>
+             <!--cart-->
+             <router-link to="" class="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+               <i class="fa-solid fa-cart-arrow-down fa-lg text-primary"></i>
+               <span class="flex-grow-1">
+                    <span class="badge badge-warning badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
+                    <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">Cartlist</span>
+               </span>
+             </router-link>
+             <!--cart-->
+           </div>
 
-          </div>
-        </div>
-      </div>
-      <div class="bg-white border-top border-gray-200 py-1">
-        <div class="container">
-          <ul class="list-inline mb-0 pl-0 mobile-hor-swipe text-center">
-            <li class="list-inline-item mr-0">
-              <router-link  to="/" class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-primary nav-link" >
-                Home
-              </router-link>
-            </li>
-            <li class="list-inline-item mr-0">
-              <router-link  to="/categories"  class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100 text-primary nav-link" >
-                Products
-              </router-link>
-            </li>
-            <li class="list-inline-item mr-0" v-if="GET_USER.length !== 0">
-              <router-link  to="/profile" class="opacity-60 fs-14 px-3 py-2 d-inline-block fw-600 hov-opacity-100  text-primary nav-link" >
-                Dashboard
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
+         </div>
+<!--       favourites & Cart & Search-->
+       </div>
+       <div class="row d-none d-lg-block fw-600">
+         <div class="col-12">
+           <div class="d-flex justify-content-center align-items-center">
+             <router-link to="/" class="nav-link text-black-50">Home</router-link>
+             <router-link to="/" class="nav-link text-black-50">Products</router-link>
+             <router-link to="/" class="nav-link text-black-50">Account</router-link>
+           </div>
+         </div>
+       </div>
+     </div>
     </header>
 <!--    Header-->
 
@@ -129,7 +128,7 @@
           <div class="col-lg-3 col-md-6">
             <router-link
                 class="text-reset border-left text-center p-4 d-block nav-link"
-                to=""
+                to="/step-three"
             >
               <i class="la la-file-text la-3x text-primary mb-2" style="font-size: 30px;"></i>
               <h4 class="h6">Terms &amp; conditions</h4>
@@ -138,7 +137,7 @@
           <div class="col-lg-3 col-md-6">
             <router-link
                 class="text-reset border-left text-center p-4 d-block nav-link"
-                to=""
+                to="/step-two"
             >
               <i class="la la-mail-reply la-3x text-primary mb-2" style="font-size: 30px;"></i>
               <h4 class="h6">return policy</h4>
@@ -156,7 +155,7 @@
           <div class="col-lg-3 col-md-6">
             <router-link
                 class="text-reset border-left border-right text-center p-4 d-block nav-link"
-                to=""
+                to="/step-one"
             >
               <i class="las la-exclamation-circle la-3x text-primary mb-2" style="font-size: 30px;" ></i>
               <h4 class="h6">privacy policy</h4>
@@ -304,6 +303,49 @@
     </div>
 <!--    Offcanvas-->
 
+<!--    Footer Bar Only Show in mobile-->
+    <div class="d-block d-md-none d-lg-none position-fixed bottom-0 bg-danger d-flex w-100 bg-white">
+      <div class="col">
+        <router-link to="/" class="text-reset d-block text-center pb-2 pt-3">
+          <i class="las la-home fs-20 opacity-60 "></i>
+          <span class="d-block fs-10 fw-600 opacity-60 ">Home</span>
+        </router-link>
+      </div>
+      <div class="col">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+          <i class="las la-list-ul fs-20 opacity-60 "></i>
+          <span class="d-block fs-10 fw-600 opacity-60 ">Categories</span>
+        </router-link>
+      </div>
+      <div class="col-auto">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+          <span class="align-items-center bg-primary border border-white border-width-4 d-flex justify-content-center position-relative rounded-circle size-50px" style="margin-top: -33px;box-shadow: 0px -5px 10px rgb(0 0 0 / 15%);border-color: #fff !important;">
+              <i class="las la-shopping-bag la-2x text-white"></i>
+          </span>
+          <span class="d-block mt-1 fs-10 fw-600 opacity-60 opacity-100 fw-600">
+             Cart(<span class="cart-count">1</span>)
+          </span>
+        </router-link>
+      </div>
+      <div class="col">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+          <span class="d-inline-block position-relative px-2">
+              <i class="las la-bell fs-20 opacity-60 "></i>
+          </span>
+          <span class="d-block fs-10 fw-600 opacity-60 ">Notifications</span>
+        </router-link>
+      </div>
+      <div class="col">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3 mobile-side-nav-thumb" >
+          <span class="d-block mx-auto">
+               <img src="http://localhost/action/CMS/public/assets/img/avatar-place.png" class="rounded-circle size-20px">
+          </span>
+          <span class="d-block fs-10 fw-600 opacity-60">Account</span>
+        </router-link>
+      </div>
+    </div>
+<!--    Footer Bar Only Show in mobile-->
+
   </div>
 </template>
 
@@ -315,6 +357,7 @@ export default {
   name: "NavBar",
   data() {
     return {
+      is_show : false,
       keyword : "",
       searchGood : [],
       is_serach : false,
