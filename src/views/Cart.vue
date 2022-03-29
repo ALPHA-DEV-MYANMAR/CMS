@@ -1,120 +1,111 @@
 <template>
   <div>
-    <!--Summery-->
-    <section class="m-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-md-12 mx-auto ">
-            <div class="card">
-              <div class="card-header">
-                <div class="d-flex justify-content-center align-items-center text-black-50">
-                  <i class="la-3x mb-2 las la-shopping-cart"></i>
-                  <h5>Cart Listing</h5>
-                </div>
-              </div>
-              <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+                <span class="h5 text-black-50 mb-0">Cart Listing</span>
+            </div>
+            <div class="card-body">
 
-<!--                If Cart Null-->
-                <div class="container" v-if="GET_CART_DATA.length === 0">
-                  <div class="row">
-                    <div class="col-xl-8 mx-auto">
-                      <div class="shadow-sm bg-white p-4 rounded">
-                        <div class="text-center p-3">
-                          <i class="las la-frown la-3x opacity-60 mb-3"></i>
-                          <h3 class="h4 fw-700  text-black-50">Your Cart is empty</h3>
+            <div style="overflow-x:auto;">
+              <table class="table table-borderless align-middle text-lg-center ">
+                <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td colspan="6">
+                    <!--If Cart Null-->
+                    <div class="container" v-if="GET_CART_DATA.length === 0">
+                      <div class="row">
+                        <div class="col-xl-8 mx-auto">
+                          <div class="shadow-sm bg-white p-4 rounded">
+                            <div class="text-center p-3 d-flex justify-content-center align-items-center">
+                              <i class="las la-frown la-3x opacity-60 mb-3"></i>
+                              <h3 class="h4 fw-700  text-black-50 mb-0">Your Cart is empty</h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-<!--                If Cart Null End-->
-
-<!--                If Cart Not Null-->
-                <table  v-else class="table table-borderless align-middle text-center">
-                  <thead>
-                  <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Each</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Delete</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr v-for="c in GET_CART_DATA" :key="c.id">
-                    <td>
-                      <img :src=" c.price === null ? '' : c.price.good.photos.length === 0 ? '' : c.price.good.photos[0].name "  class="img-fit size-60px rounded" alt="">
-                    </td>
-                    <td>
-                      {{ c.price === null ? 'Null' : c.price.good.name }}
-                    </td>
-                    <td>
-                      {{ c.price === null ? 'Null' : c.price.good.category.length === 0 ? 'No category' : c.price.good.category.name }}
-                    </td>
-                    <td>
-                      {{ c.price === null ? 'Null' : c.price.good.description }}
-                    </td>
-                    <td class="align-items-center">
-                      <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === 1 ? c.qty : c.qty--,CartUpdate(c)]" >
-                        <i class="las la-minus"></i>
-                      </button>
-                      <input
-                        type="number"
-                        class="col border-0 text-center fs-16 input-number w-25"
-                        placeholder="1"
-                        :value="c.qty"
-                      />
-                      <button class="btn btn-icon btn-sm btn-circle btn-light" @click="[c.qty === c.price.stock ? c.price.stock : c.qty++,CartUpdate(c)]">
+                    <!--If Cart Null End-->
+                  </td>
+                </tr>
+                <tr v-for="c in GET_CART_DATA" :key="c.id" class="text-black-50">
+                  <td class="align-middle">
+                    <img :src=" c.price === null ? '' : c.price.good.photos.length === 0 ? '' : c.price.good.photos[0].name "  class="img-fit size-60px rounded" alt="">
+                  </td>
+                  <td class="align-middle">
+                    {{ c.price === null ? 'Null' : c.price.good.name }}
+                  </td>
+                  <td class="align-middle">
+                    {{ c.price === null ? 'Null' : c.price.good.category.length === 0 ? 'No category' : c.price.good.category.name }}
+                  </td>
+                  <td class="align-middle">
+                    <div class="text-center">
+                      <button class="btn btn-icon btn-sm btn-light rounded-circle" @click="[c.qty === c.price.stock ? c.price.stock : c.qty++,CartUpdate(c)]">
                         <i class="las la-plus"></i>
                       </button>
-                    </td>
-                    <td class="align-items-center">
-                      {{ c.price === null ? 'Null' : c.price.good.prices[0].price }}
-                    </td>
-                    <td class="align-items-center">
-                      {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}
-                    </td>
-                    <td>
-                      <button class="btn btn-outline-primary btn-sm" @click="DelCartData(c)">
-                        <i class="las la-trash"></i>
+                      <input
+                          type="number"
+                          class="col border-0 text-center fs-16 input-number"
+                          placeholder="1"
+                          :value="c.qty"
+                      />
+                      <button class="btn btn-icon btn-sm btn-light rounded-circle" @click="[c.qty === 1 ? c.qty : c.qty--,CartUpdate(c)]" >
+                        <i class="las la-minus"></i>
                       </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="5">
-                    </td>
-                    <td class="fw-600" colspan="2">
-                      Sub Total:
-                    </td>
-                    <td class="fw-bold text-warning h5" colspan="2">
-                      {{ total.price_total }}
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-<!--                If Cart Not Null End-->
-
-              </div>
-              <div class="card-footer">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                      <div>
-                        <router-link class="btn btn-outline-primary" to="/categories">
-                          <i class="las la-arrow-left"></i>Return To Shop
-                        </router-link>
-                      </div>
-                      <div>
-                        <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered</router-link>
-                      </div>
                     </div>
+                  </td>
+                  <td class="align-middle">
+                    {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}
+                  </td>
+                  <td class="align-middle">
+                    <button class="btn btn-danger btn-sm rounded-circle " @click="DelCartData(c)">
+                      <i class="las la-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                  </td>
+                  <td class="fw-600" colspan="2">
+                    Sub Total:
+                  </td>
+                  <td class="fw-bold text-warning h5" colspan="2">
+                    {{ GET_CART_DATA.length === 0 ? 0 : total.price_total  }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                <div>
+                  <router-link class="btn btn-outline-primary" to="/categories">
+                    <i class="las la-arrow-left"></i>Return To Shop
+                  </router-link>
+                </div>
+                <div>
+                  <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered</router-link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <Modal></Modal>
 
@@ -206,9 +197,7 @@ export default {
       $http.getAll('carts?user_id='+localStorage.getItem('user_id'))
           .then((res)=>{
             this.cart = res.data.data;
-
             this.getTotal();
-
             //Add To Cart To Vuex
             this.ADD_TO_CART_FROM_DB(this.cart);
           });

@@ -42,7 +42,7 @@
                <i class="fa-solid fa-xmark position-relative ml-3 fa-2x text-black-50 d-inline-block d-md-none d-lg-none"  @click="is_show = false"></i>
            </div>
            <!--Search Data Form-->
-           <div v-if="is_serach" class="typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
+           <div v-if="is_serach" class="z-1020 typed-search-box bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" >
              <div>
                <ul class="list-group list-group-raw">
                  <li class="list-group-item" v-for="g in searchGood" :key="g.id">
@@ -89,7 +89,7 @@
              <!--favourites end-->
 
              <!--cart-->
-             <router-link to="" class="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+             <router-link to="" class="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#cart"  aria-controls="offcanvasRight">
                <i class="fa-solid fa-cart-arrow-down fa-lg text-primary"></i>
                <span class="flex-grow-1">
                     <span class="badge badge-warning badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
@@ -105,9 +105,18 @@
        <div class="row d-none d-lg-block fw-600">
          <div class="col-12">
            <div class="d-flex justify-content-center align-items-center">
-             <router-link to="/" class="nav-link text-black-50">Home</router-link>
-             <router-link to="/" class="nav-link text-black-50">Products</router-link>
-             <router-link to="/" class="nav-link text-black-50">Account</router-link>
+             <router-link to="/" class="nav-link text-black-50">
+               <i class="fa-solid fa-house"></i>
+                 Home
+             </router-link>
+             <router-link to="/categories" class="nav-link text-black-50">
+               <i class="fa-solid fa-align-justify"></i>
+               Products
+             </router-link>
+             <router-link to="/profile" class="nav-link text-black-50">
+               <i class="fa-solid fa-user"></i>
+               Account
+             </router-link>
            </div>
          </div>
        </div>
@@ -257,8 +266,8 @@
     </section>
     <!--      End Content Info-->
 
-<!--    Offcanvas-->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<!--   Cart Offcanvas-->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cart" aria-labelledby="offcanvasRightLabel">
       <div class="card min-vh-100">
         <div class="card-header">
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -301,7 +310,52 @@
         </div>
       </div>
     </div>
-<!--    Offcanvas-->
+<!--  Cart  Offcanvas-->
+
+<!--    Categories Offcanvas-->
+    <div class="offcanvas offcanvas-start text-start" tabindex="-1" id="categories" aria-labelledby="offcanvasRightLabel">
+      <div class="card min-vh-100">
+        <div class="card-header">
+          <h4 class="mb-0 text-black-50">Categories</h4>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="card-body p-0 overflow-scroll " >
+          <ul class="list-unstyled " >
+            <li>
+              <router-link to="/categories" class="nav-link p-3 m-1 card shadow-sm text-black-50 rounded fw-600">
+                <div class="d-flex justify-content-start align-items-center">
+                  <i class="las la-angle-left"></i>
+                  All Categories
+                </div>
+              </router-link>
+            </li>
+            <li class="" v-for="c in SHOW_ALL_CAT" @click="action(c)">
+              <router-link to="" class="fs-14 fw-600 nav-link text-black-50 card shadow-sm rounded p-3 m-1 hov-text-dark ">
+                <div class="d-flex justify-content-start align-items-center">
+                  <i class="las la-angle-left"></i>
+                  {{ c.name }}
+                </div>
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<!--    Categories Offcanvas-->
+
+  <!--    Profile Offcanvas-->
+  <div class="offcanvas offcanvas-start text-start" tabindex="-1" id="profile" aria-labelledby="offcanvasLeftLabel">
+    <div class="card min-vh-100">
+      <div class="card-header">
+        <h4 class="mb-0 text-black-50">Profile</h4>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="card-body p-0 overflow-scroll" >
+        <SideBar></SideBar>
+      </div>
+    </div>
+  </div>
+  <!--    Profile Offcanvas-->
 
 <!--    Footer Bar Only Show in mobile-->
     <div class="d-block d-md-none d-lg-none position-fixed bottom-0 bg-danger d-flex w-100 bg-white">
@@ -312,33 +366,33 @@
         </router-link>
       </div>
       <div class="col">
-        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3" data-bs-toggle="offcanvas" data-bs-target="#categories" aria-controls="offcanvasRight">
           <i class="las la-list-ul fs-20 opacity-60 "></i>
           <span class="d-block fs-10 fw-600 opacity-60 ">Categories</span>
         </router-link>
       </div>
       <div class="col-auto">
-        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3" data-bs-toggle="offcanvas" data-bs-target="#cart" aria-controls="offcanvasRight">
           <span class="align-items-center bg-primary border border-white border-width-4 d-flex justify-content-center position-relative rounded-circle size-50px" style="margin-top: -33px;box-shadow: 0px -5px 10px rgb(0 0 0 / 15%);border-color: #fff !important;">
               <i class="las la-shopping-bag la-2x text-white"></i>
           </span>
           <span class="d-block mt-1 fs-10 fw-600 opacity-60 opacity-100 fw-600">
-             Cart(<span class="cart-count">1</span>)
+             Cart(<span class="cart-count">{{ GET_CART_COUNT }}</span>)
           </span>
         </router-link>
       </div>
       <div class="col">
-        <router-link to="" class="text-reset d-block text-center pb-2 pt-3">
+        <router-link to="/wishlist" class="text-reset d-block text-center pb-2 pt-3">
           <span class="d-inline-block position-relative px-2">
               <i class="las la-bell fs-20 opacity-60 "></i>
           </span>
-          <span class="d-block fs-10 fw-600 opacity-60 ">Notifications</span>
+          <span class="d-block fs-10 fw-600 opacity-60 ">Wishlist</span>
         </router-link>
       </div>
       <div class="col">
-        <router-link to="" class="text-reset d-block text-center pb-2 pt-3 mobile-side-nav-thumb" >
+        <router-link to="" class="text-reset d-block text-center pb-2 pt-3 mobile-side-nav-thumb"  data-bs-toggle="offcanvas" data-bs-target="#profile" aria-controls="offcanvasLeft" >
           <span class="d-block mx-auto">
-               <img src="http://localhost/action/CMS/public/assets/img/avatar-place.png" class="rounded-circle size-20px">
+               <img src="../assets/img/avatar-place.png" class="rounded-circle size-20px">
           </span>
           <span class="d-block fs-10 fw-600 opacity-60">Account</span>
         </router-link>
@@ -353,14 +407,20 @@
 import {mapGetters,mapMutations} from "vuex"
 import $http from '../axios.js'
 import Swal from "sweetalert2";
+import CategorySideBar from "@/components/CategorySideBar";
+import SideBar from "@/components/SideBar";
+import Spinner from "@/components/Spinner";
 export default {
   name: "NavBar",
+  components: {Spinner, CategorySideBar,SideBar},
   data() {
     return {
+      spinner : true,
       is_show : false,
       keyword : "",
       searchGood : [],
       is_serach : false,
+      categories : [],
     }
   },
   computed:{
@@ -370,7 +430,8 @@ export default {
         'GET_USER',
         'GET_TOKEN',
         'GET_FAVOURITES',
-        'GET_FAVOURITES_TOTAL'
+        'GET_FAVOURITES_TOTAL',
+        'SHOW_ALL_CAT'
     ]),
   },
   created() {
@@ -384,8 +445,14 @@ export default {
         'ADD_USER',
         'ADD_TOKEN',
         'DEL_ALL_FAVOURITES_DATA',
-        'DEL_ALL_CART_DATA'
+        'DEL_ALL_CART_DATA',
+        'ADD_GOOD_WITH_ID',
     ]),
+
+    action(c){
+      this.$router.push('/single-category');
+      this.ADD_GOOD_WITH_ID(c);
+    },
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))
           .then((res)=>{

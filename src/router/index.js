@@ -14,7 +14,6 @@ import StepOne from "@/views/StepOne";
 import StepTwo from "@/views/StepTwo";
 import StepThree from "@/views/StepThree";
 import StepFour from "@/views/StepFour";
-import Order from "@/views/Order";
 
 const routes = [
   {
@@ -58,17 +57,6 @@ const routes = [
     path: '/manage-profile',
     name: 'manage-profile',
     component: ManageProfile,
-    beforeEnter: (to, from ,next) => {
-      if(localStorage.getItem("token") ) {
-        next();
-      }
-      else next('/login');
-    },
-  },
-  {
-    path: '/order',
-    name: 'order',
-    component: Order,
     beforeEnter: (to, from ,next) => {
       if(localStorage.getItem("token") ) {
         next();

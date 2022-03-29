@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home text-start">
 
     <div class="home-banner-area mb-4 pt-3">
       <div class="container">
@@ -28,7 +28,7 @@
                 <div class="col-12 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
                   <div class="card rounded-lg shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
                     <div class="card-body">
-                      <span class="text-uppercase fw-bolder text-primary">{{ c.name }}</span>
+                      <span class="text-uppercase fw-bolder text-black-50">{{ c.name }}</span>
                     </div>
                   </div>
                 </div>
@@ -122,9 +122,9 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
+                <div class="d-none d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
-                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Recommend Products</span>
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Recommended Products</span>
                   </div>
                   <div>
                     <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">See More >> </router-link>
