@@ -10,7 +10,7 @@
             <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden table-borderless hov-shadow-2xl" >
               <div class="px-3 pt-3">
                 <div class="h3 fw-700">{{ GET_CART_COUNT }}</div>
-                <div class="opacity-50">Total Carts</div>
+                <div class="opacity-50">{{ i.cartList }}</div>
               </div>
               <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@
             >
               <div class="px-3 pt-3">
                 <div class="h3 fw-700">{{ GET_FAVOURITES_TOTAL }}</div>
-                <div class="opacity-50">Total Wishlist</div>
+                <div class="opacity-50">{{ i.favouriteList }}</div>
               </div>
               <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +49,8 @@
                 class="bg-grad-2 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
             >
               <div class="px-3 pt-3">
-                <div class="h3 fw-700">$0.00</div>
-                <div class="opacity-50">Total Sold Amount</div>
+                <div class="h3 fw-700">{{ summary }}</div>
+                <div class="opacity-50">{{ i.totalCost }}</div>
               </div>
               <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@
             >
               <div class="px-3 pt-3">
                 <div class="h3 fw-700">{{ order_count }}</div>
-                <div class="opacity-50">Successful orders</div>
+                <div class="opacity-50">{{ i.orderList }}</div>
               </div>
               <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -89,14 +89,14 @@
           <div class="col-12 col-md-6">
             <div class="card">
               <div class="card-header">
-                <h5 class="mb-0 h6">Profile Detail</h5>
+                <h5 class="mb-0 h6">{{ i.myAccount }}</h5>
               </div>
               <div class="card-body">
                 <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start table-borderless" >
                   <tbody >
                   <tr>
                     <td class="footable-first-visible"  style="display: table-cell"  >
-                      Name:
+                      {{ i.name }}:
                     </td>
                     <td class="footable-last-visible" style="display: table-cell"  >
                       {{ User.name }}
@@ -104,7 +104,7 @@
                   </tr>
                   <tr>
                     <td class="footable-first-visible"  style="display: table-cell"  >
-                      Email:
+	                    {{ i.email }}:
                     </td>
                     <td class="footable-last-visible" style="display: table-cell"  >
                       {{ User.email }}
@@ -112,7 +112,7 @@
                   </tr>
                   <tr>
                     <td class="footable-first-visible"  style="display: table-cell">
-                      Gender:
+	                    {{ i.gender }}:
                     </td>
                     <td class="footable-last-visible" style="display: table-cell" >
                       {{ User.gender.name }}
@@ -120,7 +120,7 @@
                   </tr>
                   <tr>
                     <td  class="footable-first-visible" style="display: table-cell"  >
-                      Phone:
+	                    {{ i.phoneNo }}:
                     </td>
                     <td  class="footable-last-visible"  style="display: table-cell" >
                       {{ User.phone_no }}
@@ -128,7 +128,7 @@
                   </tr>
                   <tr>
                     <td  class="footable-first-visible" style="display: table-cell"  >
-                      Birthday:
+	                    {{ i.birthday }}:
                     </td>
                     <td  class="footable-last-visible"  style="display: table-cell" >
                       {{ User.birthday }}
@@ -142,7 +142,7 @@
           <div class="col-12 col-md-6">
             <div class="card">
               <div class="card-header">
-                <h5 class="mb-0 h6">Location</h5>
+                <h5 class="mb-0 h6">{{ i.address }}</h5>
               </div>
               <div class="card-body">
                 <table class="table aiz-table mb-0 footable footable-1 breakpoint-lg text-start table-borderless"  >
@@ -150,7 +150,7 @@
                   <tr>
                     <td  class="footable-first-visible"
                          style="display: table-cell" >
-                      Address:
+	                    {{ i.address }}:
                     </td>
                     <td  class="footable-last-visible"
                          style="display: table-cell"  >
@@ -160,7 +160,7 @@
                   <tr>
                     <td  class="footable-first-visible"
                          style="display: table-cell" >
-                      Postal Code:
+                      {{ i.postalCode }}:
                     </td>
                     <td  class="footable-last-visible"
                          style="display: table-cell"  >
@@ -170,7 +170,7 @@
                   <tr>
                     <td  class="footable-first-visible"
                          style="display: table-cell" >
-                      State:
+	                    {{ i.state }}:
                     </td>
                     <td  class="footable-last-visible"
                          style="display: table-cell"  >
@@ -198,6 +198,7 @@ export default {
     return {
       User : {},
       order_count : '',
+      summary : '',
     }
   },
   components: { SideBar },
@@ -206,7 +207,8 @@ export default {
         'GET_USER',
         'GET_TOKEN',
         'GET_CART_COUNT',
-        'GET_FAVOURITES_TOTAL'
+        'GET_FAVOURITES_TOTAL',
+		    'i'
     ])
   },
   created() {
@@ -223,6 +225,14 @@ export default {
     getOrder(){
       $http.getAll('orders').then((res)=>{
         this.order_count =  res.data.data.data.length;
+        this.orders = res.data.data.data;
+        let x = this.orders.filter((el)=>{
+          return el.summary !== null;
+        });
+        let summary = x.map((el)=>{
+          return el.summary.total;
+        })
+        this.summary = summary.reduce((p,n)=>p+n)
       });
     },
     getUser(){

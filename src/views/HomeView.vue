@@ -10,10 +10,10 @@
               <div class="row">
                 <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
-                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">All Categories</span>
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.shopByCategory }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">Total {{ total_category }}</router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} {{ total_category }} >></router-link>
                   </div>
                 </div>
               </div>
@@ -46,10 +46,10 @@
               <div class="row">
                 <div class="d-none d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
-                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Lasted Products</span>
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.latestUpdate }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">See More >> </router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} >> </router-link>
                   </div>
                 </div>
               </div>
@@ -124,10 +124,10 @@
               <div class="row">
                 <div class="d-none d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
-                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">Recommended Products</span>
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.recommended }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">See More >> </router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} >> </router-link>
                   </div>
                 </div>
               </div>
@@ -237,6 +237,7 @@ export default {
       'GET_FAVOURITES',
       'GET_TOKEN',
       'GET_USER',
+		   'i'
     ])
   },
   methods:{

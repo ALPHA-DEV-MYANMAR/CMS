@@ -8,7 +8,7 @@
               <div class="card text-start">
                 <div class="text-center pt-4">
                   <h1 class="h4 fw-600">
-                    Create an account.
+	                  {{ i.registerHere }}
                   </h1>
                 </div>
                 <div class="px-4 py-3 py-lg-4">
@@ -19,30 +19,14 @@
                         <div class="row">
                           <div class="col-12 col-md-6">
                             <div>
-                              <label for="" class="text-black-50 fs-12">Your Name</label>
-                              <input type="text" class="form-control" placeholder="Name" v-model="customersForm.name" required>
+	                            <label for="" class="text-black-50 fs-12">{{ i.enterYourName }}</label>
+                              <input type="text" class="form-control" :placeholder="i.enterYourName" v-model="customersForm.name" required>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
                             <div>
-                              <label for="" class="text-black-50 fs-12">Your Email</label>
-                              <input type="email" class="form-control" placeholder="Email" v-model="customersForm.email" required>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-12 col-md-6">
-                            <div>
-                              <label class="text-black-50 fs-12">Password</label>
-                              <input type="password" class="form-control" v-model="customersForm.password" placeholder="Password" >
-                            </div>
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <div>
-                              <label class="text-black-50 fs-12">Password Confirmation</label>
-                              <input type="password" class="form-control" v-model="customersForm.password_confirmation" placeholder="Password Confirmation" >
+	                            <label for="" class="text-black-50 fs-12">{{ i.enterYourEmail }}</label>
+                              <input type="email" class="form-control" :placeholder="i.enterYourEmail" v-model="customersForm.email" required>
                             </div>
                           </div>
                         </div>
@@ -51,14 +35,30 @@
                         <div class="row">
                           <div class="col-12 col-md-6">
                             <div>
-                              <label class="text-black-50 fs-12">Birthday</label>
+	                            <label for="" class="text-black-50 fs-12">{{ i.password }}</label>
+                              <input type="password" class="form-control" v-model="customersForm.password" :placeholder="i.password" >
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <div>
+	                            <label for="" class="text-black-50 fs-12">{{ i.confirmPassword }}</label>
+                              <input type="password" class="form-control" v-model="customersForm.password_confirmation" :placeholder="i.confirmPassword" >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            <div>
+                              <label class="text-black-50 fs-12">{{ i.birthday }}</label>
                               <input type="date" class="form-control" v-model="customersForm.birthday" required>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
                             <div>
-                              <label for="" class="text-black-50 fs-12">Postal Code</label>
-                              <input type="number" class="form-control" placeholder="Postal Code" v-model="customersForm.postal_code" required>
+                              <label for="" class="text-black-50 fs-12">{{ i.postalCode }}</label>
+                              <input type="number" class="form-control" :placeholder="i.postalCode" v-model="customersForm.postal_code" required>
                             </div>
                           </div>
                         </div>
@@ -67,11 +67,11 @@
                         <div class="d-flex">
                           <div class="p-1">
                             <input type="radio" id="male" value="1" v-model="customersForm.gender_id" required>
-                            <label for="male" class="text-black-50 p-1">Male</label>
+                            <label for="male" class="text-black-50 p-1">{{ i.male }}</label>
                           </div>
                           <div class="p-1">
                             <input type="radio" id="female" value="2" v-model="customersForm.gender_id" required>
-                            <label for="female" class="text-black-50 p-1">Female</label>
+                            <label for="female" class="text-black-50 p-1">{{ i.female }}</label>
                           </div>
                         </div>
                       </div>
@@ -79,15 +79,15 @@
                         <div class="row">
                           <div class="col-12 col-md-6">
                             <div>
-                              <label class="text-black-50 fs-12">Your Phone Number</label>
-                              <input type="number" placeholder="Phone" class="form-control" v-model="customersForm.phone_no" required>
+                              <label class="text-black-50 fs-12">{{ i.enterYourPhoneNo }}</label>
+                              <input type="number" :placeholder="i.enterYourPhoneNo" class="form-control" v-model="customersForm.phone_no" required>
                             </div>
                           </div>
                           <div class="col-12 col-md-6">
                             <div>
-                              <label for="" class="text-black-50 fs-12">State</label>
+                              <label for="" class="text-black-50 fs-12">{{ i.state }}</label>
                               <select v-model="customersForm.state_id" class="form-control" required>
-                                <option value="" selected >selected state</option>
+                                <option value="" selected >{{ i.state }}</option>
                                 <option :value="s.id" v-for="s in states" :key="s.id" >
                                   {{ s.name }}
                                 </option>
@@ -97,16 +97,20 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="" class="text-black-50 fs-12">Address</label>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Address" v-model="customersForm.address" required></textarea>
+                        <label for="" class="text-black-50 fs-12">{{ i.enterYourAddress }}</label>
+                        <textarea name="" id="" cols="30" rows="5" class="form-control" v-model="customersForm.address" required></textarea>
                       </div>
                       <div class="form-group text-end">
-                        <button class="btn btn-primary" >Register</button>
+                        <button class="btn btn-primary" >
+	                        {{ i.signUp }}
+                        </button>
                       </div>
                     </form>
                     <!--Register-->
                     <div class="text-center">
-                      <router-link to="/login" class="nav-link">I have already a account</router-link>
+                      <router-link to="/login" class="nav-link">
+	                      {{ i.loginHere }}
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -149,7 +153,8 @@ export default {
   computed: {
     ...mapGetters([
       'GET_TOKEN',
-      'GET_USER'
+      'GET_USER',
+	    'i'
     ])
   },
   methods:{

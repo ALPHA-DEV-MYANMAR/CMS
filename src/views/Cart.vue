@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <span class="h5 text-black-50 mb-0">Cart Listing</span>
+                <span class="h5 text-black-50 mb-0">{{ i.cartList }}</span>
             </div>
             <div class="card-body">
 
@@ -79,7 +79,7 @@
                   <td colspan="5">
                   </td>
                   <td class="fw-600" colspan="2">
-                    Sub Total:
+                    {{ i.totalCost }}:
                   </td>
                   <td class="fw-bold text-warning h5" colspan="2">
                     {{ GET_CART_DATA.length === 0 ? 0 : total.price_total  }}
@@ -141,7 +141,8 @@ export default {
       'GET_CART_DATA',
       'GET_USER',
       'GET_TOKEN',
-      'GET_MODAL_TYPE'
+      'GET_MODAL_TYPE',
+		    'i'
     ]),
   },
   methods: {
@@ -159,8 +160,7 @@ export default {
     ]),
     Ordered(){
       if(this.GET_CART_DATA.length !== 0){
-        this.ADD_MODAL_STATUS(true);
-        this.ADD_MODAL_TYPE('order');
+        this.$router.push('/order');
       }else if(this.GET_USER.length === 0){
         this.ADD_MODAL_STATUS(true);
         this.ADD_MODAL_TYPE('')

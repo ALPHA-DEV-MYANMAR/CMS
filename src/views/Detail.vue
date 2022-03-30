@@ -72,7 +72,7 @@
                       {{ SHOW_Good.brand.name }}
                     </div>
                     <div class="col-auto">
-                      <small class="opacity-50 my-2">Recommended</small><br />
+                      <small class="opacity-50 my-2">{{ i.recommended }}</small><br />
                       {{ SHOW_Good.recommended_flag === 1 ? 'No' : 'Yes'}}
                     </div>
                     <div class="col-auto">
@@ -100,7 +100,7 @@
                   <!-- Quantity + Add to cart -->
                   <div class="row no-gutters">
                     <div class="col-sm-2">
-                      <div class="opacity-50 my-2">Quantity:</div>
+                      <div class="opacity-50 my-2">{{ i.quantity }}:</div>
                     </div>
                     <div class="col-sm-10">
                       <div class="product-quantity d-flex align-items-center">
@@ -156,7 +156,7 @@
                     <!-- Add To Cart-->
                     <button v-if="SHOW_Good.total_stock > 0"  class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
                       <i class="las la-shopping-bag"></i>
-                      <span class="d-md-inline-block">Add to cart</span>
+                      <span class="d-md-inline-block">{{ i.addToCart }}</span>
                     </button>
                     <!--Add To Cart-->
                     <!--Add Buy-->
@@ -176,7 +176,7 @@
                           type="button"
                           class="btn pl-0 btn-link nav-link text-danger fw-600"
                           @click="addWishList(SHOW_Good)">
-                        Add to wishlist
+                        Add to favourite
                       </button>
                       <!-- Add to compare button -->
                     </div>
@@ -255,7 +255,7 @@
           <div class="col-12">
             <div class="card text-start">
               <div class="card-header">
-                Description
+	              {{ i.description }}
               </div>
               <div class="card-body">
                 {{ SHOW_Good.description }}
@@ -293,7 +293,8 @@ export default {
       'GET_CART_DATA',
       'GET_USER',
       'GET_TOKEN',
-      'GET_FAVOURITES'
+      'GET_FAVOURITES',
+		    'i'
     ]),
     getQty(){
       if(this.quantity > this.SHOW_Good.total_stock){

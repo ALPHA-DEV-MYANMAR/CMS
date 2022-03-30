@@ -3,15 +3,12 @@
     <div class="p-2">
       <div class="collapse-sidebar c-scrollbar-light text-start">
         <div class="bg-white shadow-sm rounded">
-          <div class="fs-15 fw-600 p-3 border-bottom">
-            Categories
-          </div>
           <div class="">
             <ul class="list-unstyled">
               <li class="">
                 <router-link to="/categories" class="fs-14 fw-600 nav-link text-black-50 hov-text-dark c-pointer"   >
                   <i class="las la-angle-left"></i>
-                  All categories
+	                {{ i.shopByCategory }}
                 </router-link>
               </li>
               <li class="" v-for="c in categories" @click="action(c)">
@@ -41,7 +38,8 @@ export default {
   computed: {
    ...mapGetters([
        'SHOW_ALL_CAT',
-       'SHOW_CAT_BY_ID'
+       'SHOW_CAT_BY_ID',
+		   'i'
    ])
   },
   created() {

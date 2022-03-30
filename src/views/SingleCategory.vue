@@ -13,14 +13,14 @@
           <!--Filter Start-->
           <div class="row">
             <div class="col-6 col-md-3 " >
-              <label class="mb-0 opacity-50 fs-12">Sub Category</label>
+              <label class="mb-0 opacity-50 fs-12">{{ i.subCategories }}</label>
               <select class="custom-select" v-model="filter.sub_category_id" aria-label=".form-select-sm example" @change="filterStart">
                 <option selected value="">Default</option>
                 <option :value="s.id" v-for="s in subCategories" :key="s.id">{{ s.name }}</option>
               </select>
             </div>
             <div class="col-6 col-md-3" >
-              <label class="mb-0 opacity-50 fs-12">Recommend</label>
+              <label class="mb-0 opacity-50 fs-12">{{ i.recommended }}</label>
               <select class="custom-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
                 <option value="">Default</option>
                 <option value="true">Yes</option>
@@ -173,7 +173,8 @@ export default {
         'GET_CART_DATA',
         'GET_TOKEN',
         'GET_USER',
-        'GET_FAVOURITES'
+        'GET_FAVOURITES',
+		    'i'
     ]),
     getGoodByCategory(){
       $http.getAll(`goods?category_id=${this.SHOW_CAT_BY_ID.id}`)

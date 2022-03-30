@@ -8,20 +8,20 @@
               <div class="card">
                 <div class="text-center pt-4">
                   <h1 class="h4 fw-600">
-                    Login to your account.
+                    {{ i.loginHere }}
                   </h1>
                 </div>
 
                 <div class="px-4 py-3 py-lg-4">
                   <div class="">
                     <form class="form-default" @submit.prevent="loginUser" >
-
+	
                       <div class="form-group">
-                        <input type="email" class="form-control" v-model="form.email" placeholder="Email" name="email">
+                        <input type="email" class="form-control" v-model="form.email" :placeholder="i.email" name="email">
                       </div>
 
                       <div class="form-group">
-                        <input type="password" class="form-control" v-model="form.password" placeholder="Password" name="password">
+                        <input type="password" class="form-control" v-model="form.password" :placeholder="i.password" name="password">
                       </div>
 
                       <div class="row mb-2">
@@ -33,20 +33,20 @@
                           </label>
                         </div>
                         <div class="col-6 text-start">
-                          <router-link to="" class="text-reset opacity-60 fs-14">Forgot password?</router-link>
+                          <router-link to="" class="text-reset opacity-60 fs-14">{{ i.forgetPassword }}</router-link>
                         </div>
                       </div>
 
                       <div class="mb-5">
-                        <button type="submit" class="btn btn-primary btn-block fw-600">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block fw-600">{{ i.login }}</button>
                       </div>
                     </form>
 
 
                   </div>
                   <div class="text-center">
-                    <p class="text-muted mb-0">Dont have an account?</p>
-                    <router-link to="register" class="nav-link">Register Now</router-link>
+                    <p class="text-muted mb-0">{{ i.dontHaveAnAccount }}</p>
+                    <router-link to="register" class="nav-link">{{ i.registerHere }}</router-link>
                   </div>
                 </div>
               </div>
@@ -82,7 +82,8 @@ export default {
   computed: {
     ...mapGetters([
         'GET_TOKEN',
-        'GET_USER'
+        'GET_USER',
+		    'i'
     ])
   },
   created() {

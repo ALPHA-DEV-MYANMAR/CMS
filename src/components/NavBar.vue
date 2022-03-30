@@ -2,17 +2,28 @@
   <div>
 <!--    Top Bar-->
     <div class="container">
-        <div class="row">
-          <div class="col-12 col-md-12 d-flex justify-content-end">
+        <div class="row justify-content-between align-items-center">
+
+          <div class="col-6 col-md-2">
+            <select class="form-select form-select-sm" v-model="lang"  @change="langChange()">
+              <option value="en">English</option>
+              <option value="my">မြန်မာ</option>
+            </select>
+          </div>
+
+          <div class="col-6 col-md-6 d-flex justify-content-end ">
             <div class="d-flex" v-if="GET_USER.length === 0">
-              <router-link to="login" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Login</router-link>
-              <router-link to="register" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">Register</router-link>
+              <router-link to="login" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">{{ i.login }}</router-link>
+              <router-link to="register" class="nav-link text-black-50 p-1  fw-bolder" style="font-size: 15px;">
+	              {{ i.registerHere }}</router-link>
             </div>
             <div class="d-flex" v-else>
-              <router-link  to="profile" class="nav-link text-black-50 p-1 hov-text-primary fw-bolder " style="font-size: 15px;">{{ GET_USER.name }}</router-link>
-              <router-link  to="" @click="logout" class="nav-link text-danger p-1  fw-bolder" style="font-size: 15px;">Logout</router-link>
+              <router-link  to="profile" class="nav-link text-black-50 p-1 hov-text-primary fw-bolder " style="font-size: 15px;">{{ i.myAccount }}</router-link>
+              <router-link  to="" @click="logout" class="nav-link text-danger p-1  fw-bolder" style="font-size: 15px;">
+	              {{ i.logout }}</router-link>
             </div>
           </div>
+
         </div>
       </div>
 <!--    Top Bar-->
@@ -38,7 +49,7 @@
 <!--       Search-->
          <div class="col-12 col-md-6 d-md-block" :class="is_show === false ? 'd-none' : '' ">
            <div class="d-flex justify-content-center align-items-center "  >
-               <input type="search" class="form-control rounded-pill " placeholder="search product here..." @keyup="SearchStart" v-model="keyword">
+               <input type="search" class="form-control rounded-pill " :placeholder="i.search" @keyup="SearchStart" v-model="keyword">
                <i class="fa-solid fa-xmark position-relative ml-3 fa-2x text-black-50 d-inline-block d-md-none d-lg-none"  @click="is_show = false"></i>
            </div>
            <!--Search Data Form-->
@@ -83,7 +94,9 @@
                <i class="fa-solid fa-heart fa-lg text-danger"></i>
                 <span class="flex-grow-1">
                   <span class="badge badge-warning badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
-                  <span class="nav-box-text d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >Wishlist</span >
+                  <span class="nav-box-text d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >
+	                  {{ i.favourite }}
+                  </span >
                 </span>
              </router-link>
              <!--favourites end-->
@@ -93,7 +106,9 @@
                <i class="fa-solid fa-cart-arrow-down fa-lg text-primary"></i>
                <span class="flex-grow-1">
                     <span class="badge badge-warning badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
-                    <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">Cartlist</span>
+                    <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">
+	                    {{ i.cart }}
+                    </span>
                </span>
              </router-link>
              <!--cart-->
@@ -107,15 +122,15 @@
            <div class="d-flex justify-content-center align-items-center">
              <router-link to="/" class="nav-link text-black-50">
                <i class="fa-solid fa-house"></i>
-                 Home
+	             {{ i.home }}
              </router-link>
              <router-link to="/categories" class="nav-link text-black-50">
                <i class="fa-solid fa-align-justify"></i>
-               Products
+	             {{ i.shopByCategory }}
              </router-link>
              <router-link to="/profile" class="nav-link text-black-50">
                <i class="fa-solid fa-user"></i>
-               Account
+	             {{ i.myAccount }}
              </router-link>
            </div>
          </div>
@@ -140,7 +155,7 @@
                 to="/step-three"
             >
               <i class="la la-file-text la-3x text-primary mb-2" style="font-size: 30px;"></i>
-              <h4 class="h6">Terms &amp; conditions</h4>
+              <h4 class="h6">{{ i.termsAndConditions }}</h4>
             </router-link>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -181,11 +196,9 @@
         <div class="row">
           <div class="col-lg-5 col-xl-4 text-start">
             <div class="mt-4">
-              <router-link to="/" class="d-block">
-                <img class=" ls-is-cached lazyloaded" src="../assets/img/logo.png"  alt="" height="44">
+              <router-link to="/" >
+                <img class="img-fluid" src="../assets/img/logo.png"  alt="" height="50">
               </router-link>
-              <div class="my-3">
-              </div>
               <div class="d-inline-block d-md-block mb-4">
                 <form class="form-inline" >
                 <div class="form-group mb-0">
@@ -195,8 +208,6 @@
                     Subscribe
                   </button>
                 </form>
-              </div>
-              <div class="w-300px mw-100 mx-auto mx-md-0">
               </div>
             </div>
           </div>
@@ -252,14 +263,6 @@
                 </li>
               </ul>
             </div>
-            <div class="text-start mt-4">
-              <h4 class="fs-13 text-uppercase fw-600 border-bottom border-gray-900 pb-2 mb-4">
-                Be A Seller
-              </h4>
-              <router-link to="" class="btn btn-primary btn-sm shadow-md">
-                Apply Now
-              </router-link>
-            </div>
           </div>
         </div>
       </div>
@@ -271,12 +274,12 @@
       <div class="card min-vh-100">
         <div class="card-header">
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          <h4 class="mb-0 text-black-50">Cart Listing</h4>
+          <h4 class="mb-0 text-black-50">{{ i.cartList }}</h4>
         </div>
         <div class="card-body" v-if="GET_CART_DATA.length === 0">
           <div class="text-center">
             <i class="las la-frown la-3x opacity-60 mb-3"></i>
-            <h3 class="h4 fw-700 text-black-50">Your Cart is empty</h3>
+            <h3 class="h4 fw-700 text-black-50">{{ i.noCartItems }}</h3>
           </div>
         </div>
         <div class="card-body" v-if="GET_CART_DATA.length !== 0">
@@ -306,7 +309,7 @@
           </ul>
         </div>
         <div class="card-footer">
-           <router-link to="/cart" class="btn btn-outline-primary form-control">View Cart</router-link>
+           <router-link to="/cart" class="btn btn-outline-primary form-control">{{ i.viewAll }}</router-link>
         </div>
       </div>
     </div>
@@ -316,7 +319,7 @@
     <div class="offcanvas offcanvas-start text-start" tabindex="-1" id="categories" aria-labelledby="offcanvasRightLabel">
       <div class="card min-vh-100">
         <div class="card-header">
-          <h4 class="mb-0 text-black-50">Categories</h4>
+          <h4 class="mb-0 text-black-50">{{ i.shopByCategory }}</h4>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="card-body p-0 overflow-scroll " >
@@ -347,7 +350,7 @@
   <div class="offcanvas offcanvas-start text-start" tabindex="-1" id="profile" aria-labelledby="offcanvasLeftLabel">
     <div class="card min-vh-100">
       <div class="card-header">
-        <h4 class="mb-0 text-black-50">Profile</h4>
+        <h4 class="mb-0 text-black-50">{{ i.myAccount }}</h4>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="card-body p-0 overflow-scroll" >
@@ -400,6 +403,7 @@
     </div>
 <!--    Footer Bar Only Show in mobile-->
 
+    
   </div>
 </template>
 
@@ -418,6 +422,7 @@ export default {
       spinner : true,
       is_show : false,
       keyword : "",
+      lang : "en",
       searchGood : [],
       is_serach : false,
       categories : [],
@@ -431,11 +436,20 @@ export default {
         'GET_TOKEN',
         'GET_FAVOURITES',
         'GET_FAVOURITES_TOTAL',
-        'SHOW_ALL_CAT'
+        'SHOW_ALL_CAT',
+        'GET_LANG',
+		    'i'
     ]),
   },
   created() {
     this.getUser();
+		//Change Language From Back
+		if(!localStorage.getItem('lang')) {
+			localStorage.setItem('lang','en')
+		}
+		this.lang = localStorage.getItem('lang')
+		let data = require('../assets/lang/'+localStorage.getItem('lang')+'.json')
+		this.ADD_LANG_OJ(data)
     },
   methods:{
     ...mapMutations([
@@ -447,8 +461,17 @@ export default {
         'DEL_ALL_FAVOURITES_DATA',
         'DEL_ALL_CART_DATA',
         'ADD_GOOD_WITH_ID',
+        'ADD_LANG',
+		    'ADD_LANG_OJ'
     ]),
-
+    langChange(){
+			//Save to local
+      localStorage.setItem('lang',this.lang);
+      this.ADD_LANG(this.lang);
+			//Change language real time
+	    const l = require('../assets/lang/'+this.GET_LANG+'.json');
+			this.ADD_LANG_OJ(l);
+    },
     action(c){
       this.$router.push('/single-category');
       this.ADD_GOOD_WITH_ID(c);

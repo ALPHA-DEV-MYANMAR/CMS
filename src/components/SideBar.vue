@@ -18,13 +18,13 @@
               <li class="aiz-side-nav-item">
                 <router-link  to="/profile"  class="aiz-side-nav-link nav-link hov-bg-soft-info hov-text-dark rounded">
                   <i class="las la-home aiz-side-nav-icon"></i>
-                  <span class="aiz-side-nav-text">Dashboard</span>
+                  <span class="aiz-side-nav-text">{{ i.myAccount }}</span>
                 </router-link>
               </li>
               <li class="aiz-side-nav-item">
                 <router-link  to="/wishlist" class="aiz-side-nav-link nav-link hov-bg-soft-info hov-text-dark rounded">
                   <i class="la la-heart-o aiz-side-nav-icon"></i>
-                  <span class="aiz-side-nav-text">Wishlist</span>
+                  <span class="aiz-side-nav-text">{{ i.favourite }}</span>
                 </router-link>
               </li>
               <li class="aiz-side-nav-item">
@@ -41,7 +41,7 @@
       <div class="row text-center" >
         <div class="col-12 p-3">
           <div>
-            <span class="fw-bolder">Sold Amount</span>
+            <span class="fw-bolder">{{ i.totalCost }}</span>
             <br>
             <button class="btn btn-primary">{{ summary }}</button>
           </div>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-danger w-100" @click="logout">Logout</button>
+      <button class="btn btn-danger w-100" @click="logout">{{ i.logout }}</button>
     </div>
   </div>
 </template>
@@ -67,7 +67,8 @@
     },
     computed: {
       ...mapGetters([
-          'GET_USER'
+          'GET_USER',
+		      'i'
       ])
     },
     created() {
@@ -78,7 +79,7 @@
           'ADD_USER',
           'ADD_TOKEN',
           'DEL_ALL_FAVOURITES_DATA',
-          'DEL_ALL_CART_DATA'
+          'DEL_ALL_CART_DATA',
       ]),
       getOrders(){
         $http.getAll('orders')

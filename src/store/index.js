@@ -17,8 +17,16 @@ export default createStore({
     get_delivery_accept_time: [],
     get_delivery_agent: [],
     get_order_total: {},
+    lang: "en",
+    i : {}
   },
   getters: {
+    i : (state) => {
+      return state.i;
+    },
+    GET_LANG : (state) => {
+      return state.lang;
+    },
     GET_ORDER_STATUS: (state) => {
       return state.get_order_status;
     },
@@ -69,6 +77,12 @@ export default createStore({
     }
   },
   mutations: {
+    ADD_LANG_OJ: (state,o) => {
+      state.i = o;
+    },
+    ADD_LANG: (state,l) => {
+      state.lang = l;
+    },
     ADD_ORDER_STATUS: (state,list) => {
       state.get_order_status = list ;
     },

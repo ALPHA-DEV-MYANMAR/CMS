@@ -19,7 +19,7 @@
               <input type="number" class="form-control" placeholder="0" v-model="filter.max_price" @keyup="filterStart">
             </div>
             <div class="col-6 col-md-4 fs-12">
-              <label class="text-black-50">Recommend</label>
+              <label class="text-black-50">{{ i.recommended }}</label>
               <select class="form-select" aria-label=".form-select-sm example" v-model="filter.recommend" @change="filterStart">
                 <option value="">Default</option>
                 <option value="true">Yes</option>
@@ -32,7 +32,7 @@
 <!--          Title-->
           <div class="row">
             <div class="col-12 mt-2">
-              <div class="fw-600 h6">ကုန်ပစ္စည်းအားလုံး</div>
+              <div class="fw-600 h6">{{ i.shopByCategory }}</div>
             </div>
           </div>
 <!--          Title-->
@@ -161,7 +161,8 @@ export default {
         'GET_CART_DATA',
         'GET_FAVOURITES',
         'GET_TOKEN',
-        'GET_USER'
+        'GET_USER',
+		    'i'
     ])
   },
   created() {

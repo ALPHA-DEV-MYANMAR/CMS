@@ -16,14 +16,14 @@
                     <div class="row">
                       <div class="col-12 col-md-6">
                         <div>
-                          <label for="" class="text-black-50 fs-12">Your Name</label>
-                          <input type="text" class="form-control" placeholder="Name" v-model="customersForm.name" required>
+                          <label for="" class="text-black-50 fs-12">{{ i.name }}</label>
+                          <input type="text" class="form-control" :placeholder="i.name" v-model="customersForm.name" required>
                         </div>
                       </div>
                       <div class="col-12 col-md-6">
                         <div>
-                          <label for="" class="text-black-50 fs-12">Your Email</label>
-                          <input type="email" class="form-control" placeholder="Email" v-model="customersForm.email" required>
+                          <label for="" class="text-black-50 fs-12">{{ i.email }}</label>
+                          <input type="email" class="form-control" :placeholder="i.email" v-model="customersForm.email" required>
                         </div>
                       </div>
                     </div>
@@ -32,14 +32,14 @@
                     <div class="row">
                       <div class="col-12 col-md-6">
                         <div>
-                          <label class="text-black-50 fs-12">Birthday</label>
+                          <label class="text-black-50 fs-12">{{ i.birthday }}</label>
                           <input type="date" class="form-control" v-model="customersForm.birthday" required>
                         </div>
                       </div>
                       <div class="col-12 col-md-6">
                         <div>
-                          <label for="" class="text-black-50 fs-12">Postal Code</label>
-                          <input type="number" class="form-control" placeholder="Postal Code" v-model="customersForm.postal_code" required>
+                          <label for="" class="text-black-50 fs-12">{{ i.postalCode }}</label>
+                          <input type="number" class="form-control" :placeholder="i.postalCode" v-model="customersForm.postal_code" required>
                         </div>
                       </div>
                     </div>
@@ -48,11 +48,11 @@
                     <div class="d-flex">
                       <div class="p-1">
                         <input type="radio" id="male" value="1" v-model="customersForm.gender_id" required>
-                        <label for="male" class="text-black-50 p-1">Male</label>
+                        <label for="male" class="text-black-50 p-1">{{ i.male }}</label>
                       </div>
                       <div class="p-1">
                         <input type="radio" id="female" value="2" v-model="customersForm.gender_id" required>
-                        <label for="female" class="text-black-50 p-1">Female</label>
+                        <label for="female" class="text-black-50 p-1">{{ i.female }}</label>
                       </div>
                     </div>
                   </div>
@@ -60,13 +60,13 @@
                     <div class="row">
                       <div class="col-12 col-md-6">
                         <div>
-                          <label class="text-black-50 fs-12">Your Phone Number</label>
-                          <input type="number" placeholder="Phone" class="form-control" v-model="customersForm.phone_no" required>
+                          <label class="text-black-50 fs-12">{{ i.phoneNo }}</label>
+                          <input type="number" :placeholder="i.phoneNo" class="form-control" v-model="customersForm.phone_no" required>
                         </div>
                       </div>
                       <div class="col-12 col-md-6">
                         <div>
-                          <label for="" class="text-black-50 fs-12">State</label>
+                          <label for="" class="text-black-50 fs-12">{{  i.state }}</label>
                           <select v-model="customersForm.state_id" class="form-control" required>
                             <option value="" selected >selected state</option>
                             <option :value="s.id" v-for="s in states" :key="s.id" >
@@ -78,11 +78,11 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="" class="text-black-50 fs-12">Address</label>
-                    <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Address" v-model="customersForm.address" required></textarea>
+                    <label for="" class="text-black-50 fs-12">{{ i.address }}</label>
+                    <textarea name="" id="" cols="30" rows="5" class="form-control" v-model="customersForm.address" required></textarea>
                   </div>
                   <div class="form-group text-end">
-                    <button class="btn btn-primary" >Update Profile</button>
+                    <button class="btn btn-primary" >{{ i.accountDataUpdate }}</button>
                   </div>
                 </form>
                 <!--Customer-->
@@ -121,7 +121,8 @@ export default {
   },
   computed:{
     ...mapGetters([
-        'GET_USER'
+        'GET_USER',
+		    'i'
     ]),
   },
   components: { SideBar },
