@@ -18,9 +18,14 @@ export default createStore({
     get_delivery_agent: [],
     get_order_total: {},
     lang: "en",
-    i : {}
+    i : {},
+    is_pay : false,
+    get_order: {}
   },
   getters: {
+    GET_ORDER : (state) => {
+      return state.get_order;
+    },
     i : (state) => {
       return state.i;
     },
@@ -74,9 +79,18 @@ export default createStore({
     },
     GET_ORDER_TOTAL: (state) => {
       return state.get_order_total;
+    },
+    GET_PAY: (state) => {
+      return state.is_pay;
     }
   },
   mutations: {
+    ADD_ORDER:(state,data) => {
+      state.get_order = data;
+    },
+    ADD_PAY: (state,con) => {
+      state.is_pay = con;
+    },
     ADD_LANG_OJ: (state,o) => {
       state.i = o;
     },

@@ -140,7 +140,7 @@
 <!--    Header-->
 
 <!--    Content-->
-    <router-view></router-view>
+	      <router-view></router-view>
 <!--    Content-->
 
 <!--    Bottom-->
@@ -414,9 +414,10 @@ import Swal from "sweetalert2";
 import CategorySideBar from "@/components/CategorySideBar";
 import SideBar from "@/components/SideBar";
 import Spinner from "@/components/Spinner";
+
 export default {
   name: "NavBar",
-  components: {Spinner, CategorySideBar,SideBar},
+  components: {Stripe, Spinner, CategorySideBar,SideBar},
   data() {
     return {
       spinner : true,
@@ -438,7 +439,8 @@ export default {
         'GET_FAVOURITES_TOTAL',
         'SHOW_ALL_CAT',
         'GET_LANG',
-		    'i'
+		    'i',
+		    'GET_PAY'
     ]),
   },
   created() {

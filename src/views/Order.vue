@@ -102,25 +102,15 @@
                           <div class="row justify-content-between align-items-center">
                             <div class="col-11 col-md-11">
                               <span class="text-black-50 fw-600 ">Name: </span>
-                              <span class="">
-                              {{ GET_USER.name }}
-                            </span> |
+                              {{ GET_USER.name }}|
                               <span  class="text-black-50 fw-600 ">Email: </span>
-                              <span class="">
-                              {{ GET_USER.email }}
-                            </span> |
+                              {{ GET_USER.email }}|
                               <span  class="text-black-50 fw-600 ">State: </span>
-                              <span class="">
-                              {{ GET_USER.address.state.name }}
-                            </span> |
+                              {{ GET_USER.address.state.name }}|
                               <span  class="text-black-50 fw-600 ">Postal Code: </span>
-                              <span class="">
-                              {{ GET_USER.address.postal_code }}
-                            </span> |
+                              {{ GET_USER.address.postal_code }} |
                               <span class="text-black-50 fw-600">Address: </span>
-                              <span>
                               {{ GET_USER.address.address }}
-                            </span>
                             </div>
                             <div class="col-1 col-md-1">
                               <button type="button" class="btn btn-outline-primary btn-sm" @click="$router.push('/manage-profile')">
@@ -135,7 +125,7 @@
                 </div>
                 <div class="form-group d-flex justify-content-between align-items-center">
 	                <router-link to="/cart" class="btn btn-outline-primary">Back</router-link>
-                  <button class="btn btn-primary" >Order Now</button>
+                  <button class="btn btn-primary" >Payment >> </button>
                 </div>
               </form>
               <!--Add Order-->
@@ -194,6 +184,8 @@ export default {
       'ADD_DELIVER_AGENT',
       'ADD_TO_CART_FROM_DB',
       'ADD_FAVOURITES_FROM_DB',
+		    'ADD_PAY',
+		    'ADD_ORDER'
     ]),
 
     getOrderStatus() {
@@ -217,20 +209,7 @@ export default {
       });
     },
     confirm() {
-      Swal.fire({
-        icon: 'question',
-        title: 'Are you sure you want to order?',
-        showDenyButton: true,
-        confirmButtonText: 'Yes',
-        denyButtonText: `No`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.orderStart();
-        } else if (result.isDenied) {
-          Swal.fire('Order Cancel', '', 'error');
-          this.close();
-        }
-      })
+        this.orderStart();
     },
     orderStart() {
       //Back End
@@ -247,14 +226,16 @@ export default {
           Swal.fire(res.data.message, '', 'error');
         } else {
           //success order
-          Swal.fire('Successfully order', '', 'success');
           console.log(res.data.data)
           this.DEL_ALL_CART_DATA();
+          // this.$router.push('/stripe')
+	        this.ADD_PAY(true);
+					this.ADD_ORDER(res.data.data);
+					localStorage.setItem('order_id',res.data.data.id);
         }
-
       }).catch((err) => {
         console.log(err);
-        alert('something was wrong')
+        alert('something was wrong');
       });
     },
   }

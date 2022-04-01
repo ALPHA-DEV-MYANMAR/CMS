@@ -84,7 +84,8 @@ import { mapGetters,mapMutations,mapState } from 'vuex'
 import Swal from "sweetalert2";
 export default {
   name: "Modal",
-  data() {
+	components: {Stripe},
+	data() {
     return {
       user: {},
       token: "",

@@ -187,7 +187,6 @@ export default {
       }).catch((err)=>{console.log(err)});
     },
     addToCart(g){
-      console.log(g)
       if(g.total_stock === 0){
         Swal.fire({
           position: 'center',

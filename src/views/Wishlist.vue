@@ -33,7 +33,10 @@
                   <button  class="btn btn-sm hov-text-danger"  @click="delFav(f)">
                     <i class="la la-trash la-2x"></i>
                   </button>
-                  <button type="button" class="btn btn-sm btn-block btn-primary ml-3"  @click="addToCart(f)">
+	                <button v-if="f.good.total_stock === 0" class="btn btn-sm btn-block btn-secondary disabled ml-3">
+		                Out of Stock
+	                </button>
+                  <button v-else type="button" class="btn btn-sm btn-block btn-primary ml-3"  @click="addToCart(f)">
                     <i class="la la-shopping-cart mr-2"></i>
                     Add to cart
                   </button>
@@ -73,7 +76,7 @@ export default {
         'ADD_Good'
     ]),
     addToCart(g){
-      if(g.total_stock === 0){
+      if(g.good.total_stock === 0){
         Swal.fire({
           position: 'center',
           icon: 'info',
