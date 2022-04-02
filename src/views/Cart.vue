@@ -76,7 +76,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="5">
+                  <td colspan="3">
                   </td>
                   <td class="fw-600" colspan="2">
                     {{ i.totalCost }}:
@@ -98,7 +98,8 @@
                   </router-link>
                 </div>
                 <div>
-                  <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered</router-link>
+                  <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered
+	                  <i class="fa-solid fa-arrow-right"></i></router-link>
                 </div>
               </div>
             </div>

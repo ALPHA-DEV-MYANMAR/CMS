@@ -140,7 +140,7 @@
 <!--    Header-->
 
 <!--    Content-->
-	      <router-view></router-view>
+	  <router-view></router-view>
 <!--    Content-->
 
 <!--    Bottom-->
@@ -196,9 +196,7 @@
         <div class="row">
           <div class="col-lg-5 col-xl-4 text-start">
             <div class="mt-4">
-              <router-link to="/" >
                 <img class="img-fluid" src="../assets/img/logo.png"  alt="" height="50">
-              </router-link>
               <div class="d-inline-block d-md-block mb-4">
                 <form class="form-inline" >
                 <div class="form-group mb-0">
@@ -276,13 +274,7 @@
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           <h4 class="mb-0 text-black-50">{{ i.cartList }}</h4>
         </div>
-        <div class="card-body" v-if="GET_CART_DATA.length === 0">
-          <div class="text-center">
-            <i class="las la-frown la-3x opacity-60 mb-3"></i>
-            <h3 class="h4 fw-700 text-black-50">{{ i.noCartItems }}</h3>
-          </div>
-        </div>
-        <div class="card-body" v-if="GET_CART_DATA.length !== 0">
+        <div class="card-body">
           <ul class="h-100 overflow-auto c-scrollbar-light list-group list-group-flush">
             <li v-for="c in GET_CART_DATA" :key="c.id">
                   <span class=" d-flex align-items-center">
@@ -408,7 +400,7 @@
 </template>
 
 <script>
-import {mapGetters,mapMutations} from "vuex"
+import {mapState,mapGetters,mapMutations} from "vuex"
 import $http from '../axios.js'
 import Swal from "sweetalert2";
 import CategorySideBar from "@/components/CategorySideBar";
@@ -417,9 +409,12 @@ import Spinner from "@/components/Spinner";
 
 export default {
   name: "NavBar",
-  components: {Stripe, Spinner, CategorySideBar,SideBar},
+  components: { Spinner, CategorySideBar,SideBar},
   data() {
     return {
+	    ...mapState([
+					'get_cart'
+	    ]),
       spinner : true,
       is_show : false,
       keyword : "",

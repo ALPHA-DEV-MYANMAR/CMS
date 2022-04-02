@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>{{ i.orderDetail }}</h4>
+              <h5 class="fw-600">{{ i.orderDetail }}</h5>
             </div>
             <div class="card-body">
               <!-- Add Order-->
@@ -14,7 +14,7 @@
                   <div class="row">
                     <div class="col-12 col-md-3">
                       <div>
-                        <label class="text-black-50 fs-12">{{ i.orderStatus }}</label>
+                        <label class="text-black-50 fs-12">Order Status</label>
                         <select v-model="orderForm.order_status_id" class="form-control" required>
                           <option value="" selected disabled class="text-black-50">selected order status</option>
                           <option v-for="c in GET_ORDER_STATUS" :key="c.id" v-bind:value="c.id">
@@ -44,7 +44,7 @@
                       </select>
                     </div>
                     <div class="col-12 col-md-3">
-                      <label class="text-black-50 fs-12">{{ i.deliveryAgent }}</label>
+                      <label class="text-black-50 fs-12">Delivery Agent</label>
                       <select v-model="orderForm.delivery_agent_id" class="form-control" required>
                         <option value='' selected disabled  class="text-black-50">selected delivery agent</option>
                         <option v-for="c in GET_DELIVER_AGENT" :key="c.id" v-bind:value="c.id">
@@ -59,7 +59,7 @@
                   <div class="row">
                     <div class="col-12 col-md-6">
                       <div>
-                        <label class="text-black-50 fs-12">{{ i.trackingId }}</label>
+                        <label class="text-black-50 fs-12">Delivery Tracking Code</label>
                         <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
                       </div>
                       <div>
@@ -98,17 +98,20 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="card">
+	                      <div class="card-header">
+		                      <h5 class="fw-600 ">Location Detail</h5>
+	                      </div>
                         <div class="card-body">
                           <div class="row justify-content-between align-items-center">
                             <div class="col-11 col-md-11">
                               <span class="text-black-50 fw-600 ">Name: </span>
-                              {{ GET_USER.name }}|
+	                            {{ GET_USER.name }} <br>
                               <span  class="text-black-50 fw-600 ">Email: </span>
-                              {{ GET_USER.email }}|
+                              {{ GET_USER.email }} <br>
                               <span  class="text-black-50 fw-600 ">State: </span>
-                              {{ GET_USER.address.state.name }}|
+                              {{ GET_USER.address.state.name }} <br>
                               <span  class="text-black-50 fw-600 ">Postal Code: </span>
-                              {{ GET_USER.address.postal_code }} |
+                              {{ GET_USER.address.postal_code }} <br>
                               <span class="text-black-50 fw-600">Address: </span>
                               {{ GET_USER.address.address }}
                             </div>
@@ -124,8 +127,14 @@
                   </div>
                 </div>
                 <div class="form-group d-flex justify-content-between align-items-center">
-	                <router-link to="/cart" class="btn btn-outline-primary">Back</router-link>
-                  <button class="btn btn-primary" >Payment >> </button>
+	                <router-link to="/cart" class="btn btn-outline-primary">
+		                <i class="fa-solid fa-arrow-left"></i>
+		                Back</router-link>
+                  <button class="btn btn-primary" :class="is_success === false ? '' : 'disabled'" >
+	                  <span  v-if="is_success" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+	                  Payment
+	                  <i class="fa-solid fa-arrow-right"></i>
+                  </button>
                 </div>
               </form>
               <!--Add Order-->
@@ -146,6 +155,7 @@ export default {
   name: "Order",
   data() {
     return {
+			is_success : false,
       orderForm: {
         "user_id": '',
         "order_status_id": '',
@@ -171,7 +181,10 @@ export default {
       'i'
     ])
   },
-  methods: {
+	created() {
+		window.scrollTo(0,0);
+	},
+	methods: {
     ...mapMutations([
       'ADD_TOKEN',
       'ADD_USER',
@@ -184,8 +197,8 @@ export default {
       'ADD_DELIVER_AGENT',
       'ADD_TO_CART_FROM_DB',
       'ADD_FAVOURITES_FROM_DB',
-		    'ADD_PAY',
-		    'ADD_ORDER'
+	    'ADD_PAY',
+	    'ADD_ORDER'
     ]),
 
     getOrderStatus() {
@@ -212,6 +225,8 @@ export default {
         this.orderStart();
     },
     orderStart() {
+			
+			this.is_success = true;
       //Back End
       $http.create('orders', this.orderForm).then((res) => {
         this.orderForm.delivery_accepttime_id = '';
@@ -227,6 +242,7 @@ export default {
         } else {
           //success order
           console.log(res.data.data)
+	        this.is_success = false;
           this.DEL_ALL_CART_DATA();
           // this.$router.push('/stripe')
 	        this.ADD_PAY(true);

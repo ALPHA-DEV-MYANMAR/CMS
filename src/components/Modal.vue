@@ -18,12 +18,12 @@
                   <div class="">
                     <form class="form-default" @submit.prevent="loginUser" >
                       <div class="form-group">
-	                      <label>{{ i.emailLabel }}</label>
-                        <input type="email" class="form-control" v-model="form.email" :placeholder="i.emailHint" name="email">
+	                      <label>{{ i.email }}</label>
+                        <input type="email" class="form-control" v-model="form.email" :placeholder="i.email" name="email">
                       </div>
                       <div class="form-group">
-	                      <label for="">{{ i.passwordLabel }}</label>
-                        <input type="password" class="form-control" v-model="form.password" :placeholder="i.passwordHint" name="password">
+	                      <label for="">{{ i.password }}</label>
+                        <input type="password" class="form-control" v-model="form.password" :placeholder="i.password" name="password">
                       </div>
                       <div class="mb-5">
                         <button type="submit" class="btn btn-primary btn-block fw-600">Login</button>
@@ -179,6 +179,7 @@ export default {
           this.getCartFromDB();
           this.getFavFromDB();
           this.getUser();
+					window.location.href = '/';
         }else{
           alert(res.data.message)
         }

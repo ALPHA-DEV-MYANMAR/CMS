@@ -9,7 +9,12 @@
 			  <div class="row min-vh-100 justify-content-center align-items-center">
 				  <div class="col-12 col-md-6">
 					  <div class="w-75 mx-auto">
-						  <span class="h4 fw-bolder">Pay with Card</span>
+						  <span class="h4 fw-bolder mb-0">
+							  <button class="btn btn-outline-danger btn-sm " @click="cancelOrder">
+								  <i class="fa-solid fa-arrow-left"></i>
+							  </button>
+							  Pay with Card
+						  </span>
 						  <form role="form"  action="http://127.0.0.1:8000/stripe"
 						        method="post" class="require-validation mt-2"
 						        data-cc-on-file="false"
@@ -115,6 +120,7 @@ import NavBar from "@/components/NavBar";
 import {mapMutations,mapGetters} from "vuex";
 import Modal from "@/components/Modal";
 import './assets/js/cusotom.js';
+import Swal from "sweetalert2";
 export default {
   components: {Modal, NavBar },
   created() {
@@ -145,6 +151,18 @@ export default {
       'ADD_TO_CART_FROM_DB',
       'ADD_FAVOURITES_FROM_DB'
     ]),
+	  cancelOrder(){
+		  Swal.fire({
+			  icon: 'warning',
+			  title: 'Are you sure you want to cancel this order?',
+			  showCancelButton: true,
+			  confirmButtonText: 'Yes',
+		  }).then((result) => {
+			  if (result.isConfirmed) {
+				  window.location.href = '/';
+			  }
+		  })
+	  },
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))
           .then((res)=>{

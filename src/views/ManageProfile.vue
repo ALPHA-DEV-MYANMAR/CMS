@@ -82,7 +82,10 @@
                     <textarea name="" id="" cols="30" rows="5" class="form-control" v-model="customersForm.address" required></textarea>
                   </div>
                   <div class="form-group text-end">
-                    <button class="btn btn-primary" >{{ i.accountDataUpdate }}</button>
+                    <button class="btn btn-primary" :class="is_success === false ? '' : 'disabled'">
+	                    {{ i.accountDataUpdate }}
+	                    <span class="spinner-grow spinner-grow-sm" v-if="is_success" role="status" aria-hidden="true"></span>
+                    </button>
                   </div>
                 </form>
                 <!--Customer-->
@@ -105,6 +108,7 @@ export default {
   data() {
     return {
       states: [],
+	    is_success: false,
       User: {},
       customersForm: {
         'user_id' : '',
@@ -157,6 +161,7 @@ export default {
           });
     },
     updateStart(){
+			this.is_success = true;
       $http.update('customers',this.GET_USER.id,this.customersForm).then((res)=>{
         console.log(res)
         if(res.data.message === "Customer successfully updated") {
@@ -173,6 +178,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
+	        this.is_success = false;
           this.getStoreUser();
         }else{
           Swal.fire({

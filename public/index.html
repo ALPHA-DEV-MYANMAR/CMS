@@ -169,6 +169,7 @@
                       .removeClass('hide')
                       .find('.alert')
                       .text(response.error.message);
+				  alert(response.error.message);
               } else {
                   /* token contains id, last4, and card type */
                   var token = response['id'];

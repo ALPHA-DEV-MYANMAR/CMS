@@ -41,8 +41,7 @@
                         <button type="submit" class="btn btn-primary btn-block fw-600">{{ i.login }}</button>
                       </div>
                     </form>
-
-
+	                  
                   </div>
                   <div class="text-center">
                     <p class="text-muted mb-0">{{ i.dontHaveAnAccount }}</p>
@@ -110,7 +109,8 @@ export default {
           this.ADD_TOKEN(this.token);
           this.ADD_USER(this.user);
           this.getUser();
-          this.$router.push('/');
+          // this.$router.push('/');
+					window.location.href = '/';
           Swal.fire({
             position: 'center',
             icon: 'success',

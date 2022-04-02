@@ -54,7 +54,7 @@ export default createStore({
       return state.get_good_by_category_id;
     },
     GET_CART_COUNT: (state) => {
-      return state.get_cart.length;
+      return state.get_cart === null ? 0 : state.get_cart.length;
     },
     GET_CART_DATA: (state) => {
       return state.get_cart;
