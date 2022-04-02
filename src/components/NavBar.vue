@@ -35,13 +35,13 @@
 
 <!--        Logo-->
          <div class="col-8 col-md-3" :class="is_show === true ? 'd-none': '' ">
-           <router-link to="/">
+           <router-link to="/" class="nav-link">
              <img
-                 src="../assets/img/logo.png"
+                 src="../assets/img/ooak-logo.png"
                  alt=""
-                 class="mw-100 h-30px h-md-40px"
-                 height="40"
+                 style="width: 60px;"
              />
+	           <span class="fw-bolder text-decoration-none" style="color:#8bff76;">{{ i.appName }}</span>
            </router-link>
          </div>
 <!--        Logo-->
@@ -196,7 +196,14 @@
         <div class="row">
           <div class="col-lg-5 col-xl-4 text-start">
             <div class="mt-4">
-                <img class="img-fluid" src="../assets/img/logo.png"  alt="" height="50">
+	            <router-link to="/" class="nav-link">
+		            <img
+				            src="../assets/img/ooak-logo.png"
+				            alt=""
+				            style="width: 60px;"
+		            />
+		            <span class="fw-bolder text-decoration-none" style="color:#8bff76;">{{ i.appName }}</span>
+	            </router-link>
               <div class="d-inline-block d-md-block mb-4">
                 <form class="form-inline" >
                 <div class="form-group mb-0">

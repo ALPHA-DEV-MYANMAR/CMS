@@ -13,7 +13,8 @@
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.shopByCategory }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} {{ total_category }} >></router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} {{ total_category }}
+	                    <i class="fa-solid fa-arrow-right"></i></router-link>
                   </div>
                 </div>
               </div>
@@ -49,7 +50,8 @@
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.latestUpdate }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} >> </router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }}
+	                    <i class="fa-solid fa-arrow-right"></i></router-link>
                   </div>
                 </div>
               </div>
@@ -127,7 +129,8 @@
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.recommended }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} >> </router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }}
+	                    <i class="fa-solid fa-arrow-right"></i></router-link>
                   </div>
                 </div>
               </div>

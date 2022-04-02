@@ -12,6 +12,7 @@
               <form @submit.prevent="confirm">
                 <div class="form-group">
                   <div class="row">
+<!--	                  order status required-->
                     <div class="col-12 col-md-3">
                       <div>
                         <label class="text-black-50 fs-12">Order Status</label>
@@ -23,6 +24,7 @@
                         </select>
                       </div>
                     </div>
+<!--	                  payment method required-->
                     <div class="col-12 col-md-3">
                       <div>
                         <label class="text-black-50 fs-12">Payment Method</label>
@@ -34,6 +36,14 @@
                         </select>
                       </div>
                     </div>
+<!--	                  delivery accept date-->
+	                  <div class="col-12 col-md-3">
+		                  <div>
+			                  <label class="text-black-50 fs-12">Delivery Accept Date</label>
+			                  <input type="date" class="form-control" v-model="orderForm.delivery_accepttime_date">
+		                  </div>
+	                  </div>
+<!--	                  delivery accept time required-->
                     <div class="col-12 col-md-3">
                       <label class="text-black-50 fs-12">Delivery Accept Time</label>
                       <select v-model="orderForm.delivery_accepttime_id" class="form-control" required>
@@ -43,57 +53,89 @@
                         </option>
                       </select>
                     </div>
+<!--	                  delivery agent-->
                     <div class="col-12 col-md-3">
                       <label class="text-black-50 fs-12">Delivery Agent</label>
-                      <select v-model="orderForm.delivery_agent_id" class="form-control" required>
+                      <select v-model="orderForm.delivery_agent_id" class="form-control">
                         <option value='' selected disabled  class="text-black-50">selected delivery agent</option>
                         <option v-for="c in GET_DELIVER_AGENT" :key="c.id" v-bind:value="c.id">
                           {{ c.name }}
                         </option>
                       </select>
                     </div>
+<!--	                  delivery tracking code-->
+	                  <div class="col-12 col-md-3">
+		                  <div>
+			                  <label class="text-black-50 fs-12">Delivery Tracking Code</label>
+			                  <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
+		                  </div>
+	                  </div>
+<!--	                  Promotion-->
+	                  <div class="col-12 col-md-3">
+		                  <label class="text-black-50 fs-12">Promotions</label>
+		                  <select v-model="orderForm.promo_code_id" class="form-control" >
+			                  <option value="" selected disabled  class="text-black-50">selected promotion</option>
+			                  <option v-for="c in promotion" :key="c.id" v-bind:value="c.id">
+				                  {{ c.name }}
+			                  </option>
+		                  </select>
+	                  </div>
+<!--	                  Promotion code-->
+	                  <div class="col-12 col-md-3">
+		                  <div>
+			                  <label class="text-black-50 fs-12">Promotion Code</label>
+			                  <input type="text" class="form-control" v-model="orderForm.promo_code" >
+		                  </div>
+	                  </div>
+<!--	                  Extra charge Cod-->
+	                  <div class="col-12 col-md-3">
+		                  <div>
+			                  <label class="text-black-50 fs-12">Extra Charge Cod</label>
+			                  <input type="text" class="form-control" v-model="orderForm.extra_charges_cod">
+		                  </div>
+	                  </div>
+<!--	                  Extra charge delivery-->
+	                  <div class="col-12 col-md-3">
+		                  <div>
+			                  <label class="text-black-50 fs-12">Extra Charge Delivery</label>
+			                  <input type="text" class="form-control" v-model="orderForm.extra_charges_delivery">
+		                  </div>
+	                  </div>
+	                  
                   </div>
                 </div>
-                <!--delivery_tracking_code-->
                 <div class="form-group">
-                  <div class="row">
-                    <div class="col-12 col-md-6">
-                      <div>
-                        <label class="text-black-50 fs-12">Delivery Tracking Code</label>
-                        <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
-                      </div>
-                      <div>
-                        <div class="card mt-2">
-                          <div class="card-body">
-                            <span class="text-black-50 fw-600">Order Items</span>
-                            <div class="div">
-                              <table class="table table-borderless align-middle text-center">
-                                <thead>
-                                <tr>
-                                  <th scope="col">Item</th>
-                                  <th scope="col">{{ i.qunatity }}</th>
-                                  <th scope="col">Price</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="text-warning">
-                                  <th>{{ GET_ORDER_TOTAL.item }}</th>
-                                  <td>{{ GET_ORDER_TOTAL.qty }}</td>
-                                  <td>{{ GET_ORDER_TOTAL.price }}</td>
-                                </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">
+                  <div>
                       <label class="text-black-50 fs-12">Remark</label>
-                      <textarea cols="10" rows="9" placeholder="Enter Remark" class="form-control" v-model="orderForm.remark"></textarea>
-                    </div>
+                      <textarea cols="3" rows="4" placeholder="Enter Remark" class="form-control" v-model="orderForm.remark"></textarea>
                   </div>
                 </div>
+	              <div class="form-group">
+		              <div class="card">
+			              <div class="card-header">
+				              <h5 class="fw-600">Order Items</h5>
+			              </div>
+			              <div class="card-body">
+				              <table class="table align-middle table-borderless text-center">
+					              <thead>
+					              <tr>
+						              <th scope="col">Item</th>
+						              <th scope="col">Quantity</th>
+						              <th scope="col">Price</th>
+					              </tr>
+					              </thead>
+					              <tbody>
+					              <tr class="text-warning">
+						              <th>{{ GET_ORDER_TOTAL.item }}</th>
+						              <td>{{ GET_ORDER_TOTAL.qty }}</td>
+						              <td>{{ GET_ORDER_TOTAL.price }}</td>
+					              </tr>
+					              </tbody>
+				              </table>
+			              </div>
+		              </div>
+
+	              </div>
                 <div class="form-group">
                   <div class="row">
                     <div class="col-12">
@@ -156,13 +198,19 @@ export default {
   data() {
     return {
 			is_success : false,
+	    promotion : [],
       orderForm: {
         "user_id": '',
         "order_status_id": '',
         "payment_method_id": '',
+	      "delivery_accepttime_date": '',
         "delivery_accepttime_id": '',
         "delivery_agent_id": '',
         "delivery_tracking_code": '',
+	      "promo_code": '',//integer
+	      "promo_code_id": '', //id
+	      "extra_charges_cod": '',
+	      "extra_charges_delivery":'',
         "remark": '',
       },
     }
@@ -183,6 +231,7 @@ export default {
   },
 	created() {
 		window.scrollTo(0,0);
+		this.getPromotion();
 	},
 	methods: {
     ...mapMutations([
@@ -221,11 +270,15 @@ export default {
         this.ADD_DELIVER_AGENT(res.data.data);
       });
     },
+		getPromotion(){
+			$http.getAll('promotions').then((res)=>{
+					this.promotion = res.data.data;
+			});
+		},
     confirm() {
         this.orderStart();
     },
     orderStart() {
-			
 			this.is_success = true;
       //Back End
       $http.create('orders', this.orderForm).then((res) => {
@@ -234,6 +287,11 @@ export default {
         this.orderForm.order_status_id = '';
         this.orderForm.payment_method_id = '';
         this.orderForm.delivery_agent_id = '';
+				this.orderForm.delivery_accepttime_date = "";
+				this.orderForm.promo_code = '';
+				this.orderForm.promo_code_id = '';
+				this.orderForm.extra_charges_cod = '';
+				this.orderForm.extra_charges_delivery = '';
         this.orderForm.remark = '';
 
         if (res.data.data === null) {
