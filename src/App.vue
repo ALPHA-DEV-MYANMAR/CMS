@@ -20,11 +20,11 @@
 						        data-cc-on-file="false"
 						        data-stripe-publishable-key="pk_test_51KixgBAFWaTKLBDD9R6wAQuV568oLMXBZE1CwpXMngRSg6DHjFqpVoXBnHswnyTs6w8WfPGkHNBLPPNUZ2Xdc3X300LCH8iEbw"
 						        id="payment-form">
-							
+
 							  <input type="hidden" name="_token" value="pT5bOFX4FRdpTCJGtPSq3WQ7ejVHH6mIGwXJtHSi">
-							  <input type="hidden" name="order_id"  id="order_id"  :value="GET_ORDER.id">
+							  <input type="hidden" name="order_id" id="order_id"  :value="GET_ORDER.id">
 							  <input type="hidden" name="user_id" id="user_id" :value="GET_ORDER.user_id">
-							
+
 							  <div class="form-group">
 								  <label for="name" class="fw-600 text-black-50 fs-12">Name</label>
 								  <input class="form-control rounded-" id="name" type="text" />
@@ -109,7 +109,7 @@
 		  </div>
 		</div>
 <!--	Stripe End -->
-	 
+
   </div>
 </template>
 
@@ -122,6 +122,15 @@ import Modal from "@/components/Modal";
 import './assets/js/cusotom.js';
 import Swal from "sweetalert2";
 export default {
+  data() {
+    return {
+      stripe_form: {
+        order_id : '',
+        user_id : '',
+        stripeToken : '',
+      }
+    }
+  },
   components: {Modal, NavBar },
   created() {
     this.getCategories();
@@ -151,6 +160,16 @@ export default {
       'ADD_TO_CART_FROM_DB',
       'ADD_FAVOURITES_FROM_DB'
     ]),
+    stripePay(){
+      this.stripe_form.order_id = 459;
+      this.stripe_form.user_id = 2;
+      this.stripe_form.stripeToken = localStorage.getItem('stripe_token');
+      console.log(this.stripe_form);
+      $http.stripePost('vue_stripe',this.stripe_form)
+      .then((res)=>{
+        console.log(res);
+      })
+    },
 	  cancelOrder(){
 		  Swal.fire({
 			  icon: 'warning',

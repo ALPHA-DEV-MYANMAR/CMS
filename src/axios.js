@@ -1,5 +1,6 @@
 import axios from 'axios';
 const RESOURCE_NAME = 'http://127.0.0.1:8000/api/v1';
+const RESOURCE_STRIPE = 'http://127.0.0.1:8000';
 const header = {
     headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -7,6 +8,9 @@ const header = {
 }
 
 export default {
+    stripePost(name,data){
+      return axios.post(`${RESOURCE_STRIPE}/${name}`,data,header);
+    },
     getAll(name) {
         return axios.get(`${RESOURCE_NAME}/${name}`,header);
     },

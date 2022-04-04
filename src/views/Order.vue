@@ -276,7 +276,7 @@ export default {
 			});
 		},
     confirm() {
-        this.orderStart();
+      this.orderStart();
     },
     orderStart() {
 			this.is_success = true;
@@ -299,13 +299,13 @@ export default {
           Swal.fire(res.data.message, '', 'error');
         } else {
           //success order
-          console.log(res.data.data)
-	        this.is_success = false;
-          this.DEL_ALL_CART_DATA();
-          // this.$router.push('/stripe')
-	        this.ADD_PAY(true);
-					this.ADD_ORDER(res.data.data);
-					localStorage.setItem('order_id',res.data.data.id);
+            console.log(res.data.data)
+            this.is_success = false;
+            this.DEL_ALL_CART_DATA();
+            // this.$router.push('/stripe')
+            this.ADD_PAY(true);
+            this.ADD_ORDER(res.data.data);
+            localStorage.setItem('order_id',res.data.data.id);
         }
       }).catch((err) => {
         console.log(err);

@@ -38,17 +38,11 @@
   </body>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="http://127.0.0.1:8000/js/jquery.creditCardValidator.js"></script>
+  <script src="http://localhost:8000/js/jquery.creditCardValidator.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://js.stripe.com/v2"></script>
 
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-  
   <script type="text/javascript">
-	  
-	  $("#order").val('4444');
-	  
-	  $("#user").val('777');
-	  
       $("#loading").css({
           display: "none"
 
@@ -125,7 +119,9 @@
                   zIndex: "9999",
 
               });
+
               $("#content").css("opacity","0.4");
+
 
               var expiry = $('.card-expiry').val();
               var expiry_array = expiry.split('/');
@@ -172,12 +168,12 @@
                       .removeClass('hide')
                       .find('.alert')
                       .text(response.error.message);
-				  alert(response.error.message);
               } else {
                   /* token contains id, last4, and card type */
                   var token = response['id'];
                   $form.find('input[type=text]').empty();
                   $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                  localStorage.setItem('stripe_token',token);
                   $form.get(0).submit();
               }
           }
