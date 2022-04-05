@@ -22,11 +22,11 @@
               </span>
               <form
                 role="form"
-                action="http://localhost:8000/stripe"
+                :action="url"
                 method="post"
                 class="require-validation"
                 data-cc-on-file="false"
-                data-stripe-publishable-key="pk_test_51KixgBAFWaTKLBDD9R6wAQuV568oLMXBZE1CwpXMngRSg6DHjFqpVoXBnHswnyTs6w8WfPGkHNBLPPNUZ2Xdc3X300LCH8iEbw"
+                :data-stripe-publishable-key="key"
                 id="payment-form"
               >
                 <input
@@ -179,6 +179,8 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
+			url : $http.stripe.url,
+	    key : $http.stripe.key,
       stripe_form: {
         order_id: "",
         user_id: "",

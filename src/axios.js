@@ -1,6 +1,6 @@
 import axios from 'axios';
-const RESOURCE_NAME = 'http://127.0.0.1:8000/api/v1';
-const RESOURCE_STRIPE = 'http://127.0.0.1:8000';
+const RESOURCE_NAME = 'https://ooak.jp/api/v1';
+const RESOURCE_STRIPE = 'https://ooak.jp';
 const header = {
     headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -8,6 +8,10 @@ const header = {
 }
 
 export default {
+    stripe : {
+      'url' : `${RESOURCE_STRIPE}/stripe`,
+      'key' : `pk_test_51KixgBAFWaTKLBDD9R6wAQuV568oLMXBZE1CwpXMngRSg6DHjFqpVoXBnHswnyTs6w8WfPGkHNBLPPNUZ2Xdc3X300LCH8iEbw`,
+    },
     stripePost(name,data){
       return axios.post(`${RESOURCE_STRIPE}/${name}`,data,header);
     },
