@@ -15,6 +15,7 @@ import StepTwo from "@/views/StepTwo";
 import StepThree from "@/views/StepThree";
 import StepFour from "@/views/StepFour";
 import Order from "@/views/Order";
+import OrderSuccess from "@/views/OrderSuccess";
 
 const routes = [
   {
@@ -80,6 +81,17 @@ const routes = [
     path:'/order',
     name: 'order',
     component: Order,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
+    path:'/order-success',
+    name: 'orderSuccess',
+    component: OrderSuccess,
     beforeEnter: (to, from ,next) => {
       if(localStorage.getItem("token") ) {
         next();

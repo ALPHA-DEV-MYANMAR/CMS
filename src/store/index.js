@@ -16,11 +16,11 @@ export default createStore({
     get_payment_method: [],
     get_delivery_accept_time: [],
     get_delivery_agent: [],
-    get_order_total: {},
+    get_order_total: "",
     lang: "en",
     i : {},
     is_pay : false,
-    get_order: {}
+    get_order: ""
   },
   getters: {
     GET_ORDER : (state) => {

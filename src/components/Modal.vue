@@ -80,11 +80,10 @@
 
 <script>
 import $http from '../axios.js'
-import { mapGetters,mapMutations,mapState } from 'vuex'
+import { mapGetters,mapMutations} from 'vuex'
 import Swal from "sweetalert2";
 export default {
   name: "Modal",
-	components: {Stripe},
 	data() {
     return {
       user: {},

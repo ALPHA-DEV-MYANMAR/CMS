@@ -174,7 +174,7 @@
 		                Back</router-link>
                   <button class="btn btn-primary" :class="is_success === false ? '' : 'disabled'" >
 	                  <span  v-if="is_success" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-	                  Payment
+                    {{ orderForm.payment_method_id === 1 ? 'Order' : 'Payment' }}
 	                  <i class="fa-solid fa-arrow-right"></i>
                   </button>
                 </div>
@@ -231,6 +231,9 @@ export default {
   },
 	created() {
 		window.scrollTo(0,0);
+    if(this.GET_ORDER_TOTAL === ""){
+      window.location.href = '/';
+    }
 		this.getPromotion();
 	},
 	methods: {
@@ -276,9 +279,31 @@ export default {
 			});
 		},
     confirm() {
-      this.orderStart();
+
+      Swal.fire({
+        title: 'Are you sure?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          // Start
+
+          if(this.orderForm.payment_method_id !== 1){
+            this.orderStartWithPay();
+          }else{
+            this.orderStartWithNormal();
+          }
+
+          // Start End
+        }
+      })
+
+
     },
-    orderStart() {
+    orderStartWithPay() {
 			this.is_success = true;
       //Back End
       $http.create('orders', this.orderForm).then((res) => {
@@ -306,6 +331,41 @@ export default {
             this.ADD_PAY(true);
             this.ADD_ORDER(res.data.data);
             localStorage.setItem('order_id',res.data.data.id);
+        }
+      }).catch((err) => {
+        console.log(err);
+        alert('something was wrong');
+      });
+    },
+    orderStartWithNormal() {
+      this.is_success = true;
+      //Back End
+      $http.create('orders', this.orderForm).then((res) => {
+        this.orderForm.delivery_accepttime_id = '';
+        this.orderForm.delivery_tracking_code = '';
+        this.orderForm.order_status_id = '';
+        this.orderForm.payment_method_id = '';
+        this.orderForm.delivery_agent_id = '';
+        this.orderForm.delivery_accepttime_date = "";
+        this.orderForm.promo_code = '';
+        this.orderForm.promo_code_id = '';
+        this.orderForm.extra_charges_cod = '';
+        this.orderForm.extra_charges_delivery = '';
+        this.orderForm.remark = '';
+
+        if (res.data.data === null) {
+          //order failed
+          Swal.fire(res.data.message, '', 'error');
+        } else {
+          //success order
+          console.log(res.data.data)
+          this.is_success = false;
+          this.DEL_ALL_CART_DATA();
+          // this.$router.push('/stripe')
+          // this.ADD_PAY(true);
+          this.ADD_ORDER(res.data.data);
+          this.$router.push('/order-success');
+          localStorage.setItem('order_id',res.data.data.id);
         }
       }).catch((err) => {
         console.log(err);
