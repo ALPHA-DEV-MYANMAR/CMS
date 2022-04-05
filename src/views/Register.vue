@@ -101,7 +101,8 @@
                         <textarea name="" id="" cols="30" rows="5" class="form-control" v-model="customersForm.address" required></textarea>
                       </div>
                       <div class="form-group text-end">
-                        <button class="btn btn-primary" >
+                        <button class="btn btn-primary" :class="is_success === false ? '' : 'disabled'" >
+                          <span  v-if="is_success" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
 	                        {{ i.signUp }}
                         </button>
                       </div>
@@ -131,6 +132,7 @@ export default {
   name: "Register",
   data() {
     return {
+      is_success : false,
       states: [],
       customersForm: {
         'name' : '',
@@ -168,6 +170,7 @@ export default {
       $http.getAll('states').then((res)=>{  this.states = res.data.data  });
     },
     RegisterStart(){
+      this.is_success = true;
       $http.create('customers',this.customersForm).then((res)=>{
         if(res.data.message === "Customer successfully created" ) {
           // this.user = res.data.data.data;
@@ -183,6 +186,7 @@ export default {
           // this.getCartFromDB();
           // this.getFavFromDB();
           // this.$router.push('/login');
+          this.is_success = false;
           window.location = '/login';
         }else{
           alert(res.data.message)

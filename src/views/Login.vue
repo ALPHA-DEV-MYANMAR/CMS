@@ -38,7 +38,11 @@
                       </div>
 
                       <div class="mb-5">
-                        <button type="submit" class="btn btn-primary btn-block fw-600">{{ i.login }}</button>
+                        
+                        <button type="submit" class="btn btn-primary btn-block fw-600" :class="is_success === false ? '' : 'disabled'">
+                           <span  v-if="is_success" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                          {{ i.login }}
+                        </button>
                       </div>
                     </form>
 	                  
@@ -65,6 +69,7 @@ import { mapGetters,mapMutations,mapState } from 'vuex'
 import Swal from "sweetalert2";
 import Modal from "@/components/Modal";
 export default {
+  is_success : false,
   name: "Login",
   components: {Modal},
   data() {
@@ -99,6 +104,7 @@ export default {
         'ADD_MODAL_TYPE'
     ]),
     loginUser(){
+      this.is_success = true;
       $http.create('login',this.form )
       .then((res)=>{
         if(res.data.message === 'success') {
@@ -111,6 +117,7 @@ export default {
           this.getUser();
           // this.$router.push('/');
 					window.location.href = '/';
+          this.is_success = false;
           Swal.fire({
             position: 'center',
             icon: 'success',
