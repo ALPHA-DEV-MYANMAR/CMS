@@ -15,6 +15,8 @@ import StepTwo from "@/views/StepTwo";
 import StepThree from "@/views/StepThree";
 import StepFour from "@/views/StepFour";
 import Order from "@/views/Order";
+import Address from "@/views/Address";
+import Promotion from "@/views/Promotion";
 import OrderSuccess from "@/views/OrderSuccess";
 
 const routes = [
@@ -70,6 +72,28 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: Cart,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
+    path: '/address',
+    name: 'address',
+    component: Address,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
+    path: '/promo',
+    name: 'promo',
+    component: Promotion,
     beforeEnter: (to, from ,next) => {
       if(localStorage.getItem("token") ) {
         next();

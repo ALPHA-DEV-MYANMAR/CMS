@@ -98,8 +98,9 @@
                   </router-link>
                 </div>
                 <div>
-                  <router-link class="btn btn-primary" to="" @click="Ordered" >Ordered
-	                  <i class="fa-solid fa-arrow-right"></i></router-link>
+                  <router-link class="btn btn-primary" to="" @click="Ordered" >Address
+	                  <i class="fa-solid fa-arrow-right"></i>
+                    </router-link>
                 </div>
               </div>
             </div>
@@ -161,7 +162,7 @@ export default {
     ]),
     Ordered(){
       if(this.GET_CART_DATA.length !== 0){
-        this.$router.push('/order');
+        this.$router.push('/address');
       }else if(this.GET_USER.length === 0){
         this.ADD_MODAL_STATUS(true);
         this.ADD_MODAL_TYPE('')
