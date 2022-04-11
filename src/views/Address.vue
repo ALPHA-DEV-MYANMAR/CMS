@@ -43,12 +43,16 @@
                     <label for="" class="text-black-50 fs-12">{{ i.address }}</label>
                     <textarea name="" id="" cols="30" rows="5" class="form-control" v-model="customersForm.address" required></textarea>
                   </div>
-                  <div class="form-group text-end">
+                  <div class="form-group d-flex justify-content-between align-item-center">
+                    <router-link to='/cart' class='btn btn-outline-primary' >
+                      <i class="fa-solid fa-arrow-left"></i>
+                    Cart
+                    </router-link>
+
                     <button class="btn btn-primary" :class="is_success === false ? '' : 'disabled'">
                         <span class="spinner-grow spinner-grow-sm" v-if="is_success" role="status" aria-hidden="true"></span>
-	                    Promotion
+	                      Promotion
                          <i class="fa-solid fa-arrow-right"></i>
-	                
                     </button>
                   </div>
                 </form>
@@ -90,7 +94,7 @@ export default {
   computed:{
     ...mapGetters([
         'GET_USER',
-		 'i'
+		    'i'
     ]),
   },
   components: { SideBar },
@@ -99,6 +103,9 @@ export default {
     this.getUser();
     this.getStoreUser();
     window.scrollTo(0,0);
+    if(this.GET_ORDER_TOTAL === "" ){
+        window.location.href = '/';
+    }
   },
   methods:{
     ...mapMutations([

@@ -63,6 +63,10 @@
                     <td>Delivery Price:</td>
                     <td>{{ GET_ORDER.summary.delivery_price }}</td>
                   </tr>
+                  <tr >
+                    <td>Promotion Price:</td>
+                    <td>{{ GET_ORDER.summary.promo }}</td>
+                  </tr>
                   <tr>
                     <td>Total Price:</td>
                     <td>{{ GET_ORDER.summary.total }}</td>

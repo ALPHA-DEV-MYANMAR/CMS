@@ -12,18 +12,6 @@
               <form @submit.prevent="confirm">
                 <div class="form-group">
                   <div class="row">
-<!--	                  order status required-->
-                    <div class="col-12 col-md-3">
-                      <div>
-                        <label class="text-black-50 fs-12">Order Status</label>
-                        <select v-model="orderForm.order_status_id" class="form-control" required>
-                          <option value="" selected disabled class="text-black-50">selected order status</option>
-                          <option v-for="c in GET_ORDER_STATUS" :key="c.id" v-bind:value="c.id">
-                            {{ c.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
 <!--	                  payment method required-->
                     <div class="col-12 col-md-3">
                       <div>
@@ -63,45 +51,6 @@
                         </option>
                       </select>
                     </div>
-<!--	                  delivery tracking code-->
-	                  <div class="col-12 col-md-3">
-		                  <div>
-			                  <label class="text-black-50 fs-12">Delivery Tracking Code</label>
-			                  <input type="text" class="form-control" placeholder="Enter Delivery Tracking Code" v-model="orderForm.delivery_tracking_code">
-		                  </div>
-	                  </div>
-<!--	                  Promotion-->
-	                  <div class="col-12 col-md-3">
-		                  <label class="text-black-50 fs-12">Promotions</label>
-		                  <select v-model="orderForm.promo_code_id" class="form-control" >
-			                  <option value="" selected disabled  class="text-black-50">selected promotion</option>
-			                  <option v-for="c in promotion" :key="c.id" v-bind:value="c.id">
-				                  {{ c.name }}
-			                  </option>
-		                  </select>
-	                  </div>
-<!--	                  Promotion code-->
-	                  <div class="col-12 col-md-3">
-		                  <div>
-			                  <label class="text-black-50 fs-12">Promotion Code</label>
-			                  <input type="text" class="form-control" v-model="orderForm.promo_code" >
-		                  </div>
-	                  </div>
-<!--	                  Extra charge Cod-->
-	                  <div class="col-12 col-md-3">
-		                  <div>
-			                  <label class="text-black-50 fs-12">Extra Charge Cod</label>
-			                  <input type="text" class="form-control" v-model="orderForm.extra_charges_cod">
-		                  </div>
-	                  </div>
-<!--	                  Extra charge delivery-->
-	                  <div class="col-12 col-md-3">
-		                  <div>
-			                  <label class="text-black-50 fs-12">Extra Charge Delivery</label>
-			                  <input type="text" class="form-control" v-model="orderForm.extra_charges_delivery">
-		                  </div>
-	                  </div>
-	                  
                   </div>
                 </div>
                 <div class="form-group">
@@ -128,7 +77,7 @@
 					              <tr class="text-warning">
 						              <th>{{ GET_ORDER_TOTAL.item }}</th>
 						              <td>{{ GET_ORDER_TOTAL.qty }}</td>
-						              <td>{{ GET_ORDER_TOTAL.price }}</td>
+						              <td>{{ GET_ORDER_TOTAL.price - GET_ORDER_TOTAL.promo_price }}</td>
 					              </tr>
 					              </tbody>
 				              </table>
@@ -201,7 +150,7 @@ export default {
 	    promotion : [],
       orderForm: {
         "user_id": '',
-        "order_status_id": '',
+        "order_status_id": 1,
         "payment_method_id": '',
 	      "delivery_accepttime_date": '',
         "delivery_accepttime_id": '',
@@ -279,7 +228,6 @@ export default {
 			});
 		},
     confirm() {
-
       Swal.fire({
         title: 'Are you sure?',
         showDenyButton: true,
@@ -287,23 +235,23 @@ export default {
         confirmButtonText: 'Yes',
         denyButtonText: `No`,
       }).then((result) => {
+      
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           // Start
-
+          this.orderForm.promo_code_id = this.GET_ORDER_TOTAL.code_id ;
           if(this.orderForm.payment_method_id !== 1){
             this.orderStartWithPay();
           }else{
             this.orderStartWithNormal();
           }
-
           // Start End
         }
-      })
-
+      });
 
     },
     orderStartWithPay() {
+    
 			this.is_success = true;
       //Back End
       $http.create('orders', this.orderForm).then((res) => {
@@ -337,6 +285,7 @@ export default {
         alert('something was wrong');
       });
     },
+
     orderStartWithNormal() {
       this.is_success = true;
       //Back End
