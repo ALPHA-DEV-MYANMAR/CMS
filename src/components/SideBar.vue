@@ -28,6 +28,12 @@
                 </router-link>
               </li>
               <li class="aiz-side-nav-item">
+                <router-link to="/order-list" class="aiz-side-nav-link nav-link hov-bg-soft-info hov-text-dark rounded" >
+                  <i class="fa-solid fa-list aiz-side-nav-icon"></i>
+                  <span class="aiz-side-nav-text">Order Listing</span>
+                </router-link>
+              </li>
+              <li class="aiz-side-nav-item">
                 <router-link to="/manage-profile" class="aiz-side-nav-link nav-link hov-bg-soft-info hov-text-dark rounded" >
                   <i class="las la-user aiz-side-nav-icon"></i>
                   <span class="aiz-side-nav-text">Manage Profile</span>

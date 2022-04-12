@@ -331,7 +331,7 @@
                 </div>
               </router-link>
             </li>
-            <li class="" v-for="c in SHOW_ALL_CAT" @click="action(c)">
+            <li class="" v-for="c in SHOW_ALL_CAT" :key="c.id" @click="action(c)">
               <router-link to="" class="fs-14 fw-600 nav-link text-black-50 card shadow-sm rounded p-3 m-1 hov-text-dark ">
                 <div class="d-flex justify-content-start align-items-center">
                   <i class="las la-angle-left"></i>

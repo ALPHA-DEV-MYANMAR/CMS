@@ -5,6 +5,7 @@ import register from "@/views/Register";
 import profile from "@/views/Profile";
 import Wishlist from "@/views/Wishlist";
 import ManageProfile from "@/views/ManageProfile";
+import OrderList from '@/views/OrderList.vue';
 import Cart from "@/views/Cart";
 import Categories from "@/views/Categories";
 import Detail from "@/views/Detail";
@@ -61,6 +62,17 @@ const routes = [
     path: '/manage-profile',
     name: 'manage-profile',
     component: ManageProfile,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
+    path: '/order-list',
+    name: 'orderlist',
+    component: OrderList,
     beforeEnter: (to, from ,next) => {
       if(localStorage.getItem("token") ) {
         next();
