@@ -19,6 +19,7 @@ import Order from "@/views/Order";
 import Address from "@/views/Address";
 import Promotion from "@/views/Promotion";
 import OrderSuccess from "@/views/OrderSuccess";
+import OrderDetail from "../views/OrderDetail.vue";
 
 const routes = [
   {
@@ -73,6 +74,17 @@ const routes = [
     path: '/order-list',
     name: 'orderlist',
     component: OrderList,
+    beforeEnter: (to, from ,next) => {
+      if(localStorage.getItem("token") ) {
+        next();
+      }
+      else next('/login');
+    },
+  },
+  {
+    path: '/order/:id',
+    name: 'OrderDetial',
+    component: OrderDetail,
     beforeEnter: (to, from ,next) => {
       if(localStorage.getItem("token") ) {
         next();
