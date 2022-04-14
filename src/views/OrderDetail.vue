@@ -83,10 +83,20 @@
 
                     <hr/>
 
-                    <div>
-                        <label for="formFile" class="form-label">Payment Slip</label>
-                        <input class="form-control" type="file" id="formFile" @change="uploadFile($event)">
-                    </div>
+
+                    <label for="formFile" class="form-label fw-600 fs-15 h4">Payment Slip</label>   
+                   
+                    <div class='row'>
+                        <div class="col-12 col-md-4">             
+                            <div v-if="imageUrl === '' " class=" hov-bg-soft-dark c-pointer border border-2 border-dark h-200px rounded-3 me-1 uploader-ui d-flex justify-content-center align-items-center px-3" @click="clickFile" id="photoUploadUi">
+                               <i class="fas fa-plus fa-2x"></i>
+                            </div>
+                            
+                            <input class="form-control d-none" type="file" id="formFile" @change="uploadFile">
+                            <img :src="imageUrl" class="img-fluid border-1 border-white c-pointer rounded " @click="clickFile"  width="200" alt="">
+                            <button v-if="imageUrl !== '' " @click="delImage()" class='btn-close btn-circle btn-danger p-2 '></button>
+                        </div>
+                    </div>    
 
                     <hr/>
 
@@ -132,6 +142,7 @@ export default{
             imageUrl : '',
             image : '',
             preview : '',
+            photo_id : '',
         }
     },
   components: { SideBar },
@@ -139,31 +150,83 @@ export default{
       window.scrollTo(0,0);
       this.getData();
   },
-  methods: {
-    uploadFile(event){
-        const files = event.target.files
-        this.filename = files[0].name
-        this.file = event.target.files[0]
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-            this.imageUrl = fileReader.result
+  methods: {    
+    clickFile(){
+        document.getElementById('formFile').click();
+    },  
+
+    uploadFile(event) {
+      const files = event.target.files
+      this.filename = files[0].name
+      this.file = event.target.files[0]
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
+
+      const formData = new FormData
+      formData.set('file',this.file);
+
+      $http.create('photos',formData )
+      .then((res)=>{
+        this.photo_id = res.data.data.id;
+        console.log(this.photo_id);
+
+        $http.update('orders',this.$route.params.id,{
+  
+        'photo_id' : this.photo_id,
+
+        }).then((res)=>{
+            console.log(res)
         })
-        fileReader.readAsDataURL(files[0])
-        this.image = files[0];
-        const formData = new FormData;
-        formData.set('file',this.file)
-        $http.create('photos',formData)
+
+      });
+
+    },
+
+    delImage(){
+
+        Swal.fire({
+        title: 'Do you want to Delete',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+        }).then((result) => {
+        if (result.isConfirmed) {
+
+        //Delete Image
+
+        this.imageUrl = '';
+        //Photo Delete
+        $http.delete('photos',this.order.photo_id).then((res)=>{
+            this.imageUrl = '';
+        })
+        //Update Order
+        $http.update('orders',this.$route.params.id,{ 'photo_id' : 0 }).then((res)=>{
+            this.imageUrl = '';
+            console.log('success');
+        });
+
+            
+        } else if (result.isDenied) {
+            return ;
+        }
+
+        })
+
+
+    },
+
+    getData() {
+        $http.getAll('orders/'+this.$route.params.id)
         .then((res)=>{
             console.log(res);
-        });
-        },
-      getData() {
-          $http.getAll('orders/'+this.$route.params.id)
-          .then((res)=>{
-              console.log(res);
-              this.order = res.data.data;
-          })
-      }
+            this.order = res.data.data;
+            this.imageUrl = res.data.data.photo.name;
+        })
+    }
   },
 }
   

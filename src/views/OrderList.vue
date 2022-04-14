@@ -24,7 +24,7 @@
                     <tbody>
                         <tr v-for='o in orders' :key="o.id">
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm btn-circle rounded-3" @click="detailOrder(o)">
+                                <button type="button" class="btn btn-outline-warning btn-sm btn-circle rounded-3" @click="detailOrder(o)">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </td>
@@ -50,6 +50,7 @@
 
 <script>
   import SideBar from '@/components/SideBar.vue'
+  import Spinner from "@/components/Spinner";
   import $http from '../axios.js'
   export default{
       data() {
@@ -57,7 +58,7 @@
             orders: [],
           }
       },
-  components: { SideBar },
+  components: { SideBar , Spinner },
   created () {
       this.getData();
   },
@@ -65,7 +66,8 @@
     getData() {
         $http.getAll('orders')
         .then((res)=>{
-            this.orders = res.data.data.data.filter((el)=>el.items.length !== 0)
+            this.orders = res.data.data.data.filter((el)=>el.items.length !== 0);
+            console.log(res)
         });  
     },
     detailOrder(order){
