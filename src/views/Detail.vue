@@ -51,11 +51,6 @@
                   <h1 class="mb-2 fs-20 fw-600">{{ SHOW_Good.name }}</h1>
                   <div class="row align-items-center">
                     <div class="col-12">
-                    <span class="rating">
-                      <i class="las la-star"></i><i class="las la-star"></i
-                    ><i class="las la-star"></i><i class="las la-star"></i
-                    ><i class="las la-star"></i>
-                    </span>
                       <span class="ml-1 opacity-50">({{ SHOW_Good.view_count }} reviews)</span>
                     </div>
                   </div>
@@ -89,8 +84,8 @@
                     </div>
                     <div class="col-sm-10">
                       <div class="">
-                        <strong class="h2 fw-600 text-primary mb-0">
-                          {{  SHOW_Good.prices[0].price }}
+                        <strong class="h2 fw-600 mb-0">
+                          {{  SHOW_Good.prices[0].price }}￥
                         </strong>
                       </div>
                     </div>
@@ -147,97 +142,35 @@
                     </div>
                     <div class="col-sm-10">
                       <div class="product-price">
-                        <strong id="chosen_price" class="h4 fw-600 text-primary">{{ SHOW_Good.prices[0].price * quantity }}</strong>
+                        <strong id="chosen_price" class="h4 fw-600 ">{{ SHOW_Good.prices[0].price * quantity }}￥</strong>
                       </div>
                     </div>
                   </div>
 
                   <div class="mt-3">
                     <!-- Add To Cart-->
-                    <button v-if="SHOW_Good.total_stock > 0"  class="btn btn-outline-primary mr-2 add-to-cart fw-600" @click="addToCart(SHOW_Good)">
-                      <i class="las la-shopping-bag"></i>
-                      <span class="d-md-inline-block">{{ i.addToCart }}</span>
+                    <button v-if="SHOW_Good.total_stock > 0"  class="btn btn-dark mr-2 " @click="addToCart(SHOW_Good)">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>{{ i.addToCart }}</span>
                     </button>
                     <!--Add To Cart-->
                     <!--Add Buy-->
-                    <button v-if="SHOW_Good.total_stock > 0" class="btn btn-primary buy-now fw-600" @click="OrderNow(SHOW_Good)">
-                      <i class="la la-shopping-cart"></i> Order Now
+                    <button v-if="SHOW_Good.total_stock > 0" class="btn btn-dark mr-3" @click="OrderNow(SHOW_Good)">
+                      <i class="fas fa-shopping-bag"></i>
+                      Order Now
                     </button>
-                    <button v-else class="btn btn-secondary fw-600 " disabled>
-                      <i class="la la-cart-arrow-down"></i> Out of Stock
+                    <button v-else class="btn btn-secondary mr-3" disabled>
+                      <i class="fas fa-cart-arrow-down"></i> Out of Stock
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-danger mt-4 mt-md-0"
+                        @click="addWishList(SHOW_Good)">
+                      <i class="fas fa-heart"></i>
+                      Add to favourite
                     </button>
                   </div>
                   <!-- Add Buy-->
-
-                  <div class="d-table width-100 mt-3">
-                    <div class="d-table-cell">
-                      <!-- Add to wishlist button -->
-                      <button
-                          type="button"
-                          class="btn pl-0 btn-link nav-link text-danger fw-600"
-                          @click="addWishList(SHOW_Good)">
-                        Add to favourite
-                      </button>
-                      <!-- Add to compare button -->
-                    </div>
-                  </div>
-
-                  <div class="row no-gutters mt-4">
-                    <div class="col-sm-2">
-                      <div class="opacity-50 my-2">Share:</div>
-                    </div>
-                    <div class="col-sm-10">
-                      <div class="aiz-share jssocials">
-                        <div class="jssocials-shares">
-                          <div class="jssocials-share jssocials-share-email">
-                            <a
-                                target="_self"
-                                href="mailto:?subject=This%20is%20very%20cold%20bug.&amp;body=http%3A%2F%2Flocalhost%2Faction%2FCMS%2Fproduct%2Fbug"
-                                class="jssocials-share-link"
-                            ><i class="lar la-envelope jssocials-share-logo"></i
-                            ></a>
-                          </div>
-                          <div class="jssocials-share jssocials-share-twitter">
-                            <a
-                                target="_blank"
-                                href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2Faction%2FCMS%2Fproduct%2Fbug&amp;text=This%20is%20very%20cold%20bug."
-                                class="jssocials-share-link"
-                            ><i class="lab la-twitter jssocials-share-logo"></i
-                            ></a>
-                          </div>
-                          <div class="jssocials-share jssocials-share-facebook">
-                            <a
-                                target="_blank"
-                                href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2Faction%2FCMS%2Fproduct%2Fbug"
-                                class="jssocials-share-link"
-                            ><i
-                                class="lab la-facebook-f jssocials-share-logo"
-                            ></i
-                            ></a>
-                          </div>
-                          <div class="jssocials-share jssocials-share-linkedin">
-                            <a
-                                target="_blank"
-                                href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Flocalhost%2Faction%2FCMS%2Fproduct%2Fbug"
-                                class="jssocials-share-link"
-                            ><i
-                                class="lab la-linkedin-in jssocials-share-logo"
-                            ></i
-                            ></a>
-                          </div>
-                          <div class="jssocials-share jssocials-share-whatsapp">
-                            <a
-                                target="_self"
-                                href="whatsapp://send?text=http%3A%2F%2Flocalhost%2Faction%2FCMS%2Fproduct%2Fbug This%20is%20very%20cold%20bug."
-                                class="jssocials-share-link"
-                            ><i class="lab la-whatsapp jssocials-share-logo"></i
-                            ></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
               <!--        Item Detail-->

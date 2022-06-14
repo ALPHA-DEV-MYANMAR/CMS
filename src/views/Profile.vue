@@ -1,12 +1,12 @@
 <template>
   <div class="container text-start">
     <div class="row">
-      <div class="col-12 col-md-3 d-none d-md-block">
+      <div class="col-12 col-md-4 col-lg-3 d-none d-md-block">
         <SideBar></SideBar>
       </div>
-      <div class="col-12 col-md-9">
+      <div class="col-12 col-md-8 col-lg-9">
         <div class="row">
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-6 col-lg-3">
             <div class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden table-borderless hov-shadow-2xl" >
               <div class="px-3 pt-3">
                 <div class="h3 fw-700">{{ GET_CART_COUNT }}</div>
@@ -24,7 +24,7 @@
               </svg>
             </div>
           </div>
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-6 col-lg-3">
             <div
                 class="bg-grad-1 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
             >
@@ -44,12 +44,12 @@
               </svg>
             </div>
           </div>
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-6 col-lg-3">
             <div
                 class="bg-grad-2 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
             >
               <div class="px-3 pt-3">
-                <div class="h3 fw-700">{{ summary }}</div>
+                <div class="h3 fw-700">{{ summary == '' ? 0 : summary }}</div>
                 <div class="opacity-50">{{ i.totalCost }}</div>
               </div>
               <svg
@@ -64,12 +64,12 @@
               </svg>
             </div>
           </div>
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-6 col-lg-3">
             <div
                 class="bg-grad-3 text-white rounded-lg mb-4 overflow-hidden hov-shadow-2xl"
             >
               <div class="px-3 pt-3">
-                <div class="h3 fw-700">{{ order_count }}</div>
+                <div class="h3 fw-700">{{ order_count == '' ? 0 : order_count }}</div>
                 <div class="opacity-50">{{ i.orderList }}</div>
               </div>
               <svg
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-12 col-md-6">
             <div class="card">
               <div class="card-header">
                 <h5 class="mb-0 h6">{{ i.myAccount }}</h5>
@@ -139,7 +139,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-12 col-md-6">
             <div class="card">
               <div class="card-header">
                 <h5 class="mb-0 h6">{{ i.address }}</h5>

@@ -75,15 +75,6 @@
                       </router-link>
                       <router-link
                           to=""
-                          onclick=""
-                          data-toggle="tooltip"
-                          data-title="Add to compare"
-                          data-placement="left"
-                      >
-                        <i class="las la-sync"></i>
-                      </router-link>
-                      <router-link
-                          to=""
                           @click="addToCart(g)"
                           data-toggle="tooltip"
                           data-title="Add to cart"
@@ -95,12 +86,7 @@
                   </div>
                   <div class="p-md-3 p-2 text-start">
                     <div class="fs-15">
-                      <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
-                    </div>
-                    <div class="rating rating-sm mt-1">
-                      <i class="las la-star"></i><i class="las la-star"></i
-                    ><i class="las la-star"></i><i class="las la-star"></i
-                    ><i class="las la-star"></i>
+                      <span class="fw-700">{{ g.prices[0].price }}￥</span>
                     </div>
                     <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
                       {{ g.name }}

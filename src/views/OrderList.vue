@@ -1,10 +1,10 @@
 <template>
   <div class="container text-start">
     <div class="row">
-      <div class="col-12 col-md-3  d-none d-md-block">
+      <div class="col-12 col-md-4 col-lg-3  d-none d-md-block">
         <side-bar></side-bar>
       </div>
-      <div class="col-12 col-md-9">
+      <div class="col-12 col-md-8 col-lg-9">
           <div class="row">
             <div class="card">
                <div style="overflow-x:auto;">

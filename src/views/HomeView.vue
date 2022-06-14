@@ -10,11 +10,14 @@
               <div class="row">
                 <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-between w-100">
                   <div class="h5 fw-700 mb-0">
-                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.shopByCategory }}</span>
+                    <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">
+                      {{ i.shopByCategory }}
+                    </span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }} {{ total_category }}
-	                    <i class="fa-solid fa-arrow-right"></i></router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-outline-dark rounded-pill btn-sm shadow-md">{{ i.viewAll }} {{ total_category }}
+	                    <i class="fa-solid fa-arrow-right"></i>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -27,9 +30,11 @@
               </div>
               <div class="row " v-else>
                 <div class="col-12 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
-                  <div class="card rounded-lg shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
+                  <div class="card rounded rounded-pill shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
                     <div class="card-body">
-                      <span class="text-uppercase fw-bolder text-black-50">{{ c.name }}</span>
+                      <span class="text-uppercase fw-bolder text-dark">
+                        {{ c.name }}
+                        </span>
                     </div>
                   </div>
                 </div>
@@ -39,6 +44,7 @@
           <!--Category-->
         </div>
       </div>
+
       <div class="container">
         <div class="row">
           <!--Product-->
@@ -50,7 +56,7 @@
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.latestUpdate }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }}
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-outline-dark rounded-pill btn-sm shadow-md">{{ i.viewAll }}
 	                    <i class="fa-solid fa-arrow-right"></i></router-link>
                   </div>
                 </div>
@@ -79,15 +85,6 @@
                         </router-link>
                         <router-link
                             to=""
-                            @click=""
-                            data-toggle="tooltip"
-                            data-title="Add to compare"
-                            data-placement="left"
-                        >
-                          <i class="las la-sync"></i>
-                        </router-link>
-                        <router-link
-                            to=""
                             @click="addToCart(g)"
                             data-toggle="tooltip"
                             data-title="Add to cart"
@@ -99,12 +96,7 @@
                     </div>
                     <div class="p-md-3 p-2 text-start">
                       <div class="fs-15">
-                        <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
-                      </div>
-                      <div class="rating rating-sm mt-1">
-                        <i class="las la-star"></i><i class="las la-star"></i
-                      ><i class="las la-star"></i><i class="las la-star"></i
-                      ><i class="las la-star"></i>
+                        <span class="fw-700">{{ g.prices[0].price }}￥</span>
                       </div>
                       <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
                         {{ g.name }}
@@ -118,6 +110,7 @@
           <!--Product-->
         </div>
       </div>
+
       <div class="container">
         <div class="row">
           <!--Product-->
@@ -129,8 +122,9 @@
                     <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ i.recommended }}</span>
                   </div>
                   <div>
-                    <router-link to="/categories" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ i.viewAll }}
-	                    <i class="fa-solid fa-arrow-right"></i></router-link>
+                    <router-link to="/categories" class="ml-auto mr-0 btn btn-outline-dark rounded-pill btn-sm shadow-md">{{ i.viewAll }}
+	                    <i class="fa-solid fa-arrow-right"></i>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -158,15 +152,6 @@
                         </router-link>
                         <router-link
                             to=""
-                            @click=""
-                            data-toggle="tooltip"
-                            data-title="Add to compare"
-                            data-placement="left"
-                        >
-                          <i class="las la-sync"></i>
-                        </router-link>
-                        <router-link
-                            to=""
                             @click="addToCart(g)"
                             data-toggle="tooltip"
                             data-title="Add to cart"
@@ -178,12 +163,7 @@
                     </div>
                     <div class="p-md-3 p-2 text-start">
                       <div class="fs-15">
-                        <span class="fw-700 text-primary">{{ g.prices[0].price }}</span>
-                      </div>
-                      <div class="rating rating-sm mt-1">
-                        <i class="las la-star"></i><i class="las la-star"></i
-                      ><i class="las la-star"></i><i class="las la-star"></i
-                      ><i class="las la-star"></i>
+                        <span class="fw-700 ">{{ g.prices[0].price }}￥</span>
                       </div>
                       <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px c-pointer" @click="addGood(g)"  >
                         {{ g.name }}
@@ -197,6 +177,7 @@
           <!--Product-->
         </div>
       </div>
+
     </div>
 
     <Modal></Modal>

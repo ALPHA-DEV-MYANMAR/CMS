@@ -37,11 +37,11 @@
          <div class="col-8 col-md-3" :class="is_show === true ? 'd-none': '' ">
            <router-link to="/" class="nav-link">
              <img
-                 src="../assets/img/ooak-logo.png"
+                 src="../assets/logo.png"
                  alt=""
-                 style="width: 60px;"
+                 style="width: 80px;"
              />
-	           <span class="fw-bolder text-decoration-none" style="color:#8bff76;">{{ i.appName }}</span>
+	           <span class="fw-bolder text-decoration-none" style="color:rgb(2 2 2);">{{ i.appName }}</span>
            </router-link>
          </div>
 <!--        Logo-->
@@ -91,7 +91,7 @@
            <div class="justify-content-around d-none d-md-flex align-items-center">
              <!--favourites-->
              <router-link to="/wishlist" class="nav-link">
-               <i class="fa-solid fa-heart fa-lg text-danger"></i>
+               <i class="fa-solid fa-heart fa-lg text-dark"></i>
                 <span class="flex-grow-1">
                   <span class="badge badge-warning badge-inline badge-pill" >{{ GET_FAVOURITES_TOTAL }}</span  >
                   <span class="nav-box-text d-xl-block opacity-70 text-black-50 " style="font-size: 10px;" >
@@ -103,7 +103,7 @@
 
              <!--cart-->
              <router-link to="" class="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#cart"  aria-controls="offcanvasRight">
-               <i class="fa-solid fa-cart-arrow-down fa-lg text-primary"></i>
+               <i class="fa-solid fa-cart-arrow-down fa-lg text-dark"></i>
                <span class="flex-grow-1">
                     <span class="badge badge-warning badge-inline badge-pill">{{ GET_CART_COUNT }}</span>
                     <span class="nav-box-text d-none d-xl-block opacity-70 text-black-50"  style="font-size: 10px;">
@@ -120,15 +120,15 @@
        <div class="row d-none d-lg-block fw-600">
          <div class="col-12">
            <div class="d-flex justify-content-center align-items-center">
-             <router-link to="/" class="nav-link text-black-50">
+             <router-link to="/" class="nav-link text-dark">
                <i class="fa-solid fa-house"></i>
 	             {{ i.home }}
              </router-link>
-             <router-link to="/categories" class="nav-link text-black-50">
+             <router-link to="/categories" class="nav-link  text-dark">
                <i class="fa-solid fa-align-justify"></i>
 	             {{ i.shopByCategory }}
              </router-link>
-             <router-link to="/profile" class="nav-link text-black-50">
+             <router-link to="/profile" class="nav-link  text-dark">
                <i class="fa-solid fa-user"></i>
 	             {{ i.myAccount }}
              </router-link>
@@ -154,7 +154,7 @@
                 class="text-reset border-left text-center p-4 d-block nav-link"
                 to="/step-three"
             >
-              <i class="la la-file-text la-3x text-primary mb-2" style="font-size: 30px;"></i>
+              <i class="la la-file-text la-3x mb-2" style="font-size: 30px;"></i>
               <h4 class="h6">{{ i.termsAndConditions }}</h4>
             </router-link>
           </div>
@@ -163,7 +163,7 @@
                 class="text-reset border-left text-center p-4 d-block nav-link"
                 to="/step-two"
             >
-              <i class="la la-mail-reply la-3x text-primary mb-2" style="font-size: 30px;"></i>
+              <i class="la la-mail-reply la-3x mb-2" style="font-size: 30px;"></i>
               <h4 class="h6">return policy</h4>
             </router-link>
           </div>
@@ -172,7 +172,7 @@
                 class="text-reset border-left text-center p-4 d-block nav-link"
                 to=""
             >
-              <i class="la la-support la-3x text-primary mb-2" style="font-size: 30px;"></i>
+              <i class="la la-support la-3x mb-2" style="font-size: 30px;"></i>
               <h4 class="h6">Support Policy</h4>
             </router-link>
           </div>
@@ -181,7 +181,7 @@
                 class="text-reset border-left border-right text-center p-4 d-block nav-link"
                 to="/step-one"
             >
-              <i class="las la-exclamation-circle la-3x text-primary mb-2" style="font-size: 30px;" ></i>
+              <i class="las la-exclamation-circle la-3x mb-2" style="font-size: 30px;" ></i>
               <h4 class="h6">privacy policy</h4>
             </router-link>
           </div>
@@ -191,84 +191,10 @@
     <!--      Team And Policy-->
 
     <!--      Content Info-->
-    <section class="bg-dark py-5 text-light footer-widget">
+    <section class="bg-dark py-2 text-light footer-widget">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-5 col-xl-4 text-start">
-            <div class="mt-4">
-	            <router-link to="/" class="nav-link">
-		            <img
-				            src="../assets/img/ooak-logo.png"
-				            alt=""
-				            style="width: 60px;"
-		            />
-		            <span class="fw-bolder text-decoration-none" style="color:#8bff76;">{{ i.appName }}</span>
-	            </router-link>
-              <div class="d-inline-block d-md-block mb-4">
-                <form class="form-inline" >
-                <div class="form-group mb-0">
-                  <input type="email" class="form-control" placeholder="Your Email Address" name="email" required="">
-                </div>
-                  <button type="submit" class="btn btn-primary">
-                    Subscribe
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 ml-xl-auto col-md-4 mr-0">
-            <div class="text-start mt-4">
-              <h4 class="fs-13 text-uppercase fw-600 border-bottom border-gray-900 pb-2 mb-4">
-                Contact Info
-              </h4>
-              <ul class="list-unstyled">
-                <li class="mb-2">
-                  <span class="d-block opacity-30">Address:</span>
-                  <span class="d-block opacity-70"></span>
-                </li>
-                <li class="mb-2">
-                  <span class="d-block opacity-30">Phone:</span>
-                  <span class="d-block opacity-70"></span>
-                </li>
-                <li class="mb-2">
-                  <span class="d-block opacity-30">Email:</span>
-                  <span class="d-block opacity-70">
-                               <a href="mailto:" class="text-reset"></a>
-                            </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-lg-2">
-            <div class="text-start mt-4">
-              <h4 class="fs-13 text-uppercase fw-600 border-bottom border-gray-900 pb-2 mb-4">
-                My Account
-              </h4>
-              <ul class="list-unstyled">
-                <li class="mb-2">
-                  <a class="opacity-50 hov-opacity-100 text-reset" href="http://localhost/action/CMS/logout">
-                    Logout
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="opacity-50 hov-opacity-100 text-reset" href="http://localhost/action/CMS/purchase_history">
-                    Order History
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="opacity-50 hov-opacity-100 text-reset" href="http://localhost/action/CMS/wishlists">
-                    My Wishlist
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="opacity-50 hov-opacity-100 text-reset" href="http://localhost/action/CMS/track-your-order">
-                    Track Order
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div class="row justify-content-center">
+          @2022 shop.ooak.jp 
         </div>
       </div>
     </section>
@@ -308,7 +234,10 @@
           </ul>
         </div>
         <div class="card-footer">
-           <router-link to="/cart" class="btn btn-outline-primary form-control">{{ i.viewAll }}</router-link>
+           <router-link to="/cart" class="btn btn-outline-dark rounded rounded-pill form-control" data-bs-toggle="offcanvas" data-bs-target="#cart"  aria-controls="offcanvasRight" @click="goToCartList()">
+           Cart List
+           <i class="fas fa-arrow-right"></i>
+           </router-link>
         </div>
       </div>
     </div>
@@ -479,6 +408,9 @@ export default {
     action(c){
       this.$router.push('/single-category');
       this.ADD_GOOD_WITH_ID(c);
+    }, 
+    goToCartList(){
+      this.$router.push('/cart');
     },
     getUser(){
       $http.get('customers',localStorage.getItem('user_id'))

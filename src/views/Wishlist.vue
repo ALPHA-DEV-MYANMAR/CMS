@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-3  d-none d-md-block">
+      <div class="col-12 col-md-4 col-lg-3 d-none d-md-block">
         <SideBar></SideBar>
       </div>
-      <div class="col-12 col-md-9">
+      <div class="col-12  col-md-8 col-lg-9">
         <div class="row">
-            <div class="col-12 col-md-4" v-for="f in GET_FAVOURITES" :key="f.id">
+            <div class="col-12 col-md-12 col-lg-4" v-for="f in GET_FAVOURITES" :key="f.id">
               <div class="card mb-2 shadow-sm">
                 <div class="card-body">
                   <router-link to="" class="d-block mb-3">
@@ -14,17 +14,10 @@
                   </router-link>
                   <div class="text-start">
                     <h5 class="fs-14 mb-0 lh-1-5 fw-600 text-truncate-2">
-                      <router-link to="" class="text-reset c-pointer" @click="addGood(f.good)">{{ f.good.name }}</router-link>
+                      <router-link to="" class="text-decoration-none text-reset c-pointer" @click="addGood(f.good)">{{ f.good.name }}</router-link>
                     </h5>
-                    <div class="rating rating-sm mb-1">
-                      <i class="las la-star"></i>
-                      <i class="las la-star"></i>
-                      <i class="las la-star"></i>
-                      <i class="las la-star"></i>
-                      <i class="las la-star"></i>
-                    </div>
                     <div class=" fs-14">
-                      <span class="fw-600 text-primary">{{ f.good.prices[0].price }}</span>
+                      <span class="fw-600 ">{{ f.good.prices[0].price }}￥</span>
                     </div>
                   </div>
 
