@@ -13,10 +13,10 @@
                                 <div class="col-12 col-md-4 mx-auto">
                                    <label for="" class="text-black-50 fw-600 fs-12">{{ i.promoCode  }}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" v-model="code" :placeholder="i.promoCodeHintText" aria-describedby="button-addon2" @keyup="check()">
+                                        <input type="text" class="form-control" placeholder="Enter Promo Code" v-model="code" aria-describedby="button-addon2" @keyup="check()">
                                     </div>
                                         <span v-if="code !== '' " class="fs-12 fw-600" :class="is_valid ? 'text-success' : 'text-danger' ">
-                                            {{  is_valid ? i.promoCodeApplied : i.promoCodeError  }}
+                                            {{  is_valid ? 'success' : 'error'  }}
                                         </span>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                                         {{ c.qty }}
                                                     </td>
                                                     <td class="align-middle">
-                                                        {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}
+                                                        {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}￥
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -61,10 +61,10 @@
                                                         {{ i.totalCost }}
                                                     </td>
                                                     <td  v-if="is_promo === true " class="fw-bold text-success h5 " colspan="2">
-                                                        {{ GET_ORDER_TOTAL.price - promo_price }}
+                                                        {{ GET_ORDER_TOTAL.price - promo_price }}￥
                                                     </td>
                                                     <td v-else class="fw-bold text-danger h5" colspan="2">
-                                                        {{ GET_ORDER_TOTAL.price }}
+                                                        {{ GET_ORDER_TOTAL.price }}￥
                                                     </td>
                                                 </tr>
                                             </tbody>

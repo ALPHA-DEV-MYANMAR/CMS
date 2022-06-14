@@ -13,7 +13,7 @@
                 <div class="form-group">
                   <div class="row">
 <!--	                  payment method required-->
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-lg-4">
                       <div>
                         <label class="text-black-50 fs-12">Payment Method</label>
                         <select v-model="orderForm.payment_method_id" class="form-control" required>
@@ -25,14 +25,14 @@
                       </div>
                     </div>
 <!--	                  delivery accept date-->
-	                  <div class="col-12 col-md-3">
+	                  <div class="col-12 col-lg-4">
 		                  <div>
 			                  <label class="text-black-50 fs-12">Delivery Accept Date</label>
 			                  <input type="date" class="form-control" v-model="orderForm.delivery_accepttime_date">
 		                  </div>
 	                  </div>
 <!--	                  delivery accept time required-->
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-lg-4">
                       <label class="text-black-50 fs-12">Delivery Accept Time</label>
                       <select v-model="orderForm.delivery_accepttime_id" class="form-control" required>
                         <option value="" selected disabled  class="text-black-50">selected delivery accept time</option>
@@ -42,7 +42,7 @@
                       </select>
                     </div>
 <!--	                  delivery agent-->
-                    <div class="col-12 col-md-3">
+                    <!-- <div class="col-12 col-md-3">
                       <label class="text-black-50 fs-12">Delivery Agent</label>
                       <select v-model="orderForm.delivery_agent_id" class="form-control">
                         <option value='' selected disabled  class="text-black-50">selected delivery agent</option>
@@ -50,7 +50,7 @@
                           {{ c.name }}
                         </option>
                       </select>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="form-group">
@@ -77,7 +77,7 @@
 					              <tr class="text-warning">
 						              <th>{{ GET_ORDER_TOTAL.item }}</th>
 						              <td>{{ GET_ORDER_TOTAL.qty }}</td>
-						              <td>{{ GET_ORDER_TOTAL.price - GET_ORDER_TOTAL.promo_price }}</td>
+						              <td>{{ GET_ORDER_TOTAL.price - GET_ORDER_TOTAL.promo_price }}￥</td>
 					              </tr>
 					              </tbody>
 				              </table>

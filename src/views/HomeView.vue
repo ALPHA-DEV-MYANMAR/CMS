@@ -2,6 +2,7 @@
   <div class="home text-start">
 
     <div class="home-banner-area mb-4 pt-3">
+
       <div class="container">
         <div class="row">
           <!--Category-->
@@ -29,7 +30,7 @@
                 </div>
               </div>
               <div class="row " v-else>
-                <div class="col-12 col-md-4" v-for="c in categories" :key="c.id" @click="action(c)">
+                <div class="col-12 col-md-6 col-lg-4" v-for="c in categories" :key="c.id" @click="action(c)">
                   <div class="card rounded rounded-pill shadow-sm hov-shadow-lg has-transition c-pointer text-center ">
                     <div class="card-body">
                       <span class="text-uppercase fw-bolder text-dark">
@@ -69,7 +70,7 @@
                 </div>
               </div>
               <div class="row" v-else>
-                <div class="col-6 col-md-3" v-for="g in goods" :key="g.id">
+                <div class="col-6 col-md-4 col-lg-3" v-for="g in goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
                       <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />
@@ -136,7 +137,7 @@
                 </div>
               </div>
               <div class="row" v-else>
-                <div class="col-6 col-md-3" v-for="g in recommend_goods" :key="g.id">
+                <div class="col-6  col-md-4 col-lg-3" v-for="g in recommend_goods" :key="g.id">
                   <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white"  >
                     <div class="position-relative">
                       <img class="img-fit mx-auto h-140px h-md-210px lazyloaded" :src="g.photos.length === 0 ? '' : g.photos[0].name" />

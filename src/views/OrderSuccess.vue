@@ -24,11 +24,10 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <span class="h5 mb-0 fw-600">Order list</span>
+              <span class="h5 mb-0 fw-600">Order Items</span>
             </div>
             <div class="card-body">
               <div style="overflow: auto">
-                <span class="h6 fw-bolder">Order Items</span>
                 <table class="table table-borderless align-middle">
                   <thead>
                   <tr >
@@ -50,7 +49,7 @@
                       {{ o.quantity }}
                     </td>
                     <td>
-                      {{ o.total_price }}
+                      {{ o.total_price }}￥
                     </td>
                   </tr>
                   </tbody>
@@ -61,15 +60,15 @@
                   <tbody>
                   <tr>
                     <td>Delivery Price:</td>
-                    <td>{{ GET_ORDER.summary.delivery_price }}</td>
+                    <td>{{ GET_ORDER.summary.delivery_price }}￥</td>
                   </tr>
                   <tr >
                     <td>Promotion Price:</td>
-                    <td>{{ GET_ORDER.summary.promo }}</td>
+                    <td>{{ GET_ORDER.summary.promo }}￥</td>
                   </tr>
                   <tr>
                     <td>Total Price:</td>
-                    <td>{{ GET_ORDER.summary.total }}</td>
+                    <td>{{ GET_ORDER.summary.total }}￥</td>
                   </tr>
                   </tbody>
                 </table>

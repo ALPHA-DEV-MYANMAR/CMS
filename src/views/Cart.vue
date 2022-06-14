@@ -67,7 +67,7 @@
                     </div>
                   </td>
                   <td class="align-middle">
-                    {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}
+                    {{ c.price === null ? 'Null' : c.price.good.prices[0].price * c.qty }}￥
                   </td>
                   <td class="align-middle">
                     <button class="btn btn-danger btn-sm rounded-circle " @click="DelCartData(c)">
@@ -82,7 +82,7 @@
                     {{ i.totalCost }}:
                   </td>
                   <td class="fw-bold text-warning h5" colspan="2">
-                    {{ GET_CART_DATA.length === 0 ? 0 : total.price_total  }}
+                    {{ GET_CART_DATA.length === 0 ? 0 : total.price_total  }}￥
                   </td>
                 </tr>
                 </tbody>

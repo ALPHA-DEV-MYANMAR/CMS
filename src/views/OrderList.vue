@@ -8,21 +8,25 @@
           <div class="row">
             <div class="card">
                <div style="overflow-x:auto;">
-                <table class="table table-hover align-middle text-start fs-14 text-nowrap overflow-hidden text-center">
+                <table class="table align-middle text-start fs-14 text-nowrap overflow-hidden text-center">
                     <thead>
                         <tr>
                             <th>Detail</th>
                             <th>Order ID</th>
                             <th>Payment Method</th>
                             <th>Date</th>
-                            <th>Order Status</th>
-                            <th>Delivery Agent</th>
-                            <th>Tracking ID</th>
                             <th>Final Cost</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for='o in orders' :key="o.id">
+                        <tr v-if="spinner == false">
+                          <td colspan="5">
+                            <div class="d-flex justify-content-center m-5">
+                                <spinner></spinner>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr v-else v-for='o in orders' :key="o.id">
                             <td>
                                 <button type="button" class="btn btn-outline-warning btn-sm btn-circle rounded-3" @click="detailOrder(o)">
                                     <i class="fa-solid fa-circle-info"></i>
@@ -31,9 +35,6 @@
                             <td>{{ o.id }} </td>
                             <td>{{ o.payment_method.name }}</td>
                             <td>{{ o.created_at }}</td>
-                            <td>{{ o.status.name }}</td>
-                            <td>{{ o.delivery_agent === null ? '-' : o.delivery_agent.name }}</td>
-                            <td>{{ o.delivery_tracking_code }}</td>
                             <td>{{ o.summary.total }}</td>
                         </tr>
                     </tbody>
@@ -56,6 +57,7 @@
       data() {
           return {
             orders: [],
+            spinner: false
           }
       },
   components: { SideBar , Spinner },
@@ -67,7 +69,7 @@
         $http.getAll('orders')
         .then((res)=>{
             this.orders = res.data.data.data.filter((el)=>el.items.length !== 0);
-            console.log(res)
+            this.spinner = true;
         });  
     },
     detailOrder(order){
